@@ -1,7 +1,9 @@
+import hashlib
 from django.conf import settings
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, UserManager
 from django.utils import timezone
+from polymorphic.managers import PolymorphicManager
 from polymorphic.models import PolymorphicModel
 from django.utils.translation import gettext_lazy as _
 
@@ -17,9 +19,21 @@ class PasswordHistory(models.Model):
         verbose_name = _('password history')
         verbose_name_plural = _('passwords history')
 
+class CustomUserManager(UserManager,PolymorphicManager):
+    use_in_migrations = True
+
+    def create_user(self, username, email=None, password=None, **extra_fields):
+        extra_fields.setdefault('ftp_md5_password',hashlib.md5(password.encode('utf-8')).hexdigest())
+        super(CustomUserManager,self).create_user(username,email,password,**extra_fields)
+
+    def create_superuser(self, username, email, password, **extra_fields):
+        extra_fields.setdefault('ftp_md5_password',hashlib.md5(password.encode('utf-8')).hexdigest())
+        super(CustomUserManager,self).create_superuser(username,email,password,**extra_fields)
+
 
 class User(AbstractUser,PolymorphicModel):
 
+    objects = CustomUserManager()
     STATUS_LIST = [
         (_('active'), _('Active')),
         (_('blocked'), _('Blocked')),

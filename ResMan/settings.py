@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'CustomUser',
 ]
 
 MIDDLEWARE = [
@@ -123,7 +124,10 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+AUTH_USER_MODEL = 'CustomUser.User'
+
 try:
     from .settings_local import *
 except ImportError:
     pass
+
