@@ -75,3 +75,11 @@ class User(AbstractUser,PolymorphicModel):
     class Meta(AbstractUser.Meta):
         db_table = 'auth_user'
         swappable = 'AUTH_USER_MODEL'
+
+class UserInstitutional(User):
+    notes = models.TextField(default="",blank=True)
+
+    class Meta(User.Meta):
+        db_table = 'auth_user_institutional'
+        verbose_name = _('institutional user')
+        verbose_name_plural = _('institutional users')
