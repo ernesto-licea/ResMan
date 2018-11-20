@@ -83,3 +83,20 @@ class UserInstitutional(User):
         db_table = 'auth_user_institutional'
         verbose_name = _('institutional user')
         verbose_name_plural = _('institutional users')
+
+def user_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return 'user_{0}/{1}'.format(instance.username, filename)
+
+class UserEnterprise(User):
+    enterprise_number = models.CharField(_('enterprise number'), max_length=10, default="")
+    ci_number = models.CharField(_('ci number'), max_length=11, default="")
+    phone_number = models.CharField(_('phone number'),max_length=10,default="")
+    extension_number = models.CharField(_('extension number'),max_length=10,default="")\
+    authorized_document= models.FileField(_('authorized document'),upload_to=user_directory_path, blank=True)
+    note = models.TextField(_('note'),blank=True)
+
+    class Meta(User.Meta):
+        db_table = 'auth_user_enterprise'
+        verbose_name = _('enterprise user')
+        verbose_name_plural = _('enterprise users')
