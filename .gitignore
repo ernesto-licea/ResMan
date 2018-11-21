@@ -105,3 +105,4 @@ venv.bak/
 
 .git
 .idea
+ResMan/settings_local.py
