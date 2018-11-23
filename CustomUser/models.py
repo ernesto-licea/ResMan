@@ -81,7 +81,7 @@ class User(AbstractUser,PolymorphicModel):
         swappable = 'AUTH_USER_MODEL'
 
 class UserInstitutional(User):
-    notes = models.TextField(default="",blank=True)
+    note = models.TextField(default="",blank=True)
 
     class Meta(User.Meta):
         db_table = 'auth_user_institutional'
