@@ -57,16 +57,20 @@ class User(AbstractUser,PolymorphicModel):
         (_('weekly'), _('Weekly')),
         (_('monthly'), _('Monthly')),
     ]
-
-    status = models.CharField(_('status'),max_length=20, default=STATUS_LIST[0][0])
+    is_staff = models.BooleanField(
+        _('Informatics Staff'),
+        default=False,
+        help_text=_('Designates whether the user can log into this admin site.'),
+    )
+    status = models.CharField(_('status'),max_length=20, choices=STATUS_LIST, default=STATUS_LIST[0][0])
     password_date = models.DateTimeField(_('password date'),default=timezone.now,blank=True)
     email_buzon_size = models.PositiveIntegerField(_('email buzon size'),default=0,blank=True)
     email_message_size = models.PositiveIntegerField(_('email messages size'),default=0,blank=True)
-    email_domain = models.CharField(_('email domain reach'),max_length=20, default=EMAIL_DOMAIN_LIST[0][0],blank=True)
-    proxy_quota_type = models.CharField(_('proxy quota type'),max_length=20, default=PROXY_QUOTA_LIST[0][0],blank=True)
+    email_domain = models.CharField(_('email domain reach'),max_length=20, choices=EMAIL_DOMAIN_LIST ,default=EMAIL_DOMAIN_LIST[0][0],blank=True)
+    proxy_quota_type = models.CharField(_('proxy quota type'),max_length=20, choices=PROXY_QUOTA_LIST ,default=PROXY_QUOTA_LIST[0][0],blank=True)
     proxy_quota_size = models.PositiveIntegerField(_('proxy quota size'),default=0,blank=True)
     proxy_extra_quota_size = models.PositiveIntegerField(_('proxy extra quota size'),default=0,blank=True)
-    proxy_domain = models.CharField(_('proxy domain reach'),max_length=20, default=PROXY_DOMAIN_LIST[0][0],blank=True)
+    proxy_domain = models.CharField(_('proxy domain reach'),max_length=20, choices=PROXY_DOMAIN_LIST, default=PROXY_DOMAIN_LIST[0][0],blank=True)
     ftp_folder = models.CharField(_('ftp folder'),max_length=250,default='/home/ftp',blank=True)
     ftp_size = models.PositiveIntegerField(_('ftp size'),default=0,blank=True)
     ftp_md5_password = models.CharField(_('ftp md5 password'),max_length=128,blank=True)
