@@ -1,6 +1,9 @@
+import hashlib
+
 from django.contrib import admin
 
 # Register your models here.
+from django.contrib.auth.hashers import make_password
 from polymorphic.admin import PolymorphicChildModelAdmin, PolymorphicParentModelAdmin, PolymorphicChildModelFilter
 
 from .models import User, UserEnterprise, UserInstitutional, UserGuest
@@ -13,6 +16,19 @@ class UserAdmin(PolymorphicParentModelAdmin):
 
 class UserAdminBase(PolymorphicChildModelAdmin):
     base_model = User
+
+
+    def save_model(self, request, obj, form, change):
+        # If user is staff then is superuser too
+        if obj.is_staff:
+            obj.is_superuser = True
+
+        # Create hash password
+        if not change:
+            obj.ftp_md5_password = hashlib.md5(obj.password.encode('utf-8')).hexdigest()
+            obj.password = make_password(obj.password)
+
+        super(UserAdminBase,self).save_model(request,obj,form,change)
 
 class UserEnterpriseAdmin(UserAdminBase):
     base_model = UserEnterprise
