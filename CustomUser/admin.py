@@ -6,6 +6,7 @@ from django.contrib import admin
 from django.contrib.auth.hashers import make_password
 from polymorphic.admin import PolymorphicChildModelAdmin, PolymorphicParentModelAdmin, PolymorphicChildModelFilter
 
+from .forms import UserForm
 from .models import User, UserEnterprise, UserInstitutional, UserGuest
 
 
@@ -16,6 +17,7 @@ class UserAdmin(PolymorphicParentModelAdmin):
 
 class UserAdminBase(PolymorphicChildModelAdmin):
     base_model = User
+    base_form = UserForm
 
 
     def save_model(self, request, obj, form, change):
@@ -35,7 +37,7 @@ class UserEnterpriseAdmin(UserAdminBase):
 
     fieldsets = (
         (None, {
-            'fields': ('status', 'is_staff', 'username', 'password', 'first_name', 'last_name', 'ci_number')
+            'fields': ('status', 'is_staff', 'username', 'password', 'retype_password', 'first_name', 'last_name', 'ci_number')
         }),
         ('Enterprise Data', {
             # 'classes': ('collapse',),
@@ -65,7 +67,7 @@ class UserInstitutionalAdmin(UserAdminBase):
 
     fieldsets = (
         (None, {
-            'fields': ('status', 'username', 'password', 'first_name', 'last_name')
+            'fields': ('status', 'username', 'password', 'retype_password', 'first_name', 'last_name')
         }),
 
         ('Email Service Data', {
@@ -91,7 +93,7 @@ class UserGuestAdmin(UserAdminBase):
 
     fieldsets = (
         (None, {
-            'fields': ('status', 'username', 'password', 'first_name', 'last_name')
+            'fields': ('status', 'username', 'password', 'retype_password', 'first_name', 'last_name')
         }),
         ('Enterprise Data', {
             # 'classes': ('collapse',),
