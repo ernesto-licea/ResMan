@@ -117,7 +117,8 @@ class UserAdminBase(PolymorphicChildModelAdmin):
         # If user is staff then is superuser too
         if obj.is_staff:
             obj.is_superuser = True
-        obj.is_active = True
+
+        obj.is_active = obj.status == "active"
 
         # Create hash password
         if not change:
@@ -128,7 +129,7 @@ class UserAdminBase(PolymorphicChildModelAdmin):
 
 class UserEnterpriseAdmin(UserAdminBase,UserAdminMixin):
     base_model = UserEnterprise
-    readonly_fields = ('date_joined','last_login')
+    readonly_fields = ('date_joined','last_login','ftp_md5_password','is_active')
 
 
     def get_fieldsets(self, request, obj=None):
@@ -188,7 +189,7 @@ class UserEnterpriseAdmin(UserAdminBase,UserAdminMixin):
 
 class UserInstitutionalAdmin(UserAdminBase,UserAdminMixin):
     base_model = UserInstitutional
-    readonly_fields = ('date_joined',)
+    readonly_fields = ('date_joined','ftp_md5_password','is_active')
 
     def get_fieldsets(self, request, obj=None):
         if not obj:
@@ -241,7 +242,7 @@ class UserInstitutionalAdmin(UserAdminBase,UserAdminMixin):
 
 class UserGuestAdmin(UserAdminBase,UserAdminMixin):
     base_model = UserGuest
-    readonly_fields = ('date_joined',)
+    readonly_fields = ('date_joined','ftp_md5_password','is_active')
 
     def get_fieldsets(self, request, obj=None):
         if not obj:
