@@ -127,14 +127,14 @@ class UserAdminBase(PolymorphicChildModelAdmin):
 
 class UserEnterpriseAdmin(UserAdminBase,UserAdminMixin):
     base_model = UserEnterprise
-    readonly_fields = ('date_joined',)
+    readonly_fields = ('date_joined','last_login')
 
 
     def get_fieldsets(self, request, obj=None):
         if not obj:
             fielsets = (
                 (None, {
-                    'fields': ('date_joined','status', 'is_staff', 'username', 'password', 'retype_password', 'first_name', 'last_name', 'ci_number')
+                    'fields': ('date_joined','last_login','status', 'is_staff', 'username', 'password', 'retype_password', 'first_name', 'last_name', 'ci_number')
                 }),
                 ('Enterprise Data', {
                     # 'classes': ('collapse',),
@@ -160,7 +160,7 @@ class UserEnterpriseAdmin(UserAdminBase,UserAdminMixin):
         else:
             fielsets = (
                 (None, {
-                    'fields': ('date_joined', 'status', 'is_staff', 'username', 'password', 'first_name', 'last_name', 'ci_number')
+                    'fields': ('date_joined','last_login', 'status', 'is_staff', 'username', 'password', 'first_name', 'last_name', 'ci_number')
                 }),
                 ('Enterprise Data', {
                     # 'classes': ('collapse',),
