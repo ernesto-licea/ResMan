@@ -98,11 +98,6 @@ class UserEnterpriseAdmin(UserAdminBase):
             )
         return fielsets
 
-    def get_readonly_fields(self, request, obj=None):
-        if obj:
-            return self.readonly_fields + ('password',)
-        return self.readonly_fields
-
 class UserInstitutionalAdmin(UserAdminBase):
     base_model = UserInstitutional
 
