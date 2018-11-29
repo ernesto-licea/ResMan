@@ -1,5 +1,43 @@
 from django import forms
-from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX, identify_hasher
+from django.utils.translation import gettext_lazy as _, gettext
+
+
+class ReadOnlyPasswordHashWidget(forms.Widget):
+    template_name = 'auth/widgets/read_only_password_hash.html'
+    read_only = True
+
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        summary = []
+        if not value or value.startswith(UNUSABLE_PASSWORD_PREFIX):
+            summary.append({'label': gettext("No password set.")})
+        else:
+            try:
+                hasher = identify_hasher(value)
+            except ValueError:
+                summary.append({'label': gettext("Invalid password format or unknown hashing algorithm.")})
+            else:
+                for key, value_ in hasher.safe_summary(value).items():
+                    summary.append({'label': gettext(key), 'value': value_})
+        print(summary)
+        context['summary'] = summary
+        return context
+
+class ReadOnlyPasswordHashField(forms.Field):
+    widget = ReadOnlyPasswordHashWidget
+
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault("required", False)
+        super().__init__(*args, **kwargs)
+
+    def bound_data(self, data, initial):
+        # Always return initial because the widget doesn't
+        # render an input field.
+        return initial
+
+    def has_changed(self, initial, data):
+        return False
 
 
 class UserFormBase(forms.ModelForm):
@@ -37,8 +75,23 @@ class UserFormAdd(UserFormBase):
         return cleaned_data
 
 class UserFormEdit(UserFormBase):
+    password = ReadOnlyPasswordHashField(
+        label=_("Password"),
+        help_text=_(
+            "Raw passwords are not stored, so there is no way to see this "
+            "user's password, but you can change the password using "
+            "<a href=\"{}\">this form</a>."
+        ),
+    )
+
     class Meta(UserFormBase.Meta):
         fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        password = self.fields.get('password')
+        if password:
+            password.help_text = password.help_text.format('../password/')
 
     def clean(self):
         cleaned_data  = super(UserFormBase, self).clean()
