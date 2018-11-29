@@ -117,6 +117,7 @@ class UserAdminBase(PolymorphicChildModelAdmin):
         # If user is staff then is superuser too
         if obj.is_staff:
             obj.is_superuser = True
+        obj.is_active = True
 
         # Create hash password
         if not change:
