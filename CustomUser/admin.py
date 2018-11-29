@@ -24,7 +24,6 @@ from .models import User, UserEnterprise, UserInstitutional, UserGuest
 class UserAdminMixin(admin.ModelAdmin):
     change_password_form = AdminPasswordChangeForm
     change_user_password_template = None
-    model = User
 
     def get_urls(self):
         return [
@@ -239,34 +238,63 @@ class UserInstitutionalAdmin(UserAdminBase,UserAdminMixin):
             )
         return  fieldsets
 
-class UserGuestAdmin(UserAdminBase):
+class UserGuestAdmin(UserAdminBase,UserAdminMixin):
     base_model = UserGuest
 
-    fieldsets = (
-        (None, {
-            'fields': ('status', 'username', 'password', 'retype_password', 'first_name', 'last_name')
-        }),
-        ('Enterprise Data', {
-            # 'classes': ('collapse',),
-            'fields': ('authorized_document',),
-        }),
-        ('Email Service Data', {
-            # 'classes': ('collapse',),
-            'fields': ('email', 'email_buzon_size', 'email_message_size', 'email_domain'),
-        }),
-        ('Internet Service Data', {
-            # 'classes': ('collapse',),
-            'fields': ('proxy_domain', 'proxy_quota_type', 'proxy_quota_size', 'proxy_extra_quota_size'),
-        }),
-        ('FTP Service Data', {
-            # 'classes': ('collapse',),
-            'fields': ('ftp_folder', 'ftp_size'),
-        }),
-        ('Additional Description', {
-            # 'classes': ('collapse',),
-            'fields': ('note',),
-        }),
-    )
+    def get_fieldsets(self, request, obj=None):
+        if not obj:
+            fieldsets = (
+                (None, {
+                    'fields': ('status', 'username', 'password', 'retype_password', 'first_name', 'last_name')
+                }),
+                ('Enterprise Data', {
+                    # 'classes': ('collapse',),
+                    'fields': ('authorized_document',),
+                }),
+                ('Email Service Data', {
+                    # 'classes': ('collapse',),
+                    'fields': ('email', 'email_buzon_size', 'email_message_size', 'email_domain'),
+                }),
+                ('Internet Service Data', {
+                    # 'classes': ('collapse',),
+                    'fields': ('proxy_domain', 'proxy_quota_type', 'proxy_quota_size', 'proxy_extra_quota_size'),
+                }),
+                ('FTP Service Data', {
+                    # 'classes': ('collapse',),
+                    'fields': ('ftp_folder', 'ftp_size'),
+                }),
+                ('Additional Description', {
+                    # 'classes': ('collapse',),
+                    'fields': ('note',),
+                }),
+            )
+        else:
+            fieldsets = (
+                (None, {
+                    'fields': ('status', 'username', 'password', 'first_name', 'last_name')
+                }),
+                ('Enterprise Data', {
+                    # 'classes': ('collapse',),
+                    'fields': ('authorized_document',),
+                }),
+                ('Email Service Data', {
+                    # 'classes': ('collapse',),
+                    'fields': ('email', 'email_buzon_size', 'email_message_size', 'email_domain'),
+                }),
+                ('Internet Service Data', {
+                    # 'classes': ('collapse',),
+                    'fields': ('proxy_domain', 'proxy_quota_type', 'proxy_quota_size', 'proxy_extra_quota_size'),
+                }),
+                ('FTP Service Data', {
+                    # 'classes': ('collapse',),
+                    'fields': ('ftp_folder', 'ftp_size'),
+                }),
+                ('Additional Description', {
+                    # 'classes': ('collapse',),
+                    'fields': ('note',),
+                }),
+            )
+        return fieldsets
 
 admin.site.register(User,UserAdmin)
 admin.site.register(UserEnterprise,UserEnterpriseAdmin)
