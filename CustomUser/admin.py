@@ -24,6 +24,7 @@ from .models import User, UserEnterprise, UserInstitutional, UserGuest
 class UserAdminMixin(admin.ModelAdmin):
     change_password_form = AdminPasswordChangeForm
     change_user_password_template = None
+    model = User
 
     def get_urls(self):
         return [
@@ -102,14 +103,6 @@ class UserAdmin(PolymorphicParentModelAdmin,UserAdminMixin):
     child_models = (UserEnterprise, UserInstitutional, UserGuest)
     list_filter = (PolymorphicChildModelFilter,)
 
-    def get_urls(self):
-        return [
-            path(
-                '<id>/password/',
-                self.admin_site.admin_view(self.user_change_password),
-                name='auth_user_password_change',
-            ),
-        ] + super().get_urls()
 
 class UserAdminBase(PolymorphicChildModelAdmin):
     base_model = User
@@ -194,31 +187,57 @@ class UserEnterpriseAdmin(UserAdminBase,UserAdminMixin):
             )
         return fielsets
 
-class UserInstitutionalAdmin(UserAdminBase):
+class UserInstitutionalAdmin(UserAdminBase,UserAdminMixin):
     base_model = UserInstitutional
 
-    fieldsets = (
-        (None, {
-            'fields': ('status', 'username', 'password', 'retype_password', 'first_name', 'last_name')
-        }),
+    def get_fieldsets(self, request, obj=None):
+        if not obj:
+            fieldsets = (
+                (None, {
+                    'fields': ('status', 'username', 'password', 'retype_password', 'first_name', 'last_name')
+                }),
 
-        ('Email Service Data', {
-            # 'classes': ('collapse',),
-            'fields': ('email', 'email_buzon_size', 'email_message_size', 'email_domain'),
-        }),
-        ('Internet Service Data', {
-            # 'classes': ('collapse',),
-            'fields': ('proxy_domain', 'proxy_quota_type', 'proxy_quota_size', 'proxy_extra_quota_size'),
-        }),
-        ('FTP Service Data', {
-            # 'classes': ('collapse',),
-            'fields': ('ftp_folder', 'ftp_size'),
-        }),
-        ('Additional Description', {
-            # 'classes': ('collapse',),
-            'fields': ('note',),
-        }),
-    )
+                ('Email Service Data', {
+                    # 'classes': ('collapse',),
+                    'fields': ('email', 'email_buzon_size', 'email_message_size', 'email_domain'),
+                }),
+                ('Internet Service Data', {
+                    # 'classes': ('collapse',),
+                    'fields': ('proxy_domain', 'proxy_quota_type', 'proxy_quota_size', 'proxy_extra_quota_size'),
+                }),
+                ('FTP Service Data', {
+                    # 'classes': ('collapse',),
+                    'fields': ('ftp_folder', 'ftp_size'),
+                }),
+                ('Additional Description', {
+                    # 'classes': ('collapse',),
+                    'fields': ('note',),
+                }),
+            )
+        else:
+            fieldsets = (
+                (None, {
+                    'fields': ('status', 'username', 'password', 'first_name', 'last_name')
+                }),
+
+                ('Email Service Data', {
+                    # 'classes': ('collapse',),
+                    'fields': ('email', 'email_buzon_size', 'email_message_size', 'email_domain'),
+                }),
+                ('Internet Service Data', {
+                    # 'classes': ('collapse',),
+                    'fields': ('proxy_domain', 'proxy_quota_type', 'proxy_quota_size', 'proxy_extra_quota_size'),
+                }),
+                ('FTP Service Data', {
+                    # 'classes': ('collapse',),
+                    'fields': ('ftp_folder', 'ftp_size'),
+                }),
+                ('Additional Description', {
+                    # 'classes': ('collapse',),
+                    'fields': ('note',),
+                }),
+            )
+        return  fieldsets
 
 class UserGuestAdmin(UserAdminBase):
     base_model = UserGuest
