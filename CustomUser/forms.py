@@ -59,6 +59,14 @@ class UserFormBase(forms.ModelForm):
                 raise ValidationError(_('Invalid ci number.'))
         return ci_number
 
+    def clean_enterprise_number(self):
+        enterprise_number = self.cleaned_data.get('enterprise_number')
+        if enterprise_number:
+            pattern = re.compile('\d+$')
+            if not pattern.match(enterprise_number):
+                raise ValidationError(_('Invalid enterprise number.'))
+        return enterprise_number
+
 
 class UserFormAdd(UserFormBase):
     retype_password = forms.CharField(
