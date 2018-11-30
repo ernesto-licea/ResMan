@@ -76,6 +76,14 @@ class UserFormBase(forms.ModelForm):
                 raise ValidationError(_('Invalid phone number.'))
         return phone_number
 
+    def clean_extension_number(self):
+        extension_number = self.cleaned_data.get('extension_number')
+        if extension_number:
+            pattern = re.compile('\d+$')
+            if not pattern.match(extension_number):
+                raise ValidationError(_('Invalid extension number.'))
+        return extension_number
+
 
 class UserFormAdd(UserFormBase):
     retype_password = forms.CharField(
