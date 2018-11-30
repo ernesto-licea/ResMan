@@ -1,5 +1,8 @@
+import re
+
 from django import forms
 from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX, identify_hasher
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _, gettext
 
 
@@ -47,6 +50,14 @@ class UserFormBase(forms.ModelForm):
     def clean(self):
         cleaned_data  = super(UserFormBase, self).clean()
         return cleaned_data
+
+    def clean_ci_number(self):
+        ci_number = self.cleaned_data.get('ci_number')
+        if ci_number:
+            pattern = re.compile('\d{11}$')
+            if not pattern.match(ci_number):
+                raise ValidationError(_('Invalid ci number.'))
+        return ci_number
 
 
 class UserFormAdd(UserFormBase):
