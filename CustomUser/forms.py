@@ -67,6 +67,15 @@ class UserFormBase(forms.ModelForm):
                 raise ValidationError(_('Invalid enterprise number.'))
         return enterprise_number
 
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data.get('phone_number')
+        if phone_number:
+            pattern = re.compile('[0-9,-]+$')
+            pattern2 = re.compile('.*--.*')
+            if not pattern.match(phone_number) or pattern2.match(phone_number) or not phone_number[-1].isdigit() or not phone_number[0].isdigit():
+                raise ValidationError(_('Invalid phone number.'))
+        return phone_number
+
 
 class UserFormAdd(UserFormBase):
     retype_password = forms.CharField(
