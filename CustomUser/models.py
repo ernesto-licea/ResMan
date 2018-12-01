@@ -75,6 +75,7 @@ class User(AbstractUser,PolymorphicModel):
     ftp_size = models.PositiveIntegerField(_('ftp size'),default=0,blank=True)
     ftp_md5_password = models.CharField(_('ftp md5 password'),max_length=128,blank=True)
 
+    AbstractUser.get_full_name.short_description = _("Full Name")
 
     class Meta(AbstractUser.Meta):
         db_table = 'auth_user'
