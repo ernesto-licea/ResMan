@@ -101,7 +101,7 @@ class UserAdmin(PolymorphicParentModelAdmin,UserAdminMixin):
     base_model = User
     child_models = (UserEnterprise, UserInstitutional, UserGuest)
     list_filter = (PolymorphicChildModelFilter,)
-    list_display = ('username','status','get_full_name')
+    list_display = ('username','status','get_full_name','user_type')
 
 
 class UserAdminBase(PolymorphicChildModelAdmin):

@@ -77,6 +77,18 @@ class User(AbstractUser,PolymorphicModel):
 
     AbstractUser.get_full_name.short_description = _("Full Name")
 
+
+    @property
+    def user_type(self):
+        if str(self.polymorphic_ctype.model_class()).find("UserInstitutional") != -1:
+            return _("Institutional")
+        elif str(self.polymorphic_ctype.model_class()).find("UserEnterprise") != -1:
+            return _("Enterprise")
+        elif str(self.polymorphic_ctype.model_class()).find("UserGuest") != -1:
+            return _("Guest")
+        else:
+            return _("Superuser")
+
     class Meta(AbstractUser.Meta):
         db_table = 'auth_user'
         swappable = 'AUTH_USER_MODEL'
