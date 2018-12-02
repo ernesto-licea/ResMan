@@ -131,6 +131,7 @@ class UserAdminBase(PolymorphicChildModelAdmin):
 class UserEnterpriseAdmin(UserAdminBase,UserAdminMixin):
     base_model = UserEnterprise
     readonly_fields = ('date_joined','last_login','ftp_md5_password','is_active')
+    list_display = ('username','status','get_full_name','user_type')
 
 
     def get_fieldsets(self, request, obj=None):
@@ -191,6 +192,7 @@ class UserEnterpriseAdmin(UserAdminBase,UserAdminMixin):
 class UserInstitutionalAdmin(UserAdminBase,UserAdminMixin):
     base_model = UserInstitutional
     readonly_fields = ('date_joined','ftp_md5_password','is_active')
+    list_display = ('username','status','get_full_name','user_type')
 
     def get_fieldsets(self, request, obj=None):
         if not obj:
@@ -244,6 +246,7 @@ class UserInstitutionalAdmin(UserAdminBase,UserAdminMixin):
 class UserGuestAdmin(UserAdminBase,UserAdminMixin):
     base_model = UserGuest
     readonly_fields = ('date_joined','ftp_md5_password','is_active')
+    list_display = ('username','status','get_full_name','user_type')
 
     def get_fieldsets(self, request, obj=None):
         if not obj:
