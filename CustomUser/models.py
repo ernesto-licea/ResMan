@@ -9,10 +9,8 @@ from django.utils.translation import gettext_lazy as _
 
 class PasswordHistory(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    first = models.CharField(_('first password'),max_length=128,default="",blank=True)
-    second = models.CharField(_('second password'),max_length=128,default="",blank=True)
-    third = models.CharField(_('third password'),max_length=128,default="",blank=True)
-    forth = models.CharField(_('forth password'),max_length=128,default="",blank=True)
+    password = models.CharField(_('password'),max_length=150,default="")
+    date_password = models.DateTimeField(_("date password"),default=timezone.now)
 
     class Meta:
         db_table = 'auth_password_history'
