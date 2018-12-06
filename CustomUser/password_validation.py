@@ -94,7 +94,7 @@ class RepeatPasswordAmount:
                         _("This password can not be the same last %(num_amount)d password%(plural)s used."),
                         code='password_used',
                         params={
-                            'num_amount': self.num_amount if self.num_amount > 1 else "",
+                            'num_amount': self.num_amount,
                             'plural': 's' if self.num_amount > 1 else ""
                         },
                     )
