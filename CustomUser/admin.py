@@ -18,7 +18,7 @@ from django.utils.translation import gettext, gettext_lazy as _
 from polymorphic.admin import PolymorphicChildModelAdmin, PolymorphicParentModelAdmin, PolymorphicChildModelFilter
 
 from .forms import UserFormEdit, UserFormAdd
-from .models import User, UserEnterprise, UserInstitutional, UserGuest
+from .models import User, UserEnterprise, UserInstitutional, UserGuest, PasswordHistory
 
 
 class UserAdminMixin(admin.ModelAdmin):
@@ -127,6 +127,9 @@ class UserAdminBase(PolymorphicChildModelAdmin):
             obj.password = make_password(obj.password)
 
         super(UserAdminBase,self).save_model(request,obj,form,change)
+
+        # Create history del new password
+        PasswordHistory.objects.create(user=obj, password=obj.password)
 
 class UserEnterpriseAdmin(UserAdminBase,UserAdminMixin):
     base_model = UserEnterprise
