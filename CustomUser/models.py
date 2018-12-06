@@ -104,8 +104,8 @@ def user_directory_path(instance, filename):
     return 'user_{0}/{1}'.format(instance.username, filename)
 
 class UserEnterprise(User):
-    enterprise_number = models.CharField(_('enterprise number'), max_length=10, default="")
-    ci_number = models.CharField(_('ci number'), max_length=11, default="")
+    enterprise_number = models.CharField(_('enterprise number'), max_length=10, default="",unique=True)
+    ci_number = models.CharField(_('ci number'), max_length=11, default="",unique=True)
     phone_number = models.CharField(_('phone number'),max_length=20,default="",blank=True)
     extension_number = models.CharField(_('extension number'),max_length=10,default="",blank=True)
     authorized_document= models.FileField(_('authorized document'),upload_to=user_directory_path, blank=True)
