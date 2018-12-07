@@ -106,8 +106,8 @@ class RepeatPasswordAmount:
             PasswordHistory.objects.create(user=user, password=hash_password)
             # Remove old histories of passwords
             password_history = user.passwordhistory_set.all()
-            if password_history.count() >= self.num_amount:
-                for a in password_history[:password_history.count() - self.num_amount]:
+            if password_history.count() > self.num_amount + 1:
+                for a in password_history[:password_history.count() - self.num_amount + 1]:
                     a.delete()
 
 
