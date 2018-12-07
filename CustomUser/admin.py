@@ -13,6 +13,7 @@ from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import path, reverse
+from django.utils import timezone
 from django.utils.html import escape
 from django.utils.translation import gettext, gettext_lazy as _
 from polymorphic.admin import PolymorphicChildModelAdmin, PolymorphicParentModelAdmin, PolymorphicChildModelFilter
@@ -47,7 +48,11 @@ class UserAdminMixin(admin.ModelAdmin):
         if request.method == 'POST':
             form = self.change_password_form(user, request.POST)
             if form.is_valid():
-                form.save()
+                user = form.save(commit=False)
+                user.password_date = timezone.now()
+                user.ftp_md5_password = hashlib.md5(user._password.encode('utf-8')).hexdigest()
+                user.save()
+
                 change_message = self.construct_change_message(request, form, None)
                 self.log_change(request, user, change_message)
                 msg = gettext('Password changed successfully.')
