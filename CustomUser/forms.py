@@ -23,7 +23,6 @@ class ReadOnlyPasswordHashWidget(forms.Widget):
             else:
                 for key, value_ in hasher.safe_summary(value).items():
                     summary.append({'label': gettext(key), 'value': value_})
-        print(summary)
         context['summary'] = summary
         return context
 

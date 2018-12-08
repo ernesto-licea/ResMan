@@ -88,14 +88,20 @@ class RepeatPasswordAmount:
         if user:
             password_history = user.passwordhistory_set.all()
 
+            if check_password(password,user.password):
+                raise ValidationError(
+                    _("This password can not be the current password."),
+                    code='current_password_used',
+                )
+
             for history in password_history:
                 if check_password(password,history.password):
                     raise ValidationError(
-                        _("This password can not be the same last %(num_amount)d password%(plural)s used."),
+                        _("This password can not be the current password or the %(num_amount)s password%(plural)s used previously."),
                         code='password_used',
                         params={
-                            'num_amount': self.num_amount,
-                            'plural': 's' if self.num_amount > 1 else ""
+                            'num_amount': 'last ' + str(self.num_amount-1) if self.num_amount > 2 else "",
+                            'plural': 's' if self.num_amount > 2 else ""
                         },
                     )
 
@@ -114,9 +120,9 @@ class RepeatPasswordAmount:
 
     def get_help_text(self):
         return _(
-            "Your can not use the last %(num_amount)d password%(plural)s"
+            "Your can not use the current password or the %(num_amount)s password%(plural)s used previously."
             %{
-                'num_amount': self.num_amount,
-                'plural': 's' if self.num_amount > 1 else ""
+                'num_amount': 'last ' + str(self.num_amount-1) if self.num_amount > 2 else "",
+                'plural': 's' if self.num_amount > 2 else ""
             }
         )
