@@ -9,6 +9,9 @@ class Area(models.Model):
     responsible = models.CharField(_('responsible'), max_length=100, default="", blank=True)
     email = models.EmailField(_('email area'))
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         db_table = 'enterprise_areas'
         verbose_name = _('enterprise area')
@@ -19,6 +22,9 @@ class Department(models.Model):
     name = models.CharField(_('name'), max_length=50, default="", unique=True)
     responsible = models.CharField(_('responsible'), max_length=100, default="", blank=True)
     email = models.EmailField(_('email area'))
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         db_table = 'enterprise_departments'
