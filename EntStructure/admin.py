@@ -5,6 +5,7 @@ from .models import Area, Department
 
 class AreaAdmin(admin.ModelAdmin):
     model = Area
+    fields = ('is_active','name','responsible','email')
     list_display = ('name','is_active','responsible','email')
 
     def save_model(self, request, obj, form, change):
@@ -12,6 +13,7 @@ class AreaAdmin(admin.ModelAdmin):
 
 class DepartmentAdmin(admin.ModelAdmin):
     model = Department
+    fields = ('is_active','name','responsible','email','area')
     list_display = ('name','is_active','responsible','email','area')
 
     def save_model(self, request, obj, form, change):
