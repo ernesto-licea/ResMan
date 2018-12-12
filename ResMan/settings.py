@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'EntStructure',
     'Services',
     'DistributionList',
+    'LdapServer',
 ]
 
 MIDDLEWARE = [
