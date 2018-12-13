@@ -22,9 +22,9 @@ class LdapServer(models.Model):
     proxy_quota_size = models.CharField(_('proxy quota size map'), max_length=50, default="")
     proxy_extra_quota_size = models.CharField(_('proxy extra quota size map'), max_length=50, default="")
 
-    @property
     def socket(self):
         return "{}:{}".format(self.server_host,self.server_port)
+    socket.short_description = _('Server Connection')
 
     def __str__(self):
         return self.name
