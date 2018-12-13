@@ -1,8 +1,10 @@
 from django.conf.urls import url
-from django.contrib import admin
+from django.contrib import admin, messages
+from django.contrib.admin.utils import quote
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.html import format_html
+from django.utils.http import urlquote
 from django.utils.translation import gettext_lazy as _
 
 
@@ -33,6 +35,11 @@ class LdapServerAdmin(admin.ModelAdmin):
                 self.admin_site.admin_view(self.sync_data),
                 name='sync-server',
             ),
+            url(
+                r'^(?P<ldap_server_id>.+)/test_connection/$',
+                self.admin_site.admin_view(self.test_server),
+                name='test-server',
+            ),
         ]
         return custom_urls + urls
 
@@ -41,10 +48,50 @@ class LdapServerAdmin(admin.ModelAdmin):
             '<a class="button" href="{}">{}</a>&nbsp;',
             reverse('admin:sync-server', args=[obj.pk]),
             _('sync')
+        ) + format_html(
+            '<a class="button" href="{}">{}</a>&nbsp;',
+            reverse('admin:test-server', args=[obj.pk]),
+            _('Test Connection')
         )
 
     def sync_data(self,request,ldap_server_id,*args,**kwargs):
         ldap_server = self.get_object(request,ldap_server_id)
+        opts = ldap_server._meta
+
+        # Construct message to return
+        obj_url = reverse(
+            'admin:%s_%s_change' % (opts.app_label, opts.model_name),
+            args=(quote(ldap_server.pk),),
+            current_app=self.admin_site.name,
+        )
+        obj_repr = format_html('<a href="{}">{}</a>', urlquote(obj_url), ldap_server)
+        message = format_html(
+            _("Data was sent to server {} successfully."),
+            obj_repr
+        )
+        self.message_user(request, message, messages.SUCCESS)
+
+        # Return changelist view
+        url = reverse('admin:%s_%s_changelist' % (self.model._meta.app_label, self.model._meta.model_name))
+        return HttpResponseRedirect(url)
+
+    def test_server(self,request,ldap_server_id,*args,**kwargs):
+        ldap_server = self.get_object(request,ldap_server_id)
+        opts = ldap_server._meta
+
+        #Construct message to return
+        obj_url = reverse(
+            'admin:%s_%s_change' % (opts.app_label, opts.model_name),
+            args=(quote(ldap_server.pk),),
+            current_app=self.admin_site.name,
+        )
+        obj_repr = format_html('<a href="{}">{}</a>', urlquote(obj_url), ldap_server)
+        message = format_html(
+            _("Connection to server {} was successfully established."),
+              obj_repr
+        )
+        self.message_user(request, message, messages.SUCCESS)
+
 
         # Return changelist view
         url = reverse('admin:%s_%s_changelist' % (self.model._meta.app_label, self.model._meta.model_name))
