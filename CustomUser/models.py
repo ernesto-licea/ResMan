@@ -7,7 +7,7 @@ from polymorphic.managers import PolymorphicManager
 from polymorphic.models import PolymorphicModel
 from django.utils.translation import gettext_lazy as _
 
-from EntStructure.models import Area
+from EntStructure.models import Area,Department
 
 
 class PasswordHistory(models.Model):
@@ -114,6 +114,7 @@ class UserEnterprise(User):
     authorized_document= models.FileField(_('authorized document'),upload_to=user_directory_path, blank=True)
     note = models.TextField(_('note'),blank=True)
     area = models.ForeignKey(Area,on_delete=models.SET_NULL, default=None, null=True)
+    department = models.ForeignKey(Department,on_delete=models.SET_NULL, default=None, null=True)
 
     class Meta(User.Meta):
         db_table = 'auth_user_enterprise'
