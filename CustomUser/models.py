@@ -7,6 +7,7 @@ from polymorphic.managers import PolymorphicManager
 from polymorphic.models import PolymorphicModel
 from django.utils.translation import gettext_lazy as _
 
+from DistributionList.models import DistributionList
 from EntStructure.models import Area,Department
 from Services.models import Service
 
@@ -82,6 +83,15 @@ class User(AbstractUser,PolymorphicModel):
         blank=True,
         related_name='services_set',
         related_query_name="services",
+        help_text=_('')
+    )
+
+    distribution_list = models.ManyToManyField(
+        DistributionList,
+        verbose_name=_('distribution list'),
+        blank=True,
+        related_name='distribution_list_set',
+        related_query_name="distribution_list",
         help_text=_('')
     )
 
