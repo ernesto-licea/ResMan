@@ -111,6 +111,8 @@ class UserAdmin(PolymorphicParentModelAdmin,UserAdminMixin):
 
 class UserAdminBase(PolymorphicChildModelAdmin):
     base_model = User
+    filter_horizontal = ('services',)
+
 
     def get_form(self, request, obj=None, **kwargs):
         if obj:
@@ -146,7 +148,7 @@ class UserEnterpriseAdmin(UserAdminBase,UserAdminMixin):
         if not obj:
             fielsets = (
                 (None, {
-                    'fields': ('date_joined','last_login','status', 'is_staff', 'username', 'password', 'retype_password', 'first_name', 'last_name', 'ci_number')
+                    'fields': ('date_joined','last_login','status', 'is_staff', 'username', 'password', 'retype_password', 'first_name', 'last_name', 'ci_number', 'services')
                 }),
                 ('Enterprise Data', {
                     # 'classes': ('collapse',),
@@ -172,7 +174,7 @@ class UserEnterpriseAdmin(UserAdminBase,UserAdminMixin):
         else:
             fielsets = (
                 (None, {
-                    'fields': ('date_joined','last_login', 'status', 'is_staff', 'username', 'password', 'first_name', 'last_name', 'ci_number')
+                    'fields': ('date_joined','last_login', 'status', 'is_staff', 'username', 'password', 'first_name', 'last_name', 'ci_number', 'services')
                 }),
                 ('Enterprise Data', {
                     # 'classes': ('collapse',),
@@ -206,7 +208,7 @@ class UserInstitutionalAdmin(UserAdminBase,UserAdminMixin):
         if not obj:
             fieldsets = (
                 (None, {
-                    'fields': ('date_joined','status', 'username', 'password', 'retype_password', 'first_name', 'last_name')
+                    'fields': ('date_joined','status', 'username', 'password', 'retype_password', 'first_name', 'last_name', 'services')
                 }),
 
                 ('Email Service Data', {
@@ -229,7 +231,7 @@ class UserInstitutionalAdmin(UserAdminBase,UserAdminMixin):
         else:
             fieldsets = (
                 (None, {
-                    'fields': ('date_joined','status', 'username', 'password', 'first_name', 'last_name')
+                    'fields': ('date_joined','status', 'username', 'password', 'first_name', 'last_name', 'services')
                 }),
 
                 ('Email Service Data', {
@@ -260,7 +262,7 @@ class UserGuestAdmin(UserAdminBase,UserAdminMixin):
         if not obj:
             fieldsets = (
                 (None, {
-                    'fields': ('date_joined','status', 'username', 'password', 'retype_password', 'first_name', 'last_name')
+                    'fields': ('date_joined','status', 'username', 'password', 'retype_password', 'first_name', 'last_name', 'services')
                 }),
                 ('Enterprise Data', {
                     # 'classes': ('collapse',),
@@ -286,7 +288,7 @@ class UserGuestAdmin(UserAdminBase,UserAdminMixin):
         else:
             fieldsets = (
                 (None, {
-                    'fields': ('date_joined','status', 'username', 'password', 'first_name', 'last_name')
+                    'fields': ('date_joined','status', 'username', 'password', 'first_name', 'last_name', 'services')
                 }),
                 ('Enterprise Data', {
                     # 'classes': ('collapse',),
