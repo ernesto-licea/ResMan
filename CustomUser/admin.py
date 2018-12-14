@@ -150,7 +150,7 @@ class UserEnterpriseAdmin(UserAdminBase,UserAdminMixin):
                 }),
                 ('Enterprise Data', {
                     # 'classes': ('collapse',),
-                    'fields': ('enterprise_number', 'area', 'phone_number', 'extension_number', 'authorized_document'),
+                    'fields': ('enterprise_number', 'area', 'department', 'phone_number', 'extension_number', 'authorized_document'),
                 }),
                 ('Email Service Data', {
                     # 'classes': ('collapse',),
@@ -176,7 +176,7 @@ class UserEnterpriseAdmin(UserAdminBase,UserAdminMixin):
                 }),
                 ('Enterprise Data', {
                     # 'classes': ('collapse',),
-                    'fields': ('enterprise_number', 'phone_number', 'extension_number', 'authorized_document'),
+                    'fields': ('enterprise_number', 'area', 'department', 'phone_number', 'extension_number', 'authorized_document'),
                 }),
                 ('Email Service Data', {
                     # 'classes': ('collapse',),
