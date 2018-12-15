@@ -48,7 +48,37 @@ class UserFormBase(forms.ModelForm):
 
     def clean(self):
         cleaned_data  = super(UserFormBase, self).clean()
+        services = cleaned_data.get('services')
+        if services:
+            exist_email_service = services.filter(name='email').count() > 0
+            exist_internet_service = services.filter(name='internet').count() > 0
+            exist_ftp_service = services.filter(name='ftp').count() > 0
+
+            email_error_message = _('If you select email service this field is required.')
+            email_field = ['email','email_domain','email_buzon_size','email_message_size']
+            for field in email_field:
+                data = str(cleaned_data.get(field))
+                if data in ["","None"] and exist_email_service:
+                    self.add_error(field, email_error_message)
+
+            internet_error_message = _('If you select internet service this field is required.')
+            internet_field = ['internet_domain','internet_quota_type','internet_quota_size','internet_extra_quota_size']
+            for field in internet_field:
+                data = str(cleaned_data.get(field))
+                if data in ["", "None"] and exist_internet_service:
+                    self.add_error(field, internet_error_message)
+
+            ftp_error_message = _('If you select ftp service this field is required.')
+            ftp_fields = ['ftp_folder','ftp_size']
+            for field in ftp_fields:
+                data = str(cleaned_data.get(field))
+                if data in ["", "None"] and exist_ftp_service:
+                    self.add_error(field, ftp_error_message)
+
+
         return cleaned_data
+
+
 
     def clean_ci_number(self):
         ci_number = self.cleaned_data.get('ci_number')
@@ -82,6 +112,8 @@ class UserFormBase(forms.ModelForm):
             if not pattern.match(extension_number):
                 raise ValidationError(_('Invalid extension number.'))
         return extension_number
+
+
 
 
 class UserFormAdd(UserFormBase):
@@ -129,7 +161,7 @@ class UserFormEdit(UserFormBase):
             password.help_text = password.help_text.format('../password/')
 
     def clean(self):
-        cleaned_data  = super(UserFormBase, self).clean()
+        cleaned_data  = super(UserFormEdit, self).clean()
         return cleaned_data
 
     def clean_password(self):
