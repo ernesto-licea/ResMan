@@ -77,7 +77,7 @@ class User(AbstractUser,PolymorphicModel):
     internet_extra_quota_size = models.PositiveIntegerField(_('internet extra quota size'),default=0,blank=True,null=True)
     internet_domain = models.CharField(_('internet domain reach'),max_length=20, choices=PROXY_DOMAIN_LIST, default=PROXY_DOMAIN_LIST[0][0],blank=True)
     ftp_folder = models.CharField(_('ftp folder'),max_length=250,default='/home/ftp',blank=True)
-    ftp_size = models.PositiveIntegerField(_('ftp size'),default=0,blank=True)
+    ftp_size = models.PositiveIntegerField(_('ftp size'),default=0,blank=True,null=True)
     ftp_md5_password = models.CharField(_('ftp md5 password'),max_length=128,blank=True)
     services = models.ManyToManyField(
         Service,
