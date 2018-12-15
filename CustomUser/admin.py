@@ -160,7 +160,7 @@ class UserEnterpriseAdmin(UserAdminBase,UserAdminMixin):
                 }),
                 ('Internet Service Data', {
                     # 'classes': ('collapse',),
-                    'fields': ('proxy_domain','proxy_quota_type','proxy_quota_size','proxy_extra_quota_size'),
+                    'fields': ('internet_domain','internet_quota_type','internet_quota_size','internet_extra_quota_size'),
                 }),
                 ('FTP Service Data', {
                     # 'classes': ('collapse',),
@@ -186,7 +186,7 @@ class UserEnterpriseAdmin(UserAdminBase,UserAdminMixin):
                 }),
                 ('Internet Service Data', {
                     # 'classes': ('collapse',),
-                    'fields': ('proxy_domain', 'proxy_quota_type', 'proxy_quota_size', 'proxy_extra_quota_size'),
+                    'fields': ('internet_domain', 'internet_quota_type', 'internet_quota_size', 'internet_extra_quota_size'),
                 }),
                 ('FTP Service Data', {
                     # 'classes': ('collapse',),
@@ -217,7 +217,7 @@ class UserInstitutionalAdmin(UserAdminBase,UserAdminMixin):
                 }),
                 ('Internet Service Data', {
                     # 'classes': ('collapse',),
-                    'fields': ('proxy_domain', 'proxy_quota_type', 'proxy_quota_size', 'proxy_extra_quota_size'),
+                    'fields': ('internet_domain', 'internet_quota_type', 'internet_quota_size', 'internet_extra_quota_size'),
                 }),
                 ('FTP Service Data', {
                     # 'classes': ('collapse',),
@@ -240,7 +240,7 @@ class UserInstitutionalAdmin(UserAdminBase,UserAdminMixin):
                 }),
                 ('Internet Service Data', {
                     # 'classes': ('collapse',),
-                    'fields': ('proxy_domain', 'proxy_quota_type', 'proxy_quota_size', 'proxy_extra_quota_size'),
+                    'fields': ('internet_domain', 'internet_quota_type', 'internet_quota_size', 'internet_extra_quota_size'),
                 }),
                 ('FTP Service Data', {
                     # 'classes': ('collapse',),
@@ -274,7 +274,7 @@ class UserGuestAdmin(UserAdminBase,UserAdminMixin):
                 }),
                 ('Internet Service Data', {
                     # 'classes': ('collapse',),
-                    'fields': ('proxy_domain', 'proxy_quota_type', 'proxy_quota_size', 'proxy_extra_quota_size'),
+                    'fields': ('internet_domain', 'internet_quota_type', 'internet_quota_size', 'internet_extra_quota_size'),
                 }),
                 ('FTP Service Data', {
                     # 'classes': ('collapse',),
@@ -300,7 +300,7 @@ class UserGuestAdmin(UserAdminBase,UserAdminMixin):
                 }),
                 ('Internet Service Data', {
                     # 'classes': ('collapse',),
-                    'fields': ('proxy_domain', 'proxy_quota_type', 'proxy_quota_size', 'proxy_extra_quota_size'),
+                    'fields': ('internet_domain', 'internet_quota_type', 'internet_quota_size', 'internet_extra_quota_size'),
                 }),
                 ('FTP Service Data', {
                     # 'classes': ('collapse',),
