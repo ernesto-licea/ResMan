@@ -67,6 +67,8 @@ class User(AbstractUser,PolymorphicModel):
     )
     status = models.CharField(_('status'),max_length=20, choices=STATUS_LIST, default=STATUS_LIST[0][0])
     password_date = models.DateTimeField(_('password date'),default=timezone.now,blank=True)
+    first_name = models.CharField(_('first name'), max_length=30)
+    last_name = models.CharField(_('last name'), max_length=150)
     email_buzon_size = models.PositiveIntegerField(_('email buzon size'),default=0,blank=True)
     email_message_size = models.PositiveIntegerField(_('email messages size'),default=0,blank=True)
     email_domain = models.CharField(_('email domain reach'),max_length=20, choices=EMAIL_DOMAIN_LIST ,default=EMAIL_DOMAIN_LIST[0][0],blank=True)
