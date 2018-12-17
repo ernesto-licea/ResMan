@@ -300,7 +300,7 @@ class UserInstitutionalAdmin(UserAdminBase):
 class UserGuestAdmin(UserAdminBase):
     base_model = UserGuest
     readonly_fields = ('date_joined','ftp_md5_password','is_active')
-    list_display = ('username','status','get_full_name','user_type')
+    list_display = ('username','status','get_full_name','user_type','server_action')
 
     def get_fieldsets(self, request, obj=None):
         if not obj:
@@ -369,6 +369,14 @@ class UserGuestAdmin(UserAdminBase):
     @sensitive_post_parameters_m
     def user_guest_password_change(self, request, id, form_url=''):
         return change_password(self, request, id, form_url)
+
+    def server_action(self,obj):
+        return format_html(
+            '<a class="button" href="{}">{}</a>&nbsp;',
+            reverse('admin:user_guest_password_change', args=[obj.pk]),
+            _('Reset Password')
+        )
+
 
 admin.site.register(User,UserAdmin)
 admin.site.register(UserEnterprise,UserEnterpriseAdmin)
