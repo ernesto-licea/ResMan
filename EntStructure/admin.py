@@ -64,6 +64,17 @@ class DepartmentAdmin(admin.ModelAdmin):
     fields = ('is_active','name','responsible','email','area')
     list_display = ('name','is_active','responsible','email','area')
 
+    def get_urls(self):
+        urls = super(DepartmentAdmin, self).get_urls()
+        custom_urls = [
+            url(
+                r'^(?P<department_id>.+)/sync/$',
+                self.admin_site.admin_view(self.sync_data),
+                name='sync-department',
+            ),
+        ]
+        return custom_urls + urls
+
     def save_model(self, request, obj, form, change):
         obj.slugname = slugify(obj.name)
         super(DepartmentAdmin,self).save_model(request,obj,form,change)
