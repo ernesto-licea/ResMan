@@ -105,7 +105,7 @@ class UserAdmin(PolymorphicParentModelAdmin):
             url(
                r'^(?P<user_id>.+)/sync/$',
                self.admin_site.admin_view(self.sync_data),
-               name='sync-server',
+               name='sync-user',
             ),
         ] + super().get_urls()
 
@@ -118,6 +118,10 @@ class UserAdmin(PolymorphicParentModelAdmin):
             '<a class="button" href="{}">{}</a>&nbsp;',
             reverse('admin:user_password_change', args=[obj.pk]),
             _('Reset Password')
+        ) + format_html(
+            '<a class="button" href="{}">{}</a>&nbsp;',
+            reverse('admin:sync-user', args=[obj.pk]),
+            _('Ldap Sync')
         )
 
     def sync_data(self,request,user_id,*args,**kwargs):
