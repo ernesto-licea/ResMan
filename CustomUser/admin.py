@@ -5,7 +5,7 @@ from django.contrib import admin, messages
 
 # Register your models here.
 from django.contrib.admin.options import IS_POPUP_VAR
-from django.contrib.admin.utils import unquote
+from django.contrib.admin.utils import unquote, quote
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.admin import sensitive_post_parameters_m
 from django.contrib.auth.forms import AdminPasswordChangeForm
@@ -16,6 +16,7 @@ from django.template.response import TemplateResponse
 from django.urls import path, reverse
 from django.utils import timezone
 from django.utils.html import escape, format_html
+from django.utils.http import urlquote
 from django.utils.translation import gettext, gettext_lazy as _
 from polymorphic.admin import PolymorphicChildModelAdmin, PolymorphicParentModelAdmin, PolymorphicChildModelFilter
 
@@ -118,6 +119,27 @@ class UserAdmin(PolymorphicParentModelAdmin):
             reverse('admin:user_password_change', args=[obj.pk]),
             _('Reset Password')
         )
+
+    def sync_data(self,request,user_id,*args,**kwargs):
+        obj = self.get_object(request, user_id)
+        opts = obj._meta
+
+        # Construct message to return
+        obj_url = reverse(
+            'admin:%s_%s_change' % (opts.app_label, opts.model_name),
+            args=(quote(obj.pk),),
+            current_app=self.admin_site.name,
+        )
+        obj_repr = format_html('<a href="{}">{}</a>', urlquote(obj_url), obj)
+        message = format_html(
+            _("Data from user {} was successfully synchronized with ldap servers."),
+            obj_repr
+        )
+        self.message_user(request, message, messages.SUCCESS)
+
+        # Return changelist view
+        url = reverse('admin:%s_%s_changelist' % (self.model._meta.app_label, self.model._meta.model_name))
+        return HttpResponseRedirect(url)
 
 class UserAdminBase(PolymorphicChildModelAdmin):
     base_model = User
