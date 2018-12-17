@@ -145,7 +145,7 @@ class UserAdminBase(PolymorphicChildModelAdmin):
 class UserEnterpriseAdmin(UserAdminBase):
     base_model = UserEnterprise
     readonly_fields = ('date_joined','last_login','ftp_md5_password','is_active')
-    list_display = ('username','status','get_full_name','user_type')
+    list_display = ('username','status','get_full_name','user_type','server_action')
 
 
     def get_fieldsets(self, request, obj=None):
@@ -215,6 +215,13 @@ class UserEnterpriseAdmin(UserAdminBase):
     @sensitive_post_parameters_m
     def user_enterprise_password_change(self, request, id, form_url=''):
         return change_password(self, request, id, form_url)
+
+    def server_action(self,obj):
+        return format_html(
+            '<a class="button" href="{}">{}</a>&nbsp;',
+            reverse('admin:user_enterprise_password_change', args=[obj.pk]),
+            _('Reset Password')
+        )
 
 class UserInstitutionalAdmin(UserAdminBase):
     base_model = UserInstitutional
