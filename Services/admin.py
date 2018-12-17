@@ -13,8 +13,15 @@ from .models import Service
 class ServiceAdmin(admin.ModelAdmin):
     model = Service
     fields = ('name','description')
-    list_display = ('name','description')
+    list_display = ('name','description','server_action')
     builtin_services = ['internet','email','ftp','chat']
+
+    def server_action(self, obj):
+        return format_html(
+            '<a class="button" href="{}">{}</a>&nbsp;',
+            reverse('admin:sync-service', args=[obj.pk]),
+            _('ldap sync')
+        )
 
     def get_urls(self):
         urls = super(ServiceAdmin, self).get_urls()
@@ -39,7 +46,7 @@ class ServiceAdmin(admin.ModelAdmin):
         )
         obj_repr = format_html('<a href="{}">{}</a>', urlquote(obj_url), obj)
         message = format_html(
-            _("Data from department {} was successfully sent to ldap servers."),
+            _("Data from service {} was successfully sent to ldap servers."),
             obj_repr
         )
         self.message_user(request, message, messages.SUCCESS)
