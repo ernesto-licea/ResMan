@@ -14,7 +14,7 @@ from django.http import Http404, HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import path, reverse
 from django.utils import timezone
-from django.utils.html import escape
+from django.utils.html import escape, format_html
 from django.utils.translation import gettext, gettext_lazy as _
 from polymorphic.admin import PolymorphicChildModelAdmin, PolymorphicParentModelAdmin, PolymorphicChildModelFilter
 
@@ -91,7 +91,7 @@ class UserAdmin(PolymorphicParentModelAdmin):
     base_model = User
     child_models = (UserEnterprise, UserInstitutional, UserGuest)
     list_filter = (PolymorphicChildModelFilter,)
-    list_display = ('username','status','get_full_name','user_type')
+    list_display = ('username','status','get_full_name','user_type','server_action')
 
     def get_urls(self):
         return [
@@ -106,6 +106,12 @@ class UserAdmin(PolymorphicParentModelAdmin):
     def user_password_change(self, request, id, form_url=''):
         return change_password(self,request,id,form_url)
 
+    def server_action(self,obj):
+        return format_html(
+            '<a class="button" href="{}">{}</a>&nbsp;',
+            reverse('admin:user_password_change', args=[obj.pk]),
+            _('Reset Password')
+        )
 
 class UserAdminBase(PolymorphicChildModelAdmin):
     base_model = User
