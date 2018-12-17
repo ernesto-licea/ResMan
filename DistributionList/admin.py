@@ -14,7 +14,14 @@ from .models import DistributionList
 class DistributionListAdmin(admin.ModelAdmin):
     model = DistributionList
     fields = ('name','responsible','email','description')
-    list_display = ('name','responsible','email','description')
+    list_display = ('name','responsible','email','description','server_action')
+
+    def server_action(self, obj):
+        return format_html(
+            '<a class="button" href="{}">{}</a>&nbsp;',
+            reverse('admin:sync-distributionlist', args=[obj.pk]),
+            _('ldap sync')
+        )
 
     def get_urls(self):
         urls = super(DistributionListAdmin, self).get_urls()
