@@ -1,6 +1,12 @@
 from django.conf.urls import url
-from django.contrib import admin
+from django.contrib import admin, messages
+from django.contrib.admin.utils import quote
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.utils.html import format_html
+from django.utils.http import urlquote
 from django.utils.text import slugify
+from django.utils.translation import gettext_lazy as _
 
 from .models import Service
 
@@ -20,6 +26,27 @@ class ServiceAdmin(admin.ModelAdmin):
             ),
         ]
         return custom_urls + urls
+
+    def sync_data(self,request,service_id,*args,**kwargs):
+        obj = self.get_object(request,service_id)
+        opts = obj._meta
+
+        # Construct message to return
+        obj_url = reverse(
+            'admin:%s_%s_change' % (opts.app_label, opts.model_name),
+            args=(quote(obj.pk),),
+            current_app=self.admin_site.name,
+        )
+        obj_repr = format_html('<a href="{}">{}</a>', urlquote(obj_url), obj)
+        message = format_html(
+            _("Data from department {} was successfully sent to ldap servers."),
+            obj_repr
+        )
+        self.message_user(request, message, messages.SUCCESS)
+
+        # Return changelist view
+        url = reverse('admin:%s_%s_changelist' % (self.model._meta.app_label, self.model._meta.model_name))
+        return HttpResponseRedirect(url)
 
     def save_model(self, request, obj, form, change):
         obj.slugname = slugify(obj.name)
