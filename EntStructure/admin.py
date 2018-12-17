@@ -62,7 +62,14 @@ class AreaAdmin(admin.ModelAdmin):
 class DepartmentAdmin(admin.ModelAdmin):
     model = Department
     fields = ('is_active','name','responsible','email','area')
-    list_display = ('name','is_active','responsible','email','area')
+    list_display = ('name','is_active','responsible','email','area','server_action')
+
+    def server_action(self, obj):
+        return format_html(
+            '<a class="button" href="{}">{}</a>&nbsp;',
+            reverse('admin:sync-department', args=[obj.pk]),
+            _('ldap sync')
+        )
 
     def get_urls(self):
         urls = super(DepartmentAdmin, self).get_urls()
