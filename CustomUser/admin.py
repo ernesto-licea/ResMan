@@ -1,5 +1,6 @@
 import hashlib
 
+from django.conf.urls import url
 from django.contrib import admin, messages
 
 # Register your models here.
@@ -99,6 +100,11 @@ class UserAdmin(PolymorphicParentModelAdmin):
                 '<id>/password/',
                 self.admin_site.admin_view(self.user_password_change),
                 name='user_password_change',
+            ),
+            url(
+               r'^(?P<user_id>.+)/sync/$',
+               self.admin_site.admin_view(self.sync_data),
+               name='sync-server',
             ),
         ] + super().get_urls()
 
