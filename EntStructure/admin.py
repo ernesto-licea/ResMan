@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.http import urlquote
 from django.utils.text import slugify
+from django.utils.translation import gettext_lazy as _
 
 from .models import Area, Department
 
@@ -13,7 +14,14 @@ from .models import Area, Department
 class AreaAdmin(admin.ModelAdmin):
     model = Area
     fields = ('is_active','name','responsible','email')
-    list_display = ('name','is_active','responsible','email')
+    list_display = ('name','is_active','responsible','email','server_action')
+
+    def server_action(self, obj):
+        return format_html(
+            '<a class="button" href="{}">{}</a>&nbsp;',
+            reverse('admin:sync-area', args=[obj.pk]),
+            _('ldap sync')
+        )
 
     def get_urls(self):
         urls = super(AreaAdmin, self).get_urls()
