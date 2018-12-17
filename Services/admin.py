@@ -1,3 +1,4 @@
+from django.conf.urls import url
 from django.contrib import admin
 from django.utils.text import slugify
 
@@ -8,6 +9,17 @@ class ServiceAdmin(admin.ModelAdmin):
     fields = ('name','description')
     list_display = ('name','description')
     builtin_services = ['internet','email','ftp','chat']
+
+    def get_urls(self):
+        urls = super(ServiceAdmin, self).get_urls()
+        custom_urls = [
+            url(
+                r'^(?P<service_id>.+)/sync/$',
+                self.admin_site.admin_view(self.sync_data),
+                name='sync-service',
+            ),
+        ]
+        return custom_urls + urls
 
     def save_model(self, request, obj, form, change):
         obj.slugname = slugify(obj.name)
