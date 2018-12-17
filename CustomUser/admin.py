@@ -456,6 +456,11 @@ class UserGuestAdmin(UserAdminBase):
                 self.admin_site.admin_view(self.user_guest_password_change),
                 name='user_guest_password_change',
             ),
+            url(
+               r'^(?P<user_id>.+)/sync/$',
+               self.admin_site.admin_view(self.sync_data),
+               name='sync-user-guest',
+            ),
         ] + super().get_urls()
 
     @sensitive_post_parameters_m
@@ -467,7 +472,32 @@ class UserGuestAdmin(UserAdminBase):
             '<a class="button" href="{}">{}</a>&nbsp;',
             reverse('admin:user_guest_password_change', args=[obj.pk]),
             _('Reset Password')
+        ) + format_html(
+            '<a class="button" href="{}">{}</a>&nbsp;',
+            reverse('admin:sync-user-guest', args=[obj.pk]),
+            _('Ldap Sync')
         )
+
+    def sync_data(self,request,user_id,*args,**kwargs):
+        obj = self.get_object(request, user_id)
+        opts = obj._meta
+
+        # Construct message to return
+        obj_url = reverse(
+            'admin:%s_%s_change' % (opts.app_label, opts.model_name),
+            args=(quote(obj.pk),),
+            current_app=self.admin_site.name,
+        )
+        obj_repr = format_html('<a href="{}">{}</a>', urlquote(obj_url), obj)
+        message = format_html(
+            _("Data from user {} was successfully synchronized with ldap servers."),
+            obj_repr
+        )
+        self.message_user(request, message, messages.SUCCESS)
+
+        # Return changelist view
+        url = reverse('admin:%s_%s_changelist' % (self.model._meta.app_label, self.model._meta.model_name))
+        return HttpResponseRedirect(url)
 
 
 admin.site.register(User,UserAdmin)
