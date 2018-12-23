@@ -158,10 +158,6 @@ class UserAdminBase(PolymorphicChildModelAdmin):
         return super().get_form(request, obj, **kwargs)
 
     def save_model(self, request, obj, form, change):
-        # If user is staff then is superuser too
-        if obj.is_staff:
-            obj.is_superuser = True
-
         obj.is_active = obj.status == "active"
 
         # Create hash password
