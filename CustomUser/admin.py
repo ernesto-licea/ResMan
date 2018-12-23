@@ -180,7 +180,7 @@ class UserEnterpriseAdmin(UserAdminBase):
         if not obj:
             fielsets = (
                 (None, {
-                    'fields': ('date_joined','last_login','status', 'is_staff', 'username', 'password', 'retype_password', 'first_name', 'last_name', 'ci_number', 'services', 'distribution_list')
+                    'fields': ['date_joined','last_login','status', 'is_staff', 'username', 'password', 'retype_password', 'first_name', 'last_name', 'ci_number', 'services', 'distribution_list']
                 }),
                 ('Enterprise Data', {
                     # 'classes': ('collapse',),
@@ -206,7 +206,7 @@ class UserEnterpriseAdmin(UserAdminBase):
         else:
             fielsets = (
                 (None, {
-                    'fields': ('date_joined','last_login', 'status', 'is_staff', 'username', 'password', 'first_name', 'last_name', 'ci_number', 'services', 'distribution_list')
+                    'fields': ['date_joined','last_login', 'status', 'is_staff', 'username', 'password', 'first_name', 'last_name', 'ci_number', 'services', 'distribution_list']
                 }),
                 ('Enterprise Data', {
                     # 'classes': ('collapse',),
@@ -229,6 +229,8 @@ class UserEnterpriseAdmin(UserAdminBase):
                     'fields': ('note',),
                 }),
             )
+        if request.user.is_superuser:
+            fielsets[0][1]['fields'].insert(3,'is_superuser')
         return fielsets
 
     def get_urls(self):
