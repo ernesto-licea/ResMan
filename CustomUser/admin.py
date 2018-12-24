@@ -10,6 +10,8 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.admin import sensitive_post_parameters_m
 from django.contrib.auth.forms import AdminPasswordChangeForm
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import Permission
+from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpResponseRedirect
 from django.template.response import TemplateResponse
@@ -20,6 +22,9 @@ from django.utils.http import urlquote
 from django.utils.translation import gettext, gettext_lazy as _
 from polymorphic.admin import PolymorphicChildModelAdmin, PolymorphicParentModelAdmin, PolymorphicChildModelFilter
 
+from DistributionList.models import DistributionList
+from EntStructure.models import Area, Department
+from Services.models import Service
 from .forms import UserFormEdit, UserFormAdd
 from .models import User, UserEnterprise, UserInstitutional, UserGuest, PasswordHistory
 
@@ -156,6 +161,35 @@ class UserAdminBase(PolymorphicChildModelAdmin):
         else:
             kwargs['form'] = UserFormAdd
         return super().get_form(request, obj, **kwargs)
+
+    def save_related(self, request, form, formsets, change):
+        if not change:
+            obj = form.save(commit=False)
+            if obj.is_staff:
+                ct_user = ContentType.objects.get_for_model(User)
+                ct_user_enterprise  = ContentType.objects.get_for_model(UserEnterprise)
+                ct_user_institutional = ContentType.objects.get_for_model(UserInstitutional)
+                ct_user_guest  = ContentType.objects.get_for_model(UserGuest)
+                ct_services  = ContentType.objects.get_for_model(Service)
+                ct_distribution_list = ContentType.objects.get_for_model(DistributionList)
+                ct_area = ContentType.objects.get_for_model(Area)
+                ct_department  = ContentType.objects.get_for_model(Department)
+
+                all_permissions = Permission.objects.filter(content_type__in=[
+                    ct_user,
+                    ct_user_enterprise,
+                    ct_user_guest,
+                    ct_user_institutional,
+                    ct_services,
+                    ct_distribution_list,
+                    ct_area,
+                    ct_department
+                ])
+
+                for perm in all_permissions:
+                    obj.user_permissions.add(perm)
+                obj.save()
+
 
     def save_model(self, request, obj, form, change):
         obj.is_active = obj.status == "active"
