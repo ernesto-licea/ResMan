@@ -210,6 +210,11 @@ class UserEnterpriseAdmin(UserAdminBase):
     readonly_fields = ('date_joined','last_login','ftp_md5_password','is_active')
     list_display = ('username','status','get_full_name','user_type','server_action')
 
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            return self.readonly_fields + ('username',)
+        return self.readonly_fields
+
 
     def get_fieldsets(self, request, obj=None):
         if not obj:
@@ -323,6 +328,11 @@ class UserInstitutionalAdmin(UserAdminBase):
     readonly_fields = ('date_joined','ftp_md5_password','is_active')
     list_display = ('username','status','get_full_name','user_type','server_action')
 
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            return self.readonly_fields + ('username',)
+        return self.readonly_fields
+
     def get_fieldsets(self, request, obj=None):
         if not obj:
             fieldsets = (
@@ -426,6 +436,11 @@ class UserGuestAdmin(UserAdminBase):
     base_model = UserGuest
     readonly_fields = ('date_joined','ftp_md5_password','is_active')
     list_display = ('username','status','get_full_name','user_type','server_action')
+
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            return self.readonly_fields + ('username',)
+        return self.readonly_fields
 
     def get_fieldsets(self, request, obj=None):
         if not obj:
