@@ -22,7 +22,7 @@ class LdapServer(models.Model):
     internet_domain = models.CharField(_('proxy domain map'), max_length=50, default="employeeType")
     internet_quota_type = models.CharField(_('proxy quota type map'), max_length=50, default="division")
     internet_quota_size = models.CharField(_('proxy quota size map'), max_length=50, default="employeeNumber")
-    internet_extra_quota_size = models.CharField(_('proxy extra quota size map'), max_length=50, default="homeDrive")
+    internet_extra_quota_size = models.CharField(_('proxy extra quota size map'), max_length=50, default="telexNumber")
 
     def socket(self):
         return "{}:{}".format(self.server_host,self.server_port)
