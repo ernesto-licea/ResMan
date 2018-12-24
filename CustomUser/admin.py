@@ -167,8 +167,9 @@ class UserAdminBase(PolymorphicChildModelAdmin):
 
         super(UserAdminBase,self).save_model(request,obj,form,change)
 
-        # Create history del new password
-        PasswordHistory.objects.create(user=obj, password=obj.password)
+        if not change:
+            #Create history del new password
+            PasswordHistory.objects.create(user=obj, password=obj.password)
 
 class UserEnterpriseAdmin(UserAdminBase):
     base_model = UserEnterprise
