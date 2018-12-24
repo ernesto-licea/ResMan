@@ -10,8 +10,8 @@ class LdapServer(models.Model):
     server_host = models.CharField(_('server host'), max_length=50, default="", unique=True)
     server_port = models.PositiveIntegerField(_('server port'), default=389)
     start_tls = models.BooleanField(_('start tls'),default=False)
-    bind_dn = models.CharField(_('bind DN'), max_length=100, default="")
-    bind_password = models.CharField(_('bind password'), max_length=50, default="")
+    admin_username = models.CharField(_('admin username'), max_length=100, default="")
+    admin_password = models.CharField(_('admin password'), max_length=50, default="")
 
     email_domain = models.CharField(_('email domain map'), max_length=50, default="")
     email_buzon_size = models.CharField(_('email buzon size map'), max_length=50, default="")
