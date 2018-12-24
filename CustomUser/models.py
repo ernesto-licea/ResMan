@@ -7,6 +7,7 @@ from polymorphic.managers import PolymorphicManager
 from polymorphic.models import PolymorphicModel
 from django.utils.translation import gettext_lazy as _
 
+from CustomUser.signals import signals
 from DistributionList.models import DistributionList
 from EntStructure.models import Area,Department
 from Services.models import Service
@@ -110,6 +111,18 @@ class User(AbstractUser,PolymorphicModel):
             return _("Guest")
         else:
             return _("Superuser")
+
+    def create_ldap_user(self):
+        signal = getattr(signals, 'create_ldap_user')
+        receivers = signal.send_robust(sender=self.__class__, user=self)
+        for function, error in receivers:
+            return str(error) if error else None
+
+    def modify_ldap_user(self):
+        signal = getattr(signals, 'modify_ldap_user')
+        receivers = signal.send_robust(sender=self.__class__, user=self)
+        for function, error in receivers:
+            return str(error) if error else None
 
     class Meta(AbstractUser.Meta):
         db_table = 'auth_user'
