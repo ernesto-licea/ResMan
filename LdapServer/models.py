@@ -31,5 +31,5 @@ class LdapServer(models.Model):
 
     class Meta:
         db_table = 'ldap_server'
-        verbose_name = _('ldap server')
-        verbose_name_plural = _('ldap servers')
+        verbose_name = _('active directory server')
+        verbose_name_plural = _('active directory servers')
