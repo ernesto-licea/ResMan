@@ -19,10 +19,13 @@ class LdapServer(models.Model):
     email_buzon_size = models.CharField(_('email buzon size map'), max_length=50, default="otherMailbox")
     email_message_size = models.CharField(_('email message size map'), max_length=50, default="postalCode")
 
-    internet_domain = models.CharField(_('proxy domain map'), max_length=50, default="employeeType")
-    internet_quota_type = models.CharField(_('proxy quota type map'), max_length=50, default="division")
-    internet_quota_size = models.CharField(_('proxy quota size map'), max_length=50, default="employeeNumber")
-    internet_extra_quota_size = models.CharField(_('proxy extra quota size map'), max_length=50, default="telexNumber")
+    internet_domain = models.CharField(_('internet domain map'), max_length=50, default="employeeType")
+    internet_quota_type = models.CharField(_('internet quota type map'), max_length=50, default="division")
+    internet_quota_size = models.CharField(_('internet quota size map'), max_length=50, default="employeeNumber")
+    internet_extra_quota_size = models.CharField(_('internet extra quota size map'), max_length=50, default="telexNumber")
+
+    ftp_home = models.CharField(_('ftp home'), max_length=50, default="homeDrive")
+    ftp_size = models.CharField(_('ftp size'), max_length=50, default="uidNumber")
 
     def socket(self):
         return "{}:{}".format(self.server_host,self.server_port)
