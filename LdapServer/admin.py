@@ -17,12 +17,13 @@ class LdapServerAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (None, {
-            'fields': ('is_active','name','domain','search_base','server_host','server_port','admin_username','admin_password')
+            'fields': ('is_active','name','domain','search_base','server_host','server_port','start_tls','admin_username','admin_password')
         }),
         ('Ldap Data Map', {
             'fields': (
                 'email_domain','email_buzon_size','email_message_size',
-                'proxy_domain','proxy_quota_type','proxy_quota_size','proxy_extra_quota_size'
+                'internet_domain','internet_quota_type','internet_quota_size','internet_extra_quota_size',
+                'ftp_home','ftp_size'
             ),
         }),
     )
