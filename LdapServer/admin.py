@@ -13,7 +13,7 @@ from .models import LdapServer
 
 class LdapServerAdmin(admin.ModelAdmin):
     model = LdapServer
-    list_display = ('name','is_active','socket','bind_dn','server_action')
+    list_display = ('name','is_active','socket','admin_username','server_action')
 
     fieldsets = (
         (None, {
