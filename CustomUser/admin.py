@@ -199,6 +199,16 @@ class UserAdminBase(PolymorphicChildModelAdmin):
             obj.ftp_md5_password = hashlib.md5(obj.password.encode('utf-8')).hexdigest()
             obj.password = make_password(obj.password)
 
+        if not change:
+            ldap_error = obj.create_ldap_user()
+        else:
+            ldap_error = obj.modify_ldap_user()
+
+        if ldap_error:
+            self.message_user(request,'error', messages.ERROR)
+        else:
+            self.message_user(request,'success',messages.SUCCESS)
+
         super(UserAdminBase,self).save_model(request,obj,form,change)
 
         if not change:
