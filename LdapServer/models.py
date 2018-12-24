@@ -15,14 +15,14 @@ class LdapServer(models.Model):
     admin_username = models.CharField(_('admin username'), max_length=100, default="")
     admin_password = models.CharField(_('admin password'), max_length=50, default="")
 
-    email_domain = models.CharField(_('email domain map'), max_length=50, default="")
-    email_buzon_size = models.CharField(_('email buzon size map'), max_length=50, default="")
-    email_message_size = models.CharField(_('email message size map'), max_length=50, default="")
+    email_domain = models.CharField(_('email domain map'), max_length=50, default="physicalDeliveryOfficeName")
+    email_buzon_size = models.CharField(_('email buzon size map'), max_length=50, default="otherMailbox")
+    email_message_size = models.CharField(_('email message size map'), max_length=50, default="postalCode")
 
-    proxy_domain = models.CharField(_('proxy domain map'), max_length=50, default="")
-    proxy_quota_type = models.CharField(_('proxy quota type map'), max_length=50, default="")
-    proxy_quota_size = models.CharField(_('proxy quota size map'), max_length=50, default="")
-    proxy_extra_quota_size = models.CharField(_('proxy extra quota size map'), max_length=50, default="")
+    proxy_domain = models.CharField(_('proxy domain map'), max_length=50, default="employeeType")
+    proxy_quota_type = models.CharField(_('proxy quota type map'), max_length=50, default="division")
+    proxy_quota_size = models.CharField(_('proxy quota size map'), max_length=50, default="employeeNumber")
+    proxy_extra_quota_size = models.CharField(_('proxy extra quota size map'), max_length=50, default="homeDrive")
 
     def socket(self):
         return "{}:{}".format(self.server_host,self.server_port)
