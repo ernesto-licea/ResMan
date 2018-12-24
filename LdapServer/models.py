@@ -19,10 +19,10 @@ class LdapServer(models.Model):
     email_buzon_size = models.CharField(_('email buzon size map'), max_length=50, default="otherMailbox")
     email_message_size = models.CharField(_('email message size map'), max_length=50, default="postalCode")
 
-    proxy_domain = models.CharField(_('proxy domain map'), max_length=50, default="employeeType")
-    proxy_quota_type = models.CharField(_('proxy quota type map'), max_length=50, default="division")
-    proxy_quota_size = models.CharField(_('proxy quota size map'), max_length=50, default="employeeNumber")
-    proxy_extra_quota_size = models.CharField(_('proxy extra quota size map'), max_length=50, default="homeDrive")
+    internet_domain = models.CharField(_('proxy domain map'), max_length=50, default="employeeType")
+    internet_quota_type = models.CharField(_('proxy quota type map'), max_length=50, default="division")
+    internet_quota_size = models.CharField(_('proxy quota size map'), max_length=50, default="employeeNumber")
+    internet_extra_quota_size = models.CharField(_('proxy extra quota size map'), max_length=50, default="homeDrive")
 
     def socket(self):
         return "{}:{}".format(self.server_host,self.server_port)
