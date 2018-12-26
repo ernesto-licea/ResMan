@@ -57,6 +57,17 @@ class ServiceAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         obj.slugname = slugify(obj.name)
+
+        if not change:
+            ldap_error = obj.create_ldap_service()
+        else:
+            ldap_error = obj.modify_ldap_service()
+
+        if ldap_error:
+            self.message_user(request,'error', messages.ERROR)
+        else:
+            self.message_user(request,'success',messages.SUCCESS)
+
         super(ServiceAdmin,self).save_model(request,obj,form,change)
 
     def has_delete_permission(self, request, obj=None):
