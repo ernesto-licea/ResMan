@@ -1,6 +1,7 @@
 import re
 
 from django import forms
+from django.contrib.auth import password_validation
 from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX, identify_hasher
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _, gettext
@@ -129,6 +130,12 @@ class UserFormAdd(UserFormBase):
             'password': forms.PasswordInput(attrs={'class': 'vTextField'}),
             'retype_password': forms.PasswordInput(attrs={'class': 'vTextField'}),
         }
+
+    def clean_retype_password(self):
+        password2 = self.cleaned_data.get('retype_password')
+        if password2:
+            password_validation.validate_password(password2)
+        return password2
 
     def clean(self):
         cleaned_data  = super(UserFormAdd, self).clean()
