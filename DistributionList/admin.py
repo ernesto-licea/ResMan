@@ -57,6 +57,17 @@ class DistributionListAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         obj.slugname = slugify(obj.name)
+
+        if not change:
+            ldap_error = obj.create_ldap_distribution_list()
+        else:
+            ldap_error = obj.modify_ldap_distribution_list()
+
+        if ldap_error:
+            self.message_user(request,'error', messages.ERROR)
+        else:
+            self.message_user(request,'success',messages.SUCCESS)
+
         super(DistributionListAdmin,self).save_model(request,obj,form,change)
 
 admin.site.register(DistributionList,DistributionListAdmin)
