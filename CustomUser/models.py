@@ -113,13 +113,13 @@ class User(AbstractUser,PolymorphicModel):
             return _("Superuser")
 
     def create_ldap_user(self):
-        signal = getattr(signals, 'create_ldap_user')
+        signal = getattr(signals, 'create_ldap_user_signal')
         receivers = signal.send_robust(sender=self.__class__, user=self)
         for function, error in receivers:
             return str(error) if error else None
 
     def modify_ldap_user(self):
-        signal = getattr(signals, 'modify_ldap_user')
+        signal = getattr(signals, 'modify_ldap_user_signal')
         receivers = signal.send_robust(sender=self.__class__, user=self)
         for function, error in receivers:
             return str(error) if error else None
