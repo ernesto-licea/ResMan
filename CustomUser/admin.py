@@ -193,6 +193,7 @@ class UserAdminBase(PolymorphicChildModelAdmin):
 
     def save_model(self, request, obj, form, change):
         obj.is_active = obj.status == "active"
+        obj._password = obj.password
 
         # Create hash password
         if not change:
