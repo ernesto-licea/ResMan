@@ -2,7 +2,7 @@ from LdapServer.ldap.models import LdapUser
 from LdapServer.models import LdapServer
 
 
-def create_ldap_server(sender,**kwargs):
+def create_ldap_user(sender,**kwargs):
     user = kwargs['user']
     ldap_servers = LdapServer.objects.filter(is_active=True)
     for server in ldap_servers:
