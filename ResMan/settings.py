@@ -40,8 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'CustomUser',
     'EntStructure',
-    'Services',
-    'DistributionList',
     'LdapServer',
 ]
 

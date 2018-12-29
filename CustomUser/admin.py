@@ -22,9 +22,7 @@ from django.utils.http import urlquote
 from django.utils.translation import gettext, gettext_lazy as _
 from polymorphic.admin import PolymorphicChildModelAdmin, PolymorphicParentModelAdmin, PolymorphicChildModelFilter
 
-from DistributionList.models import DistributionList
 from EntStructure.models import Area, Department
-from Services.models import Service
 from .forms import UserFormEdit, UserFormAdd
 from .models import User, UserEnterprise, UserInstitutional, UserGuest, PasswordHistory
 
@@ -152,7 +150,7 @@ class UserAdmin(PolymorphicParentModelAdmin):
 
 class UserAdminBase(PolymorphicChildModelAdmin):
     base_model = User
-    filter_horizontal = ('services','distribution_list')
+    # filter_horizontal = ('services','distribution_list')
 
 
     def get_form(self, request, obj=None, **kwargs):
@@ -170,8 +168,6 @@ class UserAdminBase(PolymorphicChildModelAdmin):
                 ct_user_enterprise  = ContentType.objects.get_for_model(UserEnterprise)
                 ct_user_institutional = ContentType.objects.get_for_model(UserInstitutional)
                 ct_user_guest  = ContentType.objects.get_for_model(UserGuest)
-                ct_services  = ContentType.objects.get_for_model(Service)
-                ct_distribution_list = ContentType.objects.get_for_model(DistributionList)
                 ct_area = ContentType.objects.get_for_model(Area)
                 ct_department  = ContentType.objects.get_for_model(Department)
 
@@ -180,8 +176,6 @@ class UserAdminBase(PolymorphicChildModelAdmin):
                     ct_user_enterprise,
                     ct_user_guest,
                     ct_user_institutional,
-                    ct_services,
-                    ct_distribution_list,
                     ct_area,
                     ct_department
                 ])
