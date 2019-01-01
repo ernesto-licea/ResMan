@@ -7,11 +7,13 @@ from django.utils.html import format_html
 from django.utils.http import urlquote
 from django.utils.translation import gettext_lazy as _
 
+from Services.forms import ServiceForm
 from .models import Service
 
 
 class ServiceAdmin(admin.ModelAdmin):
     model = Service
+    form = ServiceForm
     list_display = ('name', 'is_active', 'service_type', 'email','description','server_action')
 
     fields = ['is_active','name', 'service_type', 'email','description']
