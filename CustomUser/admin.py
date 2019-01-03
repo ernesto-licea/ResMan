@@ -150,7 +150,7 @@ class UserAdmin(PolymorphicParentModelAdmin):
 
 class UserAdminBase(PolymorphicChildModelAdmin):
     base_model = User
-    # filter_horizontal = ('services','distribution_list')
+    filter_horizontal = ('services','distribution_list')
 
 
     def get_form(self, request, obj=None, **kwargs):
@@ -161,6 +161,7 @@ class UserAdminBase(PolymorphicChildModelAdmin):
         return super().get_form(request, obj, **kwargs)
 
     def save_related(self, request, form, formsets, change):
+        super().save_related(request,form,formsets,change)
         if not change:
             obj = form.save(commit=False)
             if obj.is_staff:
