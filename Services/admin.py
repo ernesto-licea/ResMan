@@ -15,6 +15,7 @@ class ServiceAdmin(admin.ModelAdmin):
     model = Service
     form = ServiceForm
     list_display = ('name', 'is_active', 'service_type', 'email','description','server_action')
+    list_filter = ('service_type',)
 
     fields = ['is_active','name', 'service_type', 'email','description']
 
