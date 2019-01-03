@@ -42,6 +42,11 @@ class ServiceAdmin(admin.ModelAdmin):
                 return False
         return True
 
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            return self.readonly_fields + ('name',)
+        return self.readonly_fields
+
     def server_action(self, obj):
         return format_html(
             '<a class="button" href="{}">{}</a>&nbsp;',
