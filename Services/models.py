@@ -19,13 +19,13 @@ class Service(models.Model):
 
     def create_ldap_group(self):
         signal = getattr(signals, 'create_ldap_group_signal')
-        receivers = signal.send_robust(sender=self.__class__, user=self)
+        receivers = signal.send_robust(sender=self.__class__, obj=self)
         for function, error in receivers:
             return str(error) if error else None
 
     def modify_ldap_group(self):
         signal = getattr(signals, 'modify_ldap_group_signal')
-        receivers = signal.send_robust(sender=self.__class__, user=self)
+        receivers = signal.send_robust(sender=self.__class__, obj=self)
         for function, error in receivers:
             return str(error) if error else None
 
