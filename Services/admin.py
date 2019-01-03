@@ -30,6 +30,12 @@ class ServiceAdmin(admin.ModelAdmin):
         ]
         return custom_urls + urls
 
+    def has_delete_permission(self, request, obj=None):
+        if obj:
+            if obj.name in ['Internet','Email','Chat','Ftp']:
+                return False
+        return True
+
     def server_action(self, obj):
         return format_html(
             '<a class="button" href="{}">{}</a>&nbsp;',
