@@ -76,6 +76,17 @@ class ServiceAdmin(admin.ModelAdmin):
         return HttpResponseRedirect(url)
 
     def save_model(self, request, obj, form, change):
+
+        if not change:
+            ldap_error = obj.create_ldap_group()
+        else:
+            ldap_error = obj.modify_ldap_group()
+
+        if ldap_error:
+            self.message_user(request,'error', messages.ERROR)
+        else:
+            self.message_user(request,'success',messages.SUCCESS)
+
         super(ServiceAdmin,self).save_model(request,obj,form,change)
 
 admin.site.register(Service,ServiceAdmin)
