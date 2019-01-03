@@ -9,6 +9,7 @@ from django.utils.translation import gettext_lazy as _
 
 from CustomUser.signals import signals
 from EntStructure.models import Area,Department
+from Services.models import Service
 
 
 class PasswordHistory(models.Model):
@@ -78,23 +79,25 @@ class User(AbstractUser,PolymorphicModel):
     ftp_folder = models.CharField(_('ftp folder'),max_length=250,default='/home/ftp',blank=True)
     ftp_size = models.PositiveIntegerField(_('ftp size'),default=0,blank=True,null=True)
     ftp_md5_password = models.CharField(_('ftp md5 password'),max_length=128,blank=True)
-    # services = models.ManyToManyField(
-    #     Service,
-    #     verbose_name=_('services'),
-    #     blank=True,
-    #     related_name='services_set',
-    #     related_query_name="services",
-    #     help_text=_('')
-    # )
-    #
-    # distribution_list = models.ManyToManyField(
-    #     DistributionList,
-    #     verbose_name=_('distribution list'),
-    #     blank=True,
-    #     related_name='distribution_list_set',
-    #     related_query_name="distribution_list",
-    #     help_text=_('')
-    # )
+    services = models.ManyToManyField(
+        Service,
+        verbose_name=_('services'),
+        blank=True,
+        related_name='services_set',
+        related_query_name="services",
+        help_text=_(''),
+        limit_choices_to={'is_active': True, 'service_type': 'security'}
+    )
+
+    distribution_list = models.ManyToManyField(
+        Service,
+        verbose_name=_('distribution list'),
+        blank=True,
+        related_name='distribution_list_set',
+        related_query_name="distribution_list",
+        help_text=_(''),
+        limit_choices_to = {'is_active': True, 'service_type': 'distribution'}
+    )
 
     AbstractUser.get_full_name.short_description = _("Full Name")
 
