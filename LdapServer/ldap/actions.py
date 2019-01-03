@@ -1,4 +1,4 @@
-from LdapServer.ldap.models import LdapUser, LdapSecurityGroup, LdapDistributionGroup
+from LdapServer.ldap.models import LdapUser, LdapGroup
 from django.apps import apps
 
 
@@ -12,21 +12,11 @@ def create_ldap_user(sender,**kwargs):
         ldap_user = LdapUser(server,user)
         ldap_user.add_user()
 
-def create_ldap_security_group(sender,**kwargs):
-    service = kwargs['service']
+def create_ldap_group(sender,**kwargs):
+    service = kwargs['obj']
     appconfig = apps.get_app_config('LdapServer')
     LdapServer = appconfig.get_model('LdapServer', 'LdapServer')
     ldap_servers = LdapServer.objects.filter(is_active=True)
     for server in ldap_servers:
-        ldap_group = LdapSecurityGroup(server,service)
+        ldap_group = LdapGroup(server,service)
         ldap_group.add()
-
-def create_ldap_distribution_group(sender,**kwargs):
-    distribution_list = kwargs['distribution_list']
-    appconfig = apps.get_app_config('LdapServer')
-    LdapServer = appconfig.get_model('LdapServer', 'LdapServer')
-    ldap_servers = LdapServer.objects.filter(is_active=True)
-    for server in ldap_servers:
-        ldap_group = LdapDistributionGroup(server,distribution_list)
-        ldap_group.add()
-
