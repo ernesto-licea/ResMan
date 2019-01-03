@@ -116,7 +116,7 @@ class LdapUser:
     def remove_user(self):
         pass
 
-class LdapSecurityGroup:
+class LdapGroup:
     def __init__(self,server,group):
         self.server = server
         self.group = group
@@ -125,67 +125,9 @@ class LdapSecurityGroup:
         self.obj += AttrDef('distinguishedName', key='dn')
         self.obj += AttrDef('objectClass', key='object_class')
         self.obj += AttrDef('cn', key='cn')
-        self.obj += AttrDef('sAMAccountName', key='slug_name')
-        self.obj += AttrDef('groupType', key='type')
-
-    def add(self):
-        ldap_server = Server(
-            host = self.server.server_host,
-            port = self.server.server_port,
-            use_ssl = self.server.start_tls,
-            get_info=ALL
-        )
-
-        connection = Connection(
-            server = ldap_server,
-            user = self.server.admin_username,
-            password = self.server.admin_password,
-            raise_exceptions = True,
-            authentication = NTLM
-        )
-        connection.bind()
-
-        cursor_reader = Reader(connection,self.obj,self.server.search_base)
-        cursor_reader.search()
-
-        cursor_writer = Writer.from_cursor(cursor_reader)
-
-        ldap_group = cursor_writer.new(
-            dn="CN={},{}".format(
-                self.group.name,
-                self.server.search_base
-            )
-        )
-
-        ldap_group.cn = self.group.name
-        ldap_group.slug_name = self.group.slugname
-        ldap_group.type = -2147483646
-
-        ldap_group.entry_commit_changes()
-
-        connection.unbind()
-
-    def edit_user(self):
-        pass
-
-    def reset_password(self,new_password):
-        pass
-
-    def remove_user(self):
-        pass
-
-class LdapDistributionGroup:
-    def __init__(self,server,group):
-        self.server = server
-        self.group = group
-
-        self.obj = ObjectDef(['top', 'group'])
-        self.obj += AttrDef('distinguishedName', key='dn')
-        self.obj += AttrDef('objectClass', key='object_class')
-        self.obj += AttrDef('cn', key='cn')
-        self.obj += AttrDef('sAMAccountName', key='slug_name')
-        self.obj += AttrDef('groupType', key='type')
         self.obj += AttrDef('mail', key='email')
+        self.obj += AttrDef('sAMAccountName', key='slug_name')
+        self.obj += AttrDef('groupType', key='type')
 
     def add(self):
         ldap_server = Server(
@@ -218,8 +160,12 @@ class LdapDistributionGroup:
 
         ldap_group.cn = self.group.name
         ldap_group.slug_name = self.group.slugname
-        ldap_group.type = 2
-        ldap_group.email = self.group.email
+
+        if self.group.service_type == 'security':
+            ldap_group.type = -2147483646
+        else:
+            ldap_group.type = 2
+            ldap_group.email = self.group.email
 
         ldap_group.entry_commit_changes()
 
@@ -233,3 +179,4 @@ class LdapDistributionGroup:
 
     def remove_user(self):
         pass
+
