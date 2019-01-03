@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.http import urlquote
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 from Services.forms import ServiceForm
@@ -76,6 +77,7 @@ class ServiceAdmin(admin.ModelAdmin):
         return HttpResponseRedirect(url)
 
     def save_model(self, request, obj, form, change):
+        obj.slugname = slugify(obj.name)
 
         if not change:
             ldap_error = obj.create_ldap_group()
