@@ -17,14 +17,8 @@ class Service(models.Model):
     description = models.TextField(_('Description'),blank=True)
     slugname = models.SlugField(_('slugname'),blank=True)
 
-    def create_ldap_group(self):
-        signal = getattr(signals, 'create_ldap_group_signal')
-        receivers = signal.send_robust(sender=self.__class__, obj=self)
-        for function, error in receivers:
-            return str(error) if error else None
-
-    def modify_ldap_group(self):
-        signal = getattr(signals, 'modify_ldap_group_signal')
+    def ldap_save(self):
+        signal = getattr(signals, 'save_ldap_group_signal')
         receivers = signal.send_robust(sender=self.__class__, obj=self)
         for function, error in receivers:
             return str(error) if error else None
