@@ -129,7 +129,7 @@ class LdapGroup:
         self.obj += AttrDef('sAMAccountName', key='slug_name')
         self.obj += AttrDef('groupType', key='type')
 
-    def add(self):
+    def save(self):
         ldap_server = Server(
             host = self.server.server_host,
             port = self.server.server_port,
@@ -146,20 +146,27 @@ class LdapGroup:
         )
         connection.bind()
 
-        cursor_reader = Reader(connection,self.obj,self.server.search_base)
-        cursor_reader.search()
-
-        cursor_writer = Writer.from_cursor(cursor_reader)
-
-        ldap_group = cursor_writer.new(
-            dn="CN={},{}".format(
+        query = 'cn: {}'.format(
                 self.group.name,
-                self.server.search_base
             )
-        )
 
-        ldap_group.cn = self.group.name
-        ldap_group.slug_name = self.group.slugname
+        cursor_reader = Reader(connection,self.obj,self.server.search_base,query=query)
+        cursor_reader.search()
+        cursor_writer = Writer.from_cursor(cursor_reader)
+        if cursor_reader.entries:
+            ldap_group = cursor_writer[0]
+
+        else:
+
+            ldap_group = cursor_writer.new(
+                dn="CN={},{}".format(
+                    self.group.name,
+                    self.server.search_base
+                )
+            )
+
+            ldap_group.cn = self.group.name
+            ldap_group.slug_name = self.group.slugname
 
         if self.group.service_type == 'security':
             ldap_group.type = -2147483646
@@ -171,12 +178,4 @@ class LdapGroup:
 
         connection.unbind()
 
-    def edit_user(self):
-        pass
-
-    def reset_password(self,new_password):
-        pass
-
-    def remove_user(self):
-        pass
 

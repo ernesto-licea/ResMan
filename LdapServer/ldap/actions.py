@@ -19,4 +19,4 @@ def create_ldap_group(sender,**kwargs):
     ldap_servers = LdapServer.objects.filter(is_active=True)
     for server in ldap_servers:
         ldap_group = LdapGroup(server,service)
-        ldap_group.add()
+        ldap_group.save()
