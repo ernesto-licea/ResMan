@@ -79,10 +79,7 @@ class ServiceAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         obj.slugname = slugify(obj.name)
 
-        if not change:
-            ldap_error = obj.create_ldap_group()
-        else:
-            ldap_error = obj.modify_ldap_group()
+        ldap_error = obj.ldap_save()
 
         if ldap_error:
             self.message_user(request,'error', messages.ERROR)
