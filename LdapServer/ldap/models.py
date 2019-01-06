@@ -14,7 +14,8 @@ class LdapUser:
         self.person += AttrDef('givenName', key='first_name')
         self.person += AttrDef('sn', key='last_name')
         self.person += AttrDef('displayName', key='full_name')
-        self.person += AttrDef('userPrincipalName', key='email')
+        self.person += AttrDef('userPrincipalName', key='logon')
+        self.person += AttrDef('mail', key='email')
         self.person += AttrDef('userAccountControl', key='control')
 
         self.person += AttrDef(server.email_domain, key='email_domain')
@@ -70,6 +71,7 @@ class LdapUser:
 
             ldap_user.cn = self.user.username
             ldap_user.username = self.user.username
+            ldap_user.logon = "{}@{}".format(self.user.username,self.server.domain)
             ldap_user.entry_commit_changes()
             self._reset_password(connection,ldap_user)
             self._activate_user(connection,ldap_user)
