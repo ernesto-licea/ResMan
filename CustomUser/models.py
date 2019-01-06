@@ -113,15 +113,9 @@ class User(AbstractUser,PolymorphicModel):
         else:
             return _("Superuser")
 
-    def create_ldap_user(self):
-        signal = getattr(signals, 'create_ldap_user_signal')
-        receivers = signal.send_robust(sender=self.__class__, user=self)
-        for function, error in receivers:
-            return str(error) if error else None
-
-    def modify_ldap_user(self):
-        signal = getattr(signals, 'modify_ldap_user_signal')
-        receivers = signal.send_robust(sender=self.__class__, user=self)
+    def ldap_save(self):
+        signal = getattr(signals, 'save_ldap_user_signal')
+        receivers = signal.send_robust(sender=self.__class__, obj=self)
         for function, error in receivers:
             return str(error) if error else None
 
