@@ -29,7 +29,7 @@ class LdapUser:
         self.person += AttrDef(server.ftp_home, key='ftp_folder')
         self.person += AttrDef(server.ftp_size, key='ftp_size')
 
-    def add_user(self):
+    def save(self):
         ldap_server = Server(
             host = self.server.server_host,
             port = self.server.server_port,
@@ -46,20 +46,34 @@ class LdapUser:
         )
         connection.bind()
 
-        cursor_reader = Reader(connection,self.person,self.server.search_base)
+        query = 'cn: {}'.format(
+            self.user.username,
+        )
+
+        cursor_reader = Reader(connection,self.person,self.server.search_base,query=query)
         cursor_reader.search()
 
         cursor_writer = Writer.from_cursor(cursor_reader)
 
-        ldap_user = cursor_writer.new(
-            dn="CN={},{}".format(
-                self.user.username,
-                self.server.search_base
-            )
-        )
+        if cursor_reader.entries:
 
-        ldap_user.cn = self.user.username
-        ldap_user.username = self.user.username
+            ldap_user = cursor_writer[0]
+
+        else:
+            print(1)
+            ldap_user = cursor_writer.new(
+                dn="CN={},{}".format(
+                    self.user.username,
+                    self.server.search_base
+                )
+            )
+
+            ldap_user.cn = self.user.username
+            ldap_user.username = self.user.username
+            ldap_user.entry_commit_changes()
+            self._reset_password(connection,ldap_user)
+            self._activate_user(connection,ldap_user)
+
         ldap_user.first_name = self.user.first_name
         ldap_user.last_name = self.user.last_name
         ldap_user.full_name = self.user.get_full_name()
@@ -96,24 +110,21 @@ class LdapUser:
 
         ldap_user.entry_commit_changes()
 
+        connection.unbind()
+
+    def _reset_password(self,connection,ldap_user):
         connection.extend.microsoft.modify_password(
             user=ldap_user.entry_dn,
             new_password=self.user._password,
             old_password=None
         )
 
+    def _activate_user(self,connection,ldap_user):
         ldap_user.control = 512
         ldap_user.entry_commit_changes()
 
-        connection.unbind()
-
-    def edit_user(self):
-        pass
 
     def reset_password(self,new_password):
-        pass
-
-    def remove_user(self):
         pass
 
 class LdapGroup:
