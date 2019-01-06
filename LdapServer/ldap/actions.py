@@ -4,7 +4,7 @@ from django.apps import apps
 
 
 def save_ldap_user(sender,**kwargs):
-    user = kwargs['user']
+    user = kwargs['obj']
     appconfig = apps.get_app_config('LdapServer')
     LdapServer = appconfig.get_model('LdapServer', 'LdapServer')
     ldap_servers = LdapServer.objects.filter(is_active=True)
