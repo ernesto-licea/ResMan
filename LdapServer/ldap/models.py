@@ -125,6 +125,10 @@ class LdapUser:
         ldap_user.control = 512
         ldap_user.entry_commit_changes()
 
+    def _deactivate_user(self,connection,ldap_user):
+        ldap_user.control = 514
+        ldap_user.entry_commit_changes()
+
 
     def reset_password(self,new_password):
         pass
