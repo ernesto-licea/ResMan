@@ -61,7 +61,6 @@ class LdapUser:
             ldap_user = cursor_writer[0]
 
         else:
-            print(1)
             ldap_user = cursor_writer.new(
                 dn="CN={},{}".format(
                     self.user.username,
@@ -74,7 +73,11 @@ class LdapUser:
             ldap_user.logon = "{}@{}".format(self.user.username,self.server.domain)
             ldap_user.entry_commit_changes()
             self._reset_password(connection,ldap_user)
+
+        if self.user.status == "active":
             self._activate_user(connection,ldap_user)
+        else:
+            self._deactivate_user(connection,ldap_user)
 
         ldap_user.first_name = self.user.first_name
         ldap_user.last_name = self.user.last_name
