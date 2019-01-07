@@ -58,7 +58,12 @@ class ServiceAdmin(admin.ModelAdmin):
     def sync_data(self,request,service_id,*args,**kwargs):
         obj = self.get_object(request,service_id)
 
-        self.message_user(request, self._sync_message(obj), messages.SUCCESS)
+        ldap_error = obj.ldap_save()
+
+        if ldap_error:
+            self.message_user(request, ldap_error, messages.ERROR)
+        else:
+            self.message_user(request, self._sync_message(obj), messages.SUCCESS)
 
         # Return changelist view
         url = reverse('admin:%s_%s_changelist' % (self.model._meta.app_label, self.model._meta.model_name))
