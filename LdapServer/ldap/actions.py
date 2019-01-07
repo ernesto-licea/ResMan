@@ -56,3 +56,27 @@ def save_ldap_group(sender,**kwargs):
                 e
             )
             raise Exception(message)
+
+def delete_ldap_group(sender,**kwargs):
+    service = kwargs['obj']
+    appconfig = apps.get_app_config('LdapServer')
+    LdapServer = appconfig.get_model('LdapServer', 'LdapServer')
+    ldap_servers = LdapServer.objects.filter(is_active=True)
+    for server in ldap_servers:
+        ldap_group = LdapGroup(server, service)
+        try:
+            ldap_group.delete()
+        except Exception as e:
+            opts = server._meta
+            # Construct message to return
+            obj_url = reverse(
+                'admin:%s_%s_change' % (opts.app_label, opts.model_name),
+                args=(quote(server.pk),),
+            )
+            obj_repr = format_html('<a href="{}">{}</a>', urlquote(obj_url), server)
+            message = format_html(
+                _("Active Directory {} says: {}."),
+                obj_repr,
+                e
+            )
+            raise Exception(message)
