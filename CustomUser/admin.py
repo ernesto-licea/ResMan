@@ -218,8 +218,16 @@ class UserAdminBase(PolymorphicChildModelAdmin):
             PasswordHistory.objects.create(user=obj, password=obj.password)
 
         obj._password = obj.password
-        ldap_error = obj.ldap_save()
 
+        obj.distribution_list.clear()
+        for d in form.cleaned_data.get('distribution_list'):
+            obj.distribution_list.add(d)
+
+        obj.services.clear()
+        for s in form.cleaned_data.get('services'):
+            obj.services.add(s)
+
+        ldap_error = obj.ldap_save()
         if ldap_error:
             self.message_user(request, ldap_error, messages.ERROR)
         else:
