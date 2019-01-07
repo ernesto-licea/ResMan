@@ -56,21 +56,9 @@ class ServiceAdmin(admin.ModelAdmin):
         )
 
     def sync_data(self,request,service_id,*args,**kwargs):
-        service = self.get_object(request,service_id)
-        opts = service._meta
+        obj = self.get_object(request,service_id)
 
-        # Construct message to return
-        obj_url = reverse(
-            'admin:%s_%s_change' % (opts.app_label, opts.model_name),
-            args=(quote(service.pk),),
-            current_app=self.admin_site.name,
-        )
-        obj_repr = format_html('<a href="{}">{}</a>', urlquote(obj_url), service)
-        message = format_html(
-            _("Data from service {} was successfully synchronized with ldap servers."),
-            obj_repr
-        )
-        self.message_user(request, message, messages.SUCCESS)
+        self.message_user(request, self._sync_message(obj), messages.SUCCESS)
 
         # Return changelist view
         url = reverse('admin:%s_%s_changelist' % (self.model._meta.app_label, self.model._meta.model_name))
@@ -79,13 +67,29 @@ class ServiceAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         obj.slugname = slugify(obj.name)
 
+        super(ServiceAdmin,self).save_model(request,obj,form,change)
+
         ldap_error = obj.ldap_save()
 
         if ldap_error:
-            self.message_user(request,'error', messages.ERROR)
+            self.message_user(request, ldap_error, messages.ERROR)
         else:
-            self.message_user(request,'success',messages.SUCCESS)
+            self.message_user(request, self._sync_message(obj), messages.SUCCESS)
 
-        super(ServiceAdmin,self).save_model(request,obj,form,change)
+    def _sync_message(self,obj):
+        opts = obj._meta
+
+        # Construct message to return
+        obj_url = reverse(
+            'admin:%s_%s_change' % (opts.app_label, opts.model_name),
+            args=(quote(obj.pk),),
+            current_app=self.admin_site.name,
+        )
+        obj_repr = format_html('<a href="{}">{}</a>', urlquote(obj_url), obj)
+        message = format_html(
+            _("Data from service {} was successfully synchronized with ldap servers."),
+            obj_repr
+        )
+        return message
 
 admin.site.register(Service,ServiceAdmin)
