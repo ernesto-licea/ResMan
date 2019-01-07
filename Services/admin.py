@@ -81,6 +81,14 @@ class ServiceAdmin(admin.ModelAdmin):
         else:
             self.message_user(request, self._sync_message(obj), messages.SUCCESS)
 
+    def delete_model(self, request, obj):
+        ldap_error = obj.delete()
+        if ldap_error:
+            self.message_user(request, ldap_error, messages.ERROR)
+        else:
+            message = _('The service "{}" was successfully deleted from ldap servers.'.format(obj.name))
+            self.message_user(request, message, messages.SUCCESS)
+
     def _sync_message(self,obj):
         opts = obj._meta
 
