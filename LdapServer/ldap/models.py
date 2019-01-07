@@ -17,6 +17,7 @@ class LdapUser:
         self.person += AttrDef('userPrincipalName', key='logon')
         self.person += AttrDef('mail', key='email')
         self.person += AttrDef('userAccountControl', key='control')
+        self.person += AttrDef('memberOf', key='groups')
 
         self.person += AttrDef(server.email_domain, key='email_domain')
         self.person += AttrDef(server.email_buzon_size, key='email_buzon_size')
@@ -114,6 +115,28 @@ class LdapUser:
             ldap_user.ftp_size = self.user.ftp_size
 
         ldap_user.entry_commit_changes()
+
+        groups = []
+        for service in self.user.services.all():
+            service.ldap_save()
+            groups.append(
+                "CN={},{}".format(
+                    service.name,
+                    self.server.search_base
+                )
+            )
+        for distribution_list in self.user.distribution_list.all():
+            distribution_list.ldap_save()
+            groups.append(
+                "CN={},{}".format(
+                    distribution_list.name,
+                    self.server.search_base
+                )
+            )
+
+        connection.extend.microsoft.remove_members_from_groups(ldap_user.entry_dn,ldap_user.groups.values)
+        connection.extend.microsoft.add_members_to_groups(ldap_user.entry_dn,groups)
+
 
         connection.unbind()
 
