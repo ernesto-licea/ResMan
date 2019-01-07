@@ -51,9 +51,9 @@ class UserFormBase(forms.ModelForm):
         cleaned_data  = super(UserFormBase, self).clean()
         services = cleaned_data.get('services')
         if services:
-            exist_email_service = services.filter(name='email').count() > 0
-            exist_internet_service = services.filter(name='internet').count() > 0
-            exist_ftp_service = services.filter(name='ftp').count() > 0
+            exist_email_service = services.filter(name='Email').count() > 0
+            exist_internet_service = services.filter(name='Internet').count() > 0
+            exist_ftp_service = services.filter(name='Ftp').count() > 0
 
             email_error_message = _('If you select email service this field is required.')
             email_field = ['email','email_domain','email_buzon_size','email_message_size']
