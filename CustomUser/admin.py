@@ -185,28 +185,46 @@ class UserAdminBase(PolymorphicChildModelAdmin):
                     obj.user_permissions.add(perm)
                 obj.save()
 
+    def _sync_message(self, obj):
+        opts = obj._meta
+
+        # Construct message to return
+        obj_url = reverse(
+            'admin:%s_%s_change' % (opts.app_label, opts.model_name),
+            args=(quote(obj.pk),),
+            current_app=self.admin_site.name,
+        )
+        obj_repr = format_html('<a href="{}">{}</a>', urlquote(obj_url), obj)
+        message = format_html(
+            _("Data from user {} was successfully synchronized with ldap servers."),
+            obj_repr
+        )
+        return message
+
 
     def save_model(self, request, obj, form, change):
         obj.is_active = obj.status == "active"
-        obj._password = obj.password
 
         # Create hash password
         if not change:
             obj.ftp_md5_password = hashlib.md5(obj.password.encode('utf-8')).hexdigest()
             obj.password = make_password(obj.password)
 
-        ldap_error = obj.ldap_save()
-
-        if ldap_error:
-            self.message_user(request,'error', messages.ERROR)
-        else:
-            self.message_user(request,'success',messages.SUCCESS)
 
         super(UserAdminBase,self).save_model(request,obj,form,change)
 
         if not change:
             #Create history del new password
             PasswordHistory.objects.create(user=obj, password=obj.password)
+
+        obj._password = obj.password
+        ldap_error = obj.ldap_save()
+
+        if ldap_error:
+            self.message_user(request, ldap_error, messages.ERROR)
+        else:
+
+            self.message_user(request, self._sync_message(obj), messages.SUCCESS)
 
 class UserEnterpriseAdmin(UserAdminBase):
     base_model = UserEnterprise
@@ -307,20 +325,8 @@ class UserEnterpriseAdmin(UserAdminBase):
 
     def sync_data(self,request,user_id,*args,**kwargs):
         obj = self.get_object(request, user_id)
-        opts = obj._meta
 
-        # Construct message to return
-        obj_url = reverse(
-            'admin:%s_%s_change' % (opts.app_label, opts.model_name),
-            args=(quote(obj.pk),),
-            current_app=self.admin_site.name,
-        )
-        obj_repr = format_html('<a href="{}">{}</a>', urlquote(obj_url), obj)
-        message = format_html(
-            _("Data from user {} was successfully synchronized with ldap servers."),
-            obj_repr
-        )
-        self.message_user(request, message, messages.SUCCESS)
+        self.message_user(request, self._sync_message(obj), messages.SUCCESS)
 
         # Return changelist view
         url = reverse('admin:%s_%s_changelist' % (self.model._meta.app_label, self.model._meta.model_name))
