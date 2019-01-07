@@ -23,6 +23,9 @@ class Service(models.Model):
         for function, error in receivers:
             return str(error) if error else None
 
+    def delete(self, using=None, keep_parents=False):
+        super().delete(using,keep_parents)
+
     def __str__(self):
         return self.name
 
