@@ -222,3 +222,32 @@ class LdapGroup:
         connection.unbind()
 
 
+    def delete(self):
+        ldap_server = Server(
+            host=self.server.server_host,
+            port=self.server.server_port,
+            use_ssl=self.server.start_tls,
+            get_info=ALL
+        )
+
+        connection = Connection(
+            server=ldap_server,
+            user=self.server.admin_username,
+            password=self.server.admin_password,
+            raise_exceptions=True,
+            authentication=NTLM
+        )
+        connection.bind()
+
+        query = 'cn: {}'.format(
+            self.group.name,
+        )
+
+        cursor_reader = Reader(connection, self.obj, self.server.search_base, query=query)
+        cursor_reader.search()
+        cursor_writer = Writer.from_cursor(cursor_reader)
+        if cursor_reader.entries:
+            ldap_group = cursor_writer[0]
+            ldap_group.entry_delete()
+            ldap_group.entry_commit_changes()
+
