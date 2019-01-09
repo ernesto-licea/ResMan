@@ -202,6 +202,17 @@ class UserAdminBase(PolymorphicChildModelAdmin):
         return message
 
 
+    def delete_model(self, request, obj):
+        ldap_error = obj.delete()
+        if ldap_error:
+            self.message_user(request, ldap_error, messages.ERROR)
+        else:
+            message = _('The {} "{}" was successfully deleted from ldap servers.'.format(
+                self.model._meta.verbose_name,
+                obj.username
+            ))
+            self.message_user(request, message, messages.SUCCESS)
+
     def save_model(self, request, obj, form, change):
         obj.is_active = obj.status == "active"
 
