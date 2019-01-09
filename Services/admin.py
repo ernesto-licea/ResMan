@@ -6,8 +6,9 @@ from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.http import urlquote
 from django.utils.text import slugify
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _, gettext_lazy
 
+from ResMan.admin_actions import delete_selected_services
 from Services.forms import ServiceForm
 from .models import Service
 
@@ -17,6 +18,7 @@ class ServiceAdmin(admin.ModelAdmin):
     form = ServiceForm
     list_display = ('name', 'is_active', 'service_type', 'email','description','server_action')
     list_filter = ('service_type',)
+    actions = ['delete_selected',]
 
     fields = ['is_active','name', 'service_type', 'email','description']
 
@@ -89,7 +91,6 @@ class ServiceAdmin(admin.ModelAdmin):
             message = _('The service "{}" was successfully deleted from ldap servers.'.format(obj.name))
             self.message_user(request, message, messages.SUCCESS)
 
-
     def response_delete(self, request, obj_display, obj_id):
         response = super().response_delete(request,obj_display,obj_id)
         if self.get_object(request,obj_id):
@@ -97,6 +98,12 @@ class ServiceAdmin(admin.ModelAdmin):
             for a in storage:
                 pass
         return response
+
+    def delete_selected(self,request,queryset):
+        return delete_selected_services(self,request,queryset)
+
+    delete_selected.allowed_permissions = ('delete',)
+    delete_selected.short_description = gettext_lazy("Delete selected %(verbose_name_plural)s")
 
     def _sync_message(self,obj):
         opts = obj._meta
