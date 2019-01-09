@@ -251,3 +251,4 @@ class LdapGroup:
             ldap_group.entry_delete()
             ldap_group.entry_commit_changes()
 
+        connection.unbind()
