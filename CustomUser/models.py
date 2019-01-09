@@ -122,12 +122,10 @@ class User(AbstractUser,PolymorphicModel):
     def delete(self, using=None, keep_parents=False):
         signal = getattr(signals, 'delete_ldap_user_signal')
         receivers = signal.send_robust(sender=self.__class__, obj=self)
-        return "hola mundo"
-        for function, error in receivers:
+        for function,error in receivers:
             if error:
                 return str(error)
-
-        super().delete(using, keep_parents)
+        super().delete(using,keep_parents)
 
     class Meta(AbstractUser.Meta):
         db_table = 'auth_user'
