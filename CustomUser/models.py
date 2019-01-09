@@ -119,6 +119,15 @@ class User(AbstractUser,PolymorphicModel):
         for function, error in receivers:
             return str(error) if error else None
 
+    def delete(self, using=None, keep_parents=False):
+        signal = getattr(signals, 'delete_ldap_user_signal')
+        receivers = signal.send_robust(sender=self.__class__, obj=self)
+        for function,error in receivers:
+            if error:
+                return str(error)
+
+        super().delete(using,keep_parents)
+
     class Meta(AbstractUser.Meta):
         db_table = 'auth_user'
         swappable = 'AUTH_USER_MODEL'
