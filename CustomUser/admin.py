@@ -26,6 +26,18 @@ from EntStructure.models import Area, Department
 from .forms import UserFormEdit, UserFormAdd
 from .models import User, UserEnterprise, UserInstitutional, UserGuest, PasswordHistory
 
+def delete_queryset(modeladmin,request,queryset):
+    for obj in queryset:
+        ldap_error = obj.delete()
+        if ldap_error:
+            modeladmin.message_user(request, ldap_error, messages.ERROR)
+        else:
+            message = _('The {} "{}" was successfully deleted from ldap servers.'.format(
+                modeladmin.model._meta.verbose_name,
+                obj.username
+            ))
+            modeladmin.message_user(request, message, messages.SUCCESS)
+
 
 def change_password(self,request, id, form_url=''):
     if not self.has_change_permission(request):
@@ -147,6 +159,9 @@ class UserAdmin(PolymorphicParentModelAdmin):
         # Return changelist view
         url = reverse('admin:%s_%s_changelist' % (self.model._meta.app_label, self.model._meta.model_name))
         return HttpResponseRedirect(url)
+
+    def delete_queryset(self, request, queryset):
+        delete_queryset(self,request,queryset)
 
 class UserAdminBase(PolymorphicChildModelAdmin):
     base_model = User
@@ -351,6 +366,9 @@ class UserEnterpriseAdmin(UserAdminBase):
         url = reverse('admin:%s_%s_changelist' % (self.model._meta.app_label, self.model._meta.model_name))
         return HttpResponseRedirect(url)
 
+    def delete_queryset(self, request, queryset):
+        delete_queryset(self,request,queryset)
+
 class UserInstitutionalAdmin(UserAdminBase):
     base_model = UserInstitutional
     readonly_fields = ('date_joined','ftp_md5_password','is_active')
@@ -459,6 +477,9 @@ class UserInstitutionalAdmin(UserAdminBase):
         # Return changelist view
         url = reverse('admin:%s_%s_changelist' % (self.model._meta.app_label, self.model._meta.model_name))
         return HttpResponseRedirect(url)
+
+    def delete_queryset(self, request, queryset):
+        delete_queryset(self,request,queryset)
 
 class UserGuestAdmin(UserAdminBase):
     base_model = UserGuest
@@ -574,6 +595,9 @@ class UserGuestAdmin(UserAdminBase):
         # Return changelist view
         url = reverse('admin:%s_%s_changelist' % (self.model._meta.app_label, self.model._meta.model_name))
         return HttpResponseRedirect(url)
+
+    def delete_queryset(self, request, queryset):
+        delete_queryset(self,request,queryset)
 
 
 admin.site.register(User,UserAdmin)
