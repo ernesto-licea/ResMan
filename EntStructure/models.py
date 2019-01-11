@@ -8,7 +8,6 @@ class Area(models.Model):
     is_active = models.BooleanField(_('is active'), default=True)
     name = models.CharField(_('name'), max_length=50, default="", unique=True)
     responsible = models.CharField(_('responsible'), max_length=100, default="", blank=True)
-    email = models.EmailField(_('email area'))
     slugname = models.SlugField(_('slugname'),default="")
 
     def __str__(self):
@@ -24,7 +23,6 @@ class Department(models.Model):
     area = models.ForeignKey(Area,on_delete=models.CASCADE)
     name = models.CharField(_('name'), max_length=50, default="", unique=True)
     responsible = models.CharField(_('responsible'), max_length=100, default="", blank=True)
-    email = models.EmailField(_('email area'))
     slugname = models.SlugField(_('slugname'),default="")
 
     def __str__(self):
