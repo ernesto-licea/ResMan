@@ -6,6 +6,8 @@ from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX, identify_hashe
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _, gettext
 
+from Services.models import Service
+
 
 class ReadOnlyPasswordHashWidget(forms.Widget):
     template_name = 'auth/widgets/read_only_password_hash.html'
@@ -79,6 +81,15 @@ class UserFormBase(forms.ModelForm):
 
         return cleaned_data
 
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if username:
+            try:
+                service = Service.objects.get(name=username)
+                raise ValidationError(_("This username is being used as Service name."))
+            except Service.DoesNotExist:
+                pass
+        return username
 
 
     def clean_ci_number(self):
