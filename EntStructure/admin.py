@@ -13,8 +13,8 @@ from .models import Area, Department
 
 class AreaAdmin(admin.ModelAdmin):
     model = Area
-    fields = ('is_active','name','responsible','email')
-    list_display = ('name','is_active','responsible','email','server_action')
+    fields = ('is_active','name','responsible')
+    list_display = ('name','is_active','responsible','server_action')
 
     def server_action(self, obj):
         return format_html(
@@ -61,8 +61,8 @@ class AreaAdmin(admin.ModelAdmin):
 
 class DepartmentAdmin(admin.ModelAdmin):
     model = Department
-    fields = ('is_active','name','responsible','email','area')
-    list_display = ('name','is_active','responsible','email','area','server_action')
+    fields = ('is_active','name','responsible','area')
+    list_display = ('name','is_active','responsible','area','server_action')
 
     def server_action(self, obj):
         return format_html(
