@@ -52,6 +52,13 @@ def change_password(self,request, id, form_url=''):
     if request.method == 'POST':
         form = AdminPasswordChangeForm(user, request.POST)
         if form.is_valid():
+
+            # Create new password history
+            password = form.cleaned_data.get('password1')
+            hash_password = make_password(password)
+            PasswordHistory.objects.create(user=user, password=hash_password)
+
+
             user = form.save(commit=False)
             user.password_date = timezone.now()
             user.ftp_md5_password = hashlib.md5(user._password.encode('utf-8')).hexdigest()

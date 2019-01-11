@@ -107,9 +107,6 @@ class RepeatPasswordAmount:
 
     def password_changed(self,password, user=None):
         if user:
-            #Create history del new password
-            hash_password = make_password(password)
-            PasswordHistory.objects.create(user=user, password=hash_password)
             # Remove old histories of passwords
             password_history = user.passwordhistory_set.all()
             if password_history.count() > self.num_amount:
