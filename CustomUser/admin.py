@@ -40,39 +40,47 @@ def delete_queryset(modeladmin,request,queryset):
             modeladmin.message_user(request, message, messages.SUCCESS)
 
 
-def change_password(self,request, id, form_url=''):
-    if not self.has_change_permission(request):
+def change_password(modeladmin,request, id, form_url=''):
+    if not modeladmin.has_change_permission(request):
         raise PermissionDenied
-    user = self.get_object(request, unquote(id))
+    user = modeladmin.get_object(request, unquote(id))
     if user is None:
         raise Http404(_('%(name)s object with primary key %(key)r does not exist.') % {
-            'name': self.model._meta.verbose_name,
+            'name': modeladmin.model._meta.verbose_name,
             'key': escape(id),
         })
     if request.method == 'POST':
         form = AdminPasswordChangeForm(user, request.POST)
         if form.is_valid():
 
-            # Create new password history
             password = form.cleaned_data.get('password1')
-            hash_password = make_password(password)
-            PasswordHistory.objects.create(user=user, password=hash_password)
-
-
             user = form.save(commit=False)
-            user.password_date = timezone.now()
-            user.ftp_md5_password = hashlib.md5(user._password.encode('utf-8')).hexdigest()
-            user.save()
 
-            change_message = self.construct_change_message(request, form, None)
-            self.log_change(request, user, change_message)
-            msg = gettext('Password changed successfully.')
-            messages.success(request, msg)
-            update_session_auth_hash(request, form.user)
+
+            ldap_error = user.ldap_reset_password(password)
+            if ldap_error:
+                modeladmin.message_user(request, ldap_error, messages.ERROR)
+            else:
+                hash_password = make_password(password)
+                PasswordHistory.objects.create(user=user, password=hash_password)
+
+                user.password_date = timezone.now()
+                user.ftp_md5_password = hashlib.md5(user._password.encode('utf-8')).hexdigest()
+
+                user.save()
+
+                change_message = modeladmin.construct_change_message(request, form, None)
+                modeladmin.log_change(request, user, change_message)
+
+                msg = gettext('Password changed successfully.')
+                messages.success(request, msg)
+
+                update_session_auth_hash(request, form.user)
+
             return HttpResponseRedirect(
                 reverse(
                     '%s:%s_%s_change' % (
-                        self.admin_site.name,
+                        modeladmin.admin_site.name,
                         user._meta.app_label,
                         user._meta.model_name,
                     ),
@@ -97,14 +105,14 @@ def change_password(self,request, id, form_url=''):
         'has_delete_permission': False,
         'has_change_permission': True,
         'has_absolute_url': False,
-        'opts': self.model._meta,
+        'opts': modeladmin.model._meta,
         'original': user,
         'save_as': False,
         'show_save': True,
-        **self.admin_site.each_context(request),
+        **modeladmin.admin_site.each_context(request),
     }
 
-    request.current_app = self.admin_site.name
+    request.current_app = modeladmin.admin_site.name
 
     return TemplateResponse(
         request,
