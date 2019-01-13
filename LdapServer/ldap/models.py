@@ -186,8 +186,37 @@ class LdapUser:
 
         connection.unbind()
 
-    def reset_password(self,new_password):
-        pass
+    def reset_password(self):
+        ldap_server = Server(
+            host=self.server.server_host,
+            port=self.server.server_port,
+            use_ssl=self.server.start_tls,
+            get_info=ALL
+        )
+
+        connection = Connection(
+            server=ldap_server,
+            user=self.server.admin_username,
+            password=self.server.admin_password,
+            raise_exceptions=True,
+            authentication=NTLM
+        )
+        connection.bind()
+
+        query = 'cn: {}'.format(
+            self.user.username,
+        )
+
+        cursor_reader = Reader(connection, self.person, self.server.search_base, query=query)
+        cursor_reader.search()
+        cursor_writer = Writer.from_cursor(cursor_reader)
+
+        if cursor_reader.entries:
+            ldap_user = cursor_writer[0]
+            self._reset_password(connection,ldap_user)
+            ldap_user.entry_commit_changes()
+
+        connection.unbind()
 
 class LdapGroup:
     def __init__(self,server,group):
