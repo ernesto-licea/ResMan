@@ -55,7 +55,7 @@ def change_password(modeladmin,request, id, form_url=''):
 
             password = form.cleaned_data.get('password1')
             user = form.save(commit=False)
-
+            user._password = password
 
             ldap_error = user.ldap_reset_password(password)
             if ldap_error:
