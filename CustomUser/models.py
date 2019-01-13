@@ -121,7 +121,7 @@ class User(AbstractUser,PolymorphicModel):
 
     def ldap_reset_password(self,password):
         signal = getattr(signals, 'reset_user_password_signal')
-        receivers = signal.send_robust(sender=self.__class__, obj=self, password=password)
+        receivers = signal.send_robust(sender=self.__class__, obj=self)
         for function, error in receivers:
             return str(error) if error else None
 
