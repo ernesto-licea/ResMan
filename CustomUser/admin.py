@@ -67,6 +67,7 @@ def change_password(modeladmin,request, id, form_url=''):
 
                 user.password_date = timezone.now()
                 user.ftp_md5_password = hashlib.md5(user._password.encode('utf-8')).hexdigest()
+                user.session_key = base64.b64encode(user._password.encode('utf-8')).decode()
 
                 user.save()
 
