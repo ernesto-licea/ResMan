@@ -1,3 +1,4 @@
+import base64
 import hashlib
 
 from django.conf.urls import url
@@ -253,6 +254,7 @@ class UserAdminBase(PolymorphicChildModelAdmin):
         # Create hash password
         if not change:
             obj.ftp_md5_password = hashlib.md5(obj.password.encode('utf-8')).hexdigest()
+            obj.session_key = base64.b64encode(obj.password.encode('utf-8')).decode()
             obj.password = make_password(obj.password)
 
 
