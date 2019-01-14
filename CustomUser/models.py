@@ -1,3 +1,4 @@
+import base64
 import hashlib
 from django.conf import settings
 from django.db import models
@@ -113,6 +114,11 @@ class User(AbstractUser,PolymorphicModel):
             return _("Guest")
         else:
             return _("Superuser")
+
+    @property
+    def session(self):
+        return base64.b64decode(self.session_key.encode('utf-8')).decode()
+
 
     def ldap_save(self,server=None):
         signal = getattr(signals, 'save_ldap_user_signal')
