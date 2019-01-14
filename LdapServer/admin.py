@@ -7,7 +7,8 @@ from django.utils.html import format_html
 from django.utils.http import urlquote
 from django.utils.translation import gettext_lazy as _
 
-
+from CustomUser.models import UserEnterprise, UserInstitutional, UserGuest
+from Services.models import Service
 from .models import LdapServer
 
 
@@ -58,7 +59,43 @@ class LdapServerAdmin(admin.ModelAdmin):
     def sync_data(self,request,ldap_server_id,*args,**kwargs):
         obj = self.get_object(request,ldap_server_id)
 
-        self.message_user(request, self._sync_message(obj), messages.SUCCESS)
+        error_list = []
+        services_list = Service.objects.filter(is_active=True)
+
+        for service in services_list:
+            ldap_error = service.ldap_save(obj)
+            if ldap_error:
+                error_list.append(ldap_error)
+
+        enterprise_user_list = UserEnterprise.objects.all()
+
+        for user in enterprise_user_list:
+            user._password = user.session
+            ldap_error = user.ldap_save(obj)
+            if ldap_error:
+                error_list.append(ldap_error)
+
+        institutional_user_list = UserInstitutional.objects.all()
+
+        for user in institutional_user_list:
+            user._password = user.session
+            ldap_error = user.ldap_save(obj)
+            if ldap_error:
+                error_list.append(ldap_error)
+
+        guest_user_list = UserGuest.objects.all()
+
+        for user in guest_user_list:
+            user._password = user.session
+            ldap_error = user.ldap_save(obj)
+            if ldap_error:
+                error_list.append(ldap_error)
+
+        if error_list:
+            for error in error_list:
+                self.message_user(request,error,messages.ERROR)
+        else:
+            self.message_user(request, self._sync_message(obj), messages.SUCCESS)
 
         # Return changelist view
         url = reverse('admin:%s_%s_changelist' % (self.model._meta.app_label, self.model._meta.model_name))
