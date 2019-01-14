@@ -11,9 +11,13 @@ from django.utils.translation import gettext_lazy as _
 
 def save_ldap_user(sender,**kwargs):
     user = kwargs['obj']
-    appconfig = apps.get_app_config('LdapServer')
-    LdapServer = appconfig.get_model('LdapServer', 'LdapServer')
-    ldap_servers = LdapServer.objects.filter(is_active=True)
+    server = kwargs['server']
+    if server:
+        ldap_servers = [server, ]
+    else:
+        appconfig = apps.get_app_config('LdapServer')
+        LdapServer = appconfig.get_model('LdapServer', 'LdapServer')
+        ldap_servers = LdapServer.objects.filter(is_active=True)
     for server in ldap_servers:
         ldap_user = LdapUser(server,user)
         try:
