@@ -114,15 +114,15 @@ class User(AbstractUser,PolymorphicModel):
         else:
             return _("Superuser")
 
-    def ldap_save(self):
+    def ldap_save(self,server=None):
         signal = getattr(signals, 'save_ldap_user_signal')
-        receivers = signal.send_robust(sender=self.__class__, obj=self)
+        receivers = signal.send_robust(sender=self.__class__, obj=self,server=server)
         for function, error in receivers:
             return str(error) if error else None
 
-    def ldap_reset_password(self,password):
+    def ldap_reset_password(self,password,server=None):
         signal = getattr(signals, 'reset_user_password_signal')
-        receivers = signal.send_robust(sender=self.__class__, obj=self)
+        receivers = signal.send_robust(sender=self.__class__, obj=self,server=server)
         for function, error in receivers:
             return str(error) if error else None
 
