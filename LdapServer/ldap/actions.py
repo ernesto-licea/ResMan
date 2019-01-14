@@ -83,9 +83,14 @@ def reset_ldap_user_password(sender,**kwargs):
 
 def save_ldap_group(sender,**kwargs):
     service = kwargs['obj']
-    appconfig = apps.get_app_config('LdapServer')
-    LdapServer = appconfig.get_model('LdapServer', 'LdapServer')
-    ldap_servers = LdapServer.objects.filter(is_active=True)
+    server = kwargs['server']
+    if server:
+        ldap_servers = [server,]
+    else:
+        appconfig = apps.get_app_config('LdapServer')
+        LdapServer = appconfig.get_model('LdapServer', 'LdapServer')
+        ldap_servers = LdapServer.objects.filter(is_active=True)
+
     for server in ldap_servers:
         ldap_group = LdapGroup(server,service)
         try:
