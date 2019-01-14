@@ -249,7 +249,7 @@ class UserAdminBase(PolymorphicChildModelAdmin):
 
     def save_model(self, request, obj, form, change):
         obj.is_active = obj.status == "active"
-        if not request.user.is_superuser:
+        if not request.user.is_superuser and change:
             obj.is_superuser = form.initial.get('is_superuser')
 
         # Create hash password
