@@ -159,6 +159,23 @@ class UserAdmin(PolymorphicParentModelAdmin):
 
     def sync_data(self,request,user_id,*args,**kwargs):
         obj = self.get_object(request, user_id)
+        obj._password = base64.b64decode(obj.session_key.encode('utf-8')).decode()
+
+        ldap_error = obj.ldap_save()
+
+        if ldap_error:
+            self.message_user(request, ldap_error, messages.ERROR)
+        else:
+            self.message_user(request, self._sync_message(obj), messages.SUCCESS)
+
+        # Return changelist view
+        url = reverse('admin:%s_%s_changelist' % (self.model._meta.app_label, self.model._meta.model_name))
+        return HttpResponseRedirect(url)
+
+    def delete_queryset(self, request, queryset):
+        delete_queryset(self,request,queryset)
+
+    def _sync_message(self,obj):
         opts = obj._meta
 
         # Construct message to return
@@ -172,14 +189,7 @@ class UserAdmin(PolymorphicParentModelAdmin):
             _("Data from user {} was successfully synchronized with ldap servers."),
             obj_repr
         )
-        self.message_user(request, message, messages.SUCCESS)
-
-        # Return changelist view
-        url = reverse('admin:%s_%s_changelist' % (self.model._meta.app_label, self.model._meta.model_name))
-        return HttpResponseRedirect(url)
-
-    def delete_queryset(self, request, queryset):
-        delete_queryset(self,request,queryset)
+        return message
 
 class UserAdminBase(PolymorphicChildModelAdmin):
     base_model = User
@@ -381,8 +391,14 @@ class UserEnterpriseAdmin(UserAdminBase):
 
     def sync_data(self,request,user_id,*args,**kwargs):
         obj = self.get_object(request, user_id)
+        obj._password = base64.b64decode(obj.session_key.encode('utf-8')).decode()
 
-        self.message_user(request, self._sync_message(obj), messages.SUCCESS)
+        ldap_error = obj.ldap_save()
+
+        if ldap_error:
+            self.message_user(request, ldap_error, messages.ERROR)
+        else:
+            self.message_user(request, self._sync_message(obj), messages.SUCCESS)
 
         # Return changelist view
         url = reverse('admin:%s_%s_changelist' % (self.model._meta.app_label, self.model._meta.model_name))
@@ -479,22 +495,16 @@ class UserInstitutionalAdmin(UserAdminBase):
             _('Ldap Sync')
         )
 
-    def sync_data(self,request,user_id,*args,**kwargs):
+    def sync_data(self, request, user_id, *args, **kwargs):
         obj = self.get_object(request, user_id)
-        opts = obj._meta
+        obj._password = base64.b64decode(obj.session_key.encode('utf-8')).decode()
 
-        # Construct message to return
-        obj_url = reverse(
-            'admin:%s_%s_change' % (opts.app_label, opts.model_name),
-            args=(quote(obj.pk),),
-            current_app=self.admin_site.name,
-        )
-        obj_repr = format_html('<a href="{}">{}</a>', urlquote(obj_url), obj)
-        message = format_html(
-            _("Data from user {} was successfully synchronized with ldap servers."),
-            obj_repr
-        )
-        self.message_user(request, message, messages.SUCCESS)
+        ldap_error = obj.ldap_save()
+
+        if ldap_error:
+            self.message_user(request, ldap_error, messages.ERROR)
+        else:
+            self.message_user(request, self._sync_message(obj), messages.SUCCESS)
 
         # Return changelist view
         url = reverse('admin:%s_%s_changelist' % (self.model._meta.app_label, self.model._meta.model_name))
@@ -597,22 +607,16 @@ class UserGuestAdmin(UserAdminBase):
             _('Ldap Sync')
         )
 
-    def sync_data(self,request,user_id,*args,**kwargs):
+    def sync_data(self, request, user_id, *args, **kwargs):
         obj = self.get_object(request, user_id)
-        opts = obj._meta
+        obj._password = base64.b64decode(obj.session_key.encode('utf-8')).decode()
 
-        # Construct message to return
-        obj_url = reverse(
-            'admin:%s_%s_change' % (opts.app_label, opts.model_name),
-            args=(quote(obj.pk),),
-            current_app=self.admin_site.name,
-        )
-        obj_repr = format_html('<a href="{}">{}</a>', urlquote(obj_url), obj)
-        message = format_html(
-            _("Data from user {} was successfully synchronized with ldap servers."),
-            obj_repr
-        )
-        self.message_user(request, message, messages.SUCCESS)
+        ldap_error = obj.ldap_save()
+
+        if ldap_error:
+            self.message_user(request, ldap_error, messages.ERROR)
+        else:
+            self.message_user(request, self._sync_message(obj), messages.SUCCESS)
 
         # Return changelist view
         url = reverse('admin:%s_%s_changelist' % (self.model._meta.app_label, self.model._meta.model_name))
