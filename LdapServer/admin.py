@@ -56,25 +56,29 @@ class LdapServerAdmin(admin.ModelAdmin):
         )
 
     def sync_data(self,request,ldap_server_id,*args,**kwargs):
-        ldap_server = self.get_object(request,ldap_server_id)
-        opts = ldap_server._meta
+        obj = self.get_object(request,ldap_server_id)
 
-        # Construct message to return
-        obj_url = reverse(
-            'admin:%s_%s_change' % (opts.app_label, opts.model_name),
-            args=(quote(ldap_server.pk),),
-            current_app=self.admin_site.name,
-        )
-        obj_repr = format_html('<a href="{}">{}</a>', urlquote(obj_url), ldap_server)
-        message = format_html(
-            _("Data was sent to server {} successfully."),
-            obj_repr
-        )
-        self.message_user(request, message, messages.SUCCESS)
+        self.message_user(request, self._sync_message(obj), messages.SUCCESS)
 
         # Return changelist view
         url = reverse('admin:%s_%s_changelist' % (self.model._meta.app_label, self.model._meta.model_name))
         return HttpResponseRedirect(url)
+
+    def _sync_message(self,obj):
+        opts = obj._meta
+
+        # Construct message to return
+        obj_url = reverse(
+            'admin:%s_%s_change' % (opts.app_label, opts.model_name),
+            args=(quote(obj.pk),),
+            current_app=self.admin_site.name,
+        )
+        obj_repr = format_html('<a href="{}">{}</a>', urlquote(obj_url), obj)
+        message = format_html(
+            _("Data was sent to server {} successfully."),
+            obj_repr
+        )
+        return message
 
     def test_server(self,request,ldap_server_id,*args,**kwargs):
         ldap_server = self.get_object(request,ldap_server_id)
