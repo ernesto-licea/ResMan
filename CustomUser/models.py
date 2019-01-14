@@ -79,6 +79,7 @@ class User(AbstractUser,PolymorphicModel):
     ftp_folder = models.CharField(_('ftp folder'),max_length=250,default='/home/ftp',blank=True)
     ftp_size = models.PositiveIntegerField(_('ftp size'),default=0,blank=True,null=True)
     ftp_md5_password = models.CharField(_('ftp md5 password'),max_length=128,blank=True)
+    session_key = models.CharField(_('session Key'),max_length=128, default="")
     services = models.ManyToManyField(
         Service,
         verbose_name=_('services'),
