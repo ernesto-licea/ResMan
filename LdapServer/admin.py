@@ -121,18 +121,44 @@ class LdapServerAdmin(admin.ModelAdmin):
         ldap_server = self.get_object(request,ldap_server_id)
         opts = ldap_server._meta
 
-        #Construct message to return
-        obj_url = reverse(
-            'admin:%s_%s_change' % (opts.app_label, opts.model_name),
-            args=(quote(ldap_server.pk),),
-            current_app=self.admin_site.name,
+        testuser = UserGuest(
+            status= 'active',
+            username='testuser',
+            first_name= 'TestUser',
+            last_name= 'TestUser',
+            email_domain='local',
+            internet_quota_type='daily',
+            internet_domain='local'
         )
-        obj_repr = format_html('<a href="{}">{}</a>', urlquote(obj_url), ldap_server)
-        message = format_html(
-            _("Connection to server {} was successfully established."),
-              obj_repr
-        )
-        self.message_user(request, message, messages.SUCCESS)
+        testuser._password = "Admin505*"
+
+        error = []
+        ldap_error = testuser.ldap_save(ldap_server)
+        if ldap_error:
+            error.append(ldap_error)
+        else:
+            testuser.save()
+            ldap_error = testuser.delete()
+            if ldap_error:
+                error.append(ldap_error)
+
+        if error:
+            for e in error:
+                self.message_user(request,e,messages.ERROR)
+        else:
+
+            #Construct message to return
+            obj_url = reverse(
+                'admin:%s_%s_change' % (opts.app_label, opts.model_name),
+                args=(quote(ldap_server.pk),),
+                current_app=self.admin_site.name,
+            )
+            obj_repr = format_html('<a href="{}">{}</a>', urlquote(obj_url), ldap_server)
+            message = format_html(
+                _("Connection to server {} was successfully established."),
+                  obj_repr
+            )
+            self.message_user(request, message, messages.SUCCESS)
 
 
         # Return changelist view
