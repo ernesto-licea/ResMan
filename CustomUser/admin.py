@@ -127,6 +127,7 @@ class UserAdmin(PolymorphicParentModelAdmin):
     child_models = (UserEnterprise, UserInstitutional, UserGuest)
     list_filter = (PolymorphicChildModelFilter,)
     list_display = ('username','status','get_full_name','user_type','server_action')
+    search_fields = ['username',]
 
     def get_urls(self):
         return [
@@ -194,6 +195,7 @@ class UserAdmin(PolymorphicParentModelAdmin):
 class UserAdminBase(PolymorphicChildModelAdmin):
     base_model = User
     filter_horizontal = ('services','distribution_list')
+    search_fields = ['username',]
 
 
     def get_form(self, request, obj=None, **kwargs):
