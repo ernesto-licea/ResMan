@@ -1,3 +1,5 @@
+import base64
+
 import MySQLdb
 from django.core.management.base import BaseCommand, CommandError
 from django.utils.text import slugify
@@ -115,7 +117,7 @@ class Command(BaseCommand):
                 UserEnterprise.objects.create_user(
                     username=username,
                     email='%s@%s' %(username,'cnic.cu'),
-                    password='Adminadmin505',
+                    password='Adminadmin505*',
                 )
 
             user = UserEnterprise.objects.get(username=username)
@@ -129,6 +131,7 @@ class Command(BaseCommand):
             user.department=dpto
             user.email_domain = account_type_dicc[email_account_type]
             user.internet_domain = 'international'
+            user.session_key = base64.b64encode("Adminadmin505*".encode('utf-8')).decode()
 
             user_services = []
             if internet_service:
