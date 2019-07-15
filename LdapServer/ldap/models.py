@@ -70,7 +70,7 @@ class LdapUser:
             )
 
             ldap_user.cn = self.user.username
-            ldap_user.username = self.user.username
+            ldap_user.username = self.user.username[:20]
             ldap_user.logon = "{}@{}".format(self.user.username,self.server.domain)
             ldap_user.entry_commit_changes()
             self._reset_password(connection,ldap_user)
