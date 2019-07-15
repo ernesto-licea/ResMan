@@ -130,23 +130,16 @@ class LdapServerAdmin(admin.ModelAdmin):
             internet_quota_type='daily',
             internet_domain='local'
         )
-        testuser._password = "Admin505*"
+        testuser.save()
+        testuser._password = "AdminAdmin999*"
 
-        error = []
         ldap_error = testuser.ldap_save(ldap_server)
+
         if ldap_error:
-            error.append(ldap_error)
+            self.message_user(request,ldap_error,messages.ERROR)
+            testuser.delete()
         else:
-            testuser.save()
-            ldap_error = testuser.delete()
-            if ldap_error:
-                error.append(ldap_error)
-
-        if error:
-            for e in error:
-                self.message_user(request,e,messages.ERROR)
-        else:
-
+            testuser.delete()
             #Construct message to return
             obj_url = reverse(
                 'admin:%s_%s_change' % (opts.app_label, opts.model_name),
