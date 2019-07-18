@@ -24,6 +24,7 @@ from django.utils.translation import gettext, gettext_lazy as _
 from polymorphic.admin import PolymorphicChildModelAdmin, PolymorphicParentModelAdmin, PolymorphicChildModelFilter
 
 from EntStructure.models import Area, Department
+from LdapServer.models import LdapServer
 from Services.models import Service
 from .forms import UserFormEdit, UserFormAdd
 from .models import User, UserEnterprise, UserInstitutional, UserGuest, PasswordHistory
@@ -34,11 +35,12 @@ def delete_queryset(modeladmin,request,queryset):
         if ldap_error:
             modeladmin.message_user(request, ldap_error, messages.ERROR)
         else:
-            message = _('The {} "{}" was successfully deleted from ldap servers.'.format(
-                modeladmin.model._meta.verbose_name,
-                obj.username
-            ))
-            modeladmin.message_user(request, message, messages.SUCCESS)
+            if LdapServer.objects.all().count():
+                message = _('The {} "{}" was successfully deleted from ldap servers.'.format(
+                    modeladmin.model._meta.verbose_name,
+                    obj.username
+                ))
+                modeladmin.message_user(request, message, messages.SUCCESS)
 
 
 def change_password(modeladmin,request, id, form_url=''):
@@ -253,11 +255,12 @@ class UserAdminBase(PolymorphicChildModelAdmin):
         if ldap_error:
             self.message_user(request, ldap_error, messages.ERROR)
         else:
-            message = _('The {} "{}" was successfully deleted from ldap servers.'.format(
-                self.model._meta.verbose_name,
-                obj.username
-            ))
-            self.message_user(request, message, messages.SUCCESS)
+            if LdapServer.objects.all().count():
+                message = _('The {} "{}" was successfully deleted from ldap servers.'.format(
+                    self.model._meta.verbose_name,
+                    obj.username
+                ))
+                self.message_user(request, message, messages.SUCCESS)
 
     def save_model(self, request, obj, form, change):
         obj.is_active = obj.status == "active"
