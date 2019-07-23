@@ -4,7 +4,7 @@ import MySQLdb
 from django.core.management.base import BaseCommand, CommandError
 from django.utils.text import slugify
 
-from CustomUser.models import UserEnterprise, User
+from CustomUser.models import UserEnterprise, User, PasswordHistory
 from EntStructure.models import Area, Department
 from Services.models import Service
 
@@ -147,6 +147,8 @@ class Command(BaseCommand):
                 user.services.add(s)
 
             user.save()
+
+            PasswordHistory.objects.create(user=user, password=user.password)
 
             self.stdout.write(self.style.SUCCESS("User: %s, Email Type: %s" % (user.username,user.email_domain)))
 
