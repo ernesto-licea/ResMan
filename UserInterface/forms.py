@@ -2,7 +2,7 @@ from django import forms
 
 
 class LoginForm(forms.Form):
-    Username = forms.CharField(widget=forms.TextInput(
+    username = forms.CharField(widget=forms.TextInput(
         attrs={
             "placeholder":"Username",
             "autocomplete":"off"
