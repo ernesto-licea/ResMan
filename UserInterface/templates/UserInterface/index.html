@@ -6,5 +6,38 @@
 </head>
 <body>
     <p>Hola mundo</p>
+
+    <form id="login_form" class="form-horizontal" role="form" method="post">{% csrf_token %}
+        <fieldset>
+            {% if error %}
+            <p>Invalid username or password</p>
+            {% endif %}
+
+            <div>
+                {{ form.username }}
+                {% for error in form.username.errors %}
+                <p>
+                    {{ error|escape }}
+                </p>
+                {% endfor %}
+            </div>
+            <div>
+                {{ form.password }}
+                {% for error in form.password.errors %}
+                <p>
+                    {{ error|escape }}
+                </p>
+                {% endfor %}
+            </div>
+            <div>
+                {{ form.remember_me }}
+            </div>
+            <div>
+                <button type="submit">
+                    <span>Login</span>
+                </button>
+            </div>
+        </fieldset>
+    </form>
 </body>
 </html>
