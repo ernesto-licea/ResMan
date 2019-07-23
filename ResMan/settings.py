@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'EntStructure',
     'LdapServer',
     'Services',
+    'UserInterface',
 ]
 
 MIDDLEWARE = [
