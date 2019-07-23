@@ -34,6 +34,9 @@ class LdapServer(models.Model):
     def __str__(self):
         return self.name
 
+    def authenticate(self,username,password):
+        return True
+
     class Meta:
         db_table = 'ldap_server'
         verbose_name = _('active directory server')
