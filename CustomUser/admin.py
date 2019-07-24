@@ -263,7 +263,7 @@ class UserAdminBase(PolymorphicChildModelAdmin):
                 self.message_user(request, message, messages.SUCCESS)
 
     def save_model(self, request, obj, form, change):
-        obj.is_active = obj.status == "active"
+        obj.is_active = not obj.status == "inactive"
         if not request.user.is_superuser and change:
             obj.is_superuser = form.initial.get('is_superuser')
 
