@@ -141,6 +141,15 @@ class User(AbstractUser,PolymorphicModel):
                 return str(error)
         super().delete(using,keep_parents)
 
+    def auth_ldap(self,password):
+        self._password = password
+        signal = getattr(signals, 'auth_ldap_user_signal')
+        receivers = signal.send_robust(sender=self.__class__, obj=self)
+        for function, error in receivers:
+            if error:
+                return False
+        return True
+
     class Meta(AbstractUser.Meta):
         db_table = 'auth_user'
         swappable = 'AUTH_USER_MODEL'
