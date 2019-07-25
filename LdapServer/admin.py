@@ -18,7 +18,7 @@ class LdapServerAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (None, {
-            'fields': ('is_active','name','domain','search_base','server_host','server_port','start_tls','admin_username','admin_password')
+            'fields': ('is_active','name','domain_name','domain','search_base','server_host','server_port','start_tls','admin_username','admin_password')
         }),
         ('Ldap Data Map', {
             'fields': (
