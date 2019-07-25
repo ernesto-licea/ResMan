@@ -218,6 +218,31 @@ class LdapUser:
 
         connection.unbind()
 
+    def authenticate(self):
+        ldap_server = Server(
+            host=self.server.server_host,
+            port=self.server.server_port,
+            use_ssl=self.server.start_tls,
+            get_info=ALL
+        )
+
+        connection = Connection(
+            server=ldap_server,
+            user='{}\{}'.format(self.server.domain_name,self.user.username),
+            password=self.user._password,
+            raise_exceptions=True,
+            authentication=NTLM
+        )
+        connection.bind()
+
+        query = 'cn: {}'.format(
+            self.user.username,
+        )
+
+        cursor_reader = Reader(connection, self.person, self.server.search_base, query=query)
+        cursor_reader.search()
+        connection.unbind()
+
 class LdapGroup:
     def __init__(self,server,group):
         self.server = server
