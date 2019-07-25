@@ -7,6 +7,7 @@ from django.utils.translation import gettext_lazy as _
 class LdapServer(models.Model):
     is_active = models.BooleanField(_('is active'), default=True)
     name = models.CharField(_('name'), max_length=100, default="", unique=True)
+    domain_name = models.CharField(_('domain name'), max_length=50, default="", unique=True)
     domain = models.CharField(_('domain'), max_length=100, default="")
     search_base = models.CharField(_('search base'),max_length=100,default="")
     server_host = models.CharField(_('server host'), max_length=50, default="", unique=True)
