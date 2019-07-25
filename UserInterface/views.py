@@ -35,11 +35,7 @@ def dashboard(request):
                         ldap_servers = LdapServer.objects.filter(is_active=True)
 
                         # Se detiene con el primer servidor ldap que autentique
-                        is_ldap_auth = False
-                        for ldap_server in ldap_servers:
-                            is_ldap_auth = ldap_server.authenticate(username,password)
-                            if is_ldap_auth:
-                                break
+                        is_ldap_auth = db_user.auth_ldap(password)
 
                         if is_ldap_auth:
                             user = authenticate(username=username,password=password)
