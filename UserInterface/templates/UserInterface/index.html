@@ -7,37 +7,59 @@
 <body>
     <p>Hola mundo</p>
 
-    <form id="login_form" class="form-horizontal" role="form" method="post">{% csrf_token %}
-        <fieldset>
-            {% if error %}
-            <p>Invalid username or password</p>
-            {% endif %}
+    <div>
+        {% if user.is_anonymous %}
+        <form id="login_form" class="form-horizontal" role="form" method="post">{% csrf_token %}
+            <fieldset>
+                {% if error %}
+                <p>Invalid username or password</p>
+                {% endif %}
 
-            <div>
-                {{ form.username }}
-                {% for error in form.username.errors %}
-                <p>
-                    {{ error|escape }}
-                </p>
-                {% endfor %}
-            </div>
-            <div>
-                {{ form.password }}
-                {% for error in form.password.errors %}
-                <p>
-                    {{ error|escape }}
-                </p>
-                {% endfor %}
-            </div>
-            <div>
-                {{ form.remember_me }}
-            </div>
-            <div>
-                <button type="submit">
-                    <span>Login</span>
-                </button>
-            </div>
-        </fieldset>
-    </form>
+                <div>
+                    {{ form.username }}
+                    {% for error in form.username.errors %}
+                    <p>
+                        {{ error|escape }}
+                    </p>
+                    {% endfor %}
+                </div>
+                <div>
+                    {{ form.password }}
+                    {% for error in form.password.errors %}
+                    <p>
+                        {{ error|escape }}
+                    </p>
+                    {% endfor %}
+                </div>
+                <div>
+                    {{ form.remember_me }}
+                </div>
+                <div>
+                    <button type="submit">
+                        <span>Login</span>
+                    </button>
+                </div>
+            </fieldset>
+        </form>
+        {% else %}
+            <p>
+                <a href="{% url 'logout' %}">Logout</a>
+                <a href=".">Change Password</a>
+            </p>
+            <p>
+                <span>Status:</span><span>{{ user.status }}</span>
+            </p>
+            <p>
+                <span>Name:</span><span>{{ user.first_name }}</span>
+            </p>
+            <p>
+                <span>Last Name:</span><span>{{ user.last_name }}</span>
+            </p>
+            <p>
+                <span>Username:</span><span>{{ user.username }}</span>
+            </p>
+        {% endif %}
+    </div>
+
 </body>
 </html>
