@@ -141,3 +141,21 @@ def delete_ldap_group(sender,**kwargs):
                 e
             )
             raise Exception(message)
+
+def auth_ldap_user(sender,**kwargs):
+    user = kwargs['obj']
+    appconfig = apps.get_app_config('LdapServer')
+    LdapServer = appconfig.get_model('LdapServer', 'LdapServer')
+    ldap_servers = LdapServer.objects.filter(is_active=True)
+    auth = False
+    for server in ldap_servers:
+        ldap_user = LdapUser(server, user)
+        try:
+            ldap_user.authenticate()
+            auth = True
+            break
+        except Exception as e:
+            pass
+
+    if not auth:
+        raise Exception("Authentication Failed agains all ldap servers")
