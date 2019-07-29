@@ -130,6 +130,11 @@ MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'CustomUser.User'
 
+AUTHENTICATION_BACKENDS = [
+    'CustomUser.backend.LdapBackend',
+    'django.contrib.auth.backends.ModelBackend'
+]
+
 try:
     from .settings_local import *
 except ImportError:
