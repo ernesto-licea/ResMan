@@ -1,18 +1,13 @@
 import base64
 import hashlib
-
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth.hashers import check_password, make_password
+from django.contrib.auth.hashers import make_password
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-
-# Create your views here.
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext
-
 from CustomUser.models import User, PasswordHistory
 from LdapServer.models import LdapServer
 from UserInterface.forms import LoginForm
