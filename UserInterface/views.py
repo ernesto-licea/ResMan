@@ -85,6 +85,8 @@ def dashboard(request):
     else:
         #Servir pagina logueado con los datos del usuario
         data = {
+            "service_list": request.user.services.filter(is_active=True, service_type='security'),
+            "distribution_list": request.user.services.filter(is_active=True, service_type='distribution'),
             "user": request.user
         }
 
