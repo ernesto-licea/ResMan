@@ -1,13 +1,16 @@
 import base64
 import hashlib
 
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.hashers import check_password, make_password
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 # Create your views here.
 from django.urls import reverse
+from django.utils import timezone
+from django.utils.translation import gettext
 
 from CustomUser.models import User, PasswordHistory
 from LdapServer.models import LdapServer
@@ -91,6 +94,45 @@ def dashboard(request):
 
     return render(request, 'UserInterface/index.html', data)
 
+
+def change_password(request):
+    message_success = False
+    message_error = False
+
+
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+
+            password = form.cleaned_data.get('new_password2')
+            user = form.save(commit=False)
+            user._password = password
+
+            ldap_error = user.ldap_reset_password(password)
+            if ldap_error:
+                message_error = ldap_error
+            else:
+                hash_password = make_password(password)
+                PasswordHistory.objects.create(user=user, password=hash_password)
+
+                user.password_date = timezone.now()
+                user.ftp_md5_password = hashlib.md5(user._password.encode('utf-8')).hexdigest()
+                user.session_key = base64.b64encode(user._password.encode('utf-8')).decode()
+
+                user.save()
+                message_success = gettext('Password changed successfully.')
+
+                update_session_auth_hash(request, form.user)
+    else:
+        form = PasswordChangeForm(request.user)
+
+    data = {
+        'form':form,
+        'message_error':message_error,
+        'message_success':message_success
+    }
+
+    return render(request, 'UserInterface/change_password.html', data)
 
 def logout_view(request):
     logout(request)
