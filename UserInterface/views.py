@@ -1,7 +1,6 @@
 import base64
 import hashlib
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.hashers import make_password
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -10,7 +9,20 @@ from django.utils import timezone
 from django.utils.translation import gettext
 from CustomUser.models import User, PasswordHistory
 from LdapServer.models import LdapServer
-from UserInterface.forms import LoginForm
+from UserInterface.forms import LoginForm, UserPasswordChangeForm
+
+
+def get_default_data(request):
+    if request.user.is_anonymous:
+        return {
+            "user":request.user
+        }
+    else:
+        return {
+            'user':request.user,
+            "service_list": request.user.services.filter(is_active=True, service_type='security'),
+            "distribution_list": request.user.services.filter(is_active=True, service_type='distribution'),
+        }
 
 
 def dashboard(request):
@@ -62,7 +74,6 @@ def dashboard(request):
                             error = True
                     else:
                         user = authenticate(username=username,password=password)
-                        print(user)
                         if user is not None:
                             login(request,user)
                             return HttpResponseRedirect(reverse("dashboard"))
@@ -75,22 +86,19 @@ def dashboard(request):
         else:
             form = LoginForm()
 
-        data = {
-            "error":error,
-            "form":form,
-            "user":request.user
-        }
-        return render(request, 'UserInterface/index.html', data)
+        data = get_default_data(request)
+        data.update({
+            "error": error,
+            "form": form,
+        })
+
+        return render(request, 'UserInterface/dashboard.html', data)
 
     else:
         #Servir pagina logueado con los datos del usuario
-        data = {
-            "service_list": request.user.services.filter(is_active=True, service_type='security'),
-            "distribution_list": request.user.services.filter(is_active=True, service_type='distribution'),
-            "user": request.user
-        }
+        data = get_default_data(request)
 
-    return render(request, 'UserInterface/index.html', data)
+    return render(request, 'UserInterface/dashboard.html', data)
 
 
 def change_password(request):
@@ -100,7 +108,7 @@ def change_password(request):
 
 
         if request.method == 'POST':
-            form = PasswordChangeForm(request.user, request.POST)
+            form = UserPasswordChangeForm(request.user, request.POST)
             if form.is_valid():
 
                 password = form.cleaned_data.get('new_password2')
@@ -123,15 +131,16 @@ def change_password(request):
 
                     update_session_auth_hash(request, form.user)
         else:
-            form = PasswordChangeForm(request.user)
+            form = UserPasswordChangeForm(request.user)
 
-        data = {
+        data = get_default_data(request)
+        data.update({
             'form':form,
             'message_error':message_error,
-            'message_success':message_success
-        }
+            'message_success':message_success,
+        })
 
-        return render(request, 'UserInterface/change_password.html', data)
+        return render(request, 'UserInterface/password.html', data)
     else:
         return HttpResponseRedirect(reverse('dashboard'))
 
