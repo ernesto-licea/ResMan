@@ -1,113 +1,81 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Sistema de Usuarios</title>
-</head>
-<body>
-    <p>Hola mundo</p>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <div>
-        {% if user.is_anonymous %}
-        <form id="login_form" class="form-horizontal" role="form" method="post">{% csrf_token %}
-            <fieldset>
-                {% if error %}
-                <p>Invalid username or password</p>
-                {% endif %}
+		<title>ResMan- Sistema de Gestion de Usuarios</title>
+		<meta name="description" content="Free Bootstrap 4 Template by uicookies.com">
+		<meta name="keywords" content="Free website templates, Free bootstrap themes, Free template, Free bootstrap, Free website template">
 
-                <div>
-                    {{ form.username }}
-                    {% for error in form.username.errors %}
-                    <p>
-                        {{ error|escape }}
-                    </p>
-                    {% endfor %}
-                </div>
-                <div>
-                    {{ form.password }}
-                    {% for error in form.password.errors %}
-                    <p>
-                        {{ error|escape }}
-                    </p>
-                    {% endfor %}
-                </div>
-                <div>
-                    {{ form.remember_me }}
-                </div>
-                <div>
-                    <button type="submit">
-                        <span>Login</span>
-                    </button>
-                </div>
-            </fieldset>
-        </form>
-        {% else %}
-            <div>
-            <p>
-                <a href="{% url 'logout' %}">Logout</a>
-                <a href="{% url 'change_password' %}">Change Password</a>
-            </p>
-            <p>
-                <span>Status:</span><span>{{ user.status }}</span>
-            </p>
-            <p>
-                <span>Name:</span><span>{{ user.first_name }}</span>
-            </p>
-            <p>
-                <span>Last Name:</span><span>{{ user.last_name }}</span>
-            </p>
-            <p>
-                <span>Username:</span><span>{{ user.username }}</span>
-            </p>
-            <p>
-                <span>Enterprise Number:</span><span>{{ user.enterprise_number }}</span>
-            </p>
-            <p>
-                <span>CI Number:</span><span>{{ user.ci_number }}</span>
-            </p>
-            </div>
+{#        <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,400i,600|Montserrat:200,300,400" rel="stylesheet">#}
 
-            <div>
-                <p><u>Services</u></p>
-                <table border="on">
-                    <thead>
-                        <tr>
-                            <th>Service</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for service in service_list %}
-                        <tr>
-                            <td>{{ service.name }}</td>
-                            <td>{{ service.description }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+		<link rel="stylesheet" href="{% static 'UserInterface/assets/css/bootstrap/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'UserInterface/assets/fonts/ionicons/css/ionicons.min.css' %}">
+{#        <link rel="stylesheet" href="{% static 'UserInterface/assets/fonts/law-icons/font/flaticon.css' %}">#}
 
-            <div>
-                <p><u>Distribution Lists</u></p>
-                <table border="on">
-                    <thead>
-                        <tr>
-                            <th>List Name</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for distribution in distribution_list %}
-                        <tr>
-                            <td>{{ distribution.name }}</td>
-                            <td>{{ distribution.description }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+        <link rel="stylesheet" href="{% static 'UserInterface/assets/fonts/fontawesome/css/font-awesome.min.css' %}">
+
+
+        <link rel="stylesheet" href="{% static 'UserInterface/assets/css/slick.css' %}">
+        <link rel="stylesheet" href="{% static 'UserInterface/assets/css/slick-theme.css' %}">
+
+        <link rel="stylesheet" href="{% static 'UserInterface/assets/css/helpers.css' %}">
+        <link rel="stylesheet" href="{% static 'UserInterface/assets/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'UserInterface/assets/css/landing-2.css' %}">
+    </head>
+
+
+	<body data-spy="scroll" data-target="#pb-navbar" data-offset="200">
+
+        {% block navbar %}{% endblock %}
+
+        {% block home_section %}{% endblock %}
+
+        {% if not user.is_anonymous %}
+
+            {% block service_section %}{% endblock %}
+
+            {% block distribution_list_section %}{% endblock %}
+
         {% endif %}
-    </div>
 
-</body>
+    <!-- END section -->
+        <footer class="pb_footer bg-light" role="contentinfo">
+          <div class="container">
+            <div class="row text-center">
+              <div class="col">
+                <ul class="list-inline">
+                  <li class="list-inline-item"><a href="#" class="p-2"><i class="fa fa-facebook"></i></a></li>
+                  <li class="list-inline-item"><a href="#" class="p-2"><i class="fa fa-twitter"></i></a></li>
+                  <li class="list-inline-item"><a href="#" class="p-2"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col text-center">
+                <p class="pb_font-14">
+                    &copy; 2019. All Rights Reserved.
+                    <br>
+                        <a href="#section-home">ResMan - Sistema de Gestion de Usuarios</a>
+                    by Ernesto Licea Martin
+                </p>
+              </div>
+            </div>
+          </div>
+        </footer>
+
+        <script src="{% static 'UserInterface/assets/js/jquery.min.js' %}"></script>
+
+        <script src="{% static 'UserInterface/assets/js/popper.min.js' %}"></script>
+        <script src="{% static 'UserInterface/assets/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'UserInterface/assets/js/slick.min.js' %}"></script>
+        <script src="{% static 'UserInterface/assets/js/jquery.mb.YTPlayer.min.js' %}"></script>
+
+        <script src="{% static 'UserInterface/assets/js/jquery.waypoints.min.js' %}"></script>
+        <script src="{% static 'UserInterface/assets/js/jquery.easing.1.3.js' %}"></script>
+
+        <script src="{% static 'UserInterface/assets/js/main.js' %}"></script>
+    </body>
 </html>

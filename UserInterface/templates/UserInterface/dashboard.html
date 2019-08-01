@@ -1,0 +1,202 @@
+{% extends "UserInterface/index.html" %}
+
+{% block navbar %}
+    {% include 'UserInterface/navbar.html' %}
+{% endblock %}
+
+{% block home_section %}
+    <section class="pb_cover_v3 overflow-hidden cover-bg-indigo cover-bg-opacity text-left pb_gradient_v1 pb_slant-light" id="section-home">
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+
+                <div class="col-md-6">
+                    <h2 class="text-white pb_font-semibold-italic mb-3">System Features</h2>
+                    <div class="sub-heading">
+                        <p class="mb-4">
+                            <span style="font-size: xx-large">
+                                <i class="icon ion-android-done"></i>
+                            </span>
+                            Can check the institutional <a href="#services">services</a> you have approved
+                        </p>
+                        <p class="mb-4">
+                            <span style="font-size: xx-large">
+                                <i class="icon ion-android-done"></i>
+                            </span>
+                            Can check the institutional <a href="#services">distribution list</a> you belong
+                        </p>
+                        <p class="mb-4">
+                            <span style="font-size: xx-large">
+                                <i class="icon ion-android-done"></i>
+                            </span>
+                            Can change your <a href="#services">password</a> easily
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-1">
+                </div>
+
+                <div class="col-md-5 relative align-self-center">
+
+                    {% if user.is_anonymous %}
+                    <form role="form" method="post" class="bg-white rounded pb_form_v1">{% csrf_token %}
+
+                        <h2 class="mb-4 mt-0 text-center">Enter your credentials</h2>
+
+                        {% if error %}
+                            <div role="alert" class="alert alert-danger">
+                              Invalid Username or Password.
+                            </div>
+                        {% endif %}
+
+                        <div class="form-group">
+                            {{ form.username }}
+                            {% for error in form.username.errors %}
+                            <p>
+                                {{ error|escape }}
+                            </p>
+                            {% endfor %}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.password }}
+                            {% for error in form.password.errors %}
+                            <p>
+                                {{ error|escape }}
+                            </p>
+                            {% endfor %}
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary btn-lg btn-block pb_btn-pill  btn-shadow-blue" value="Login">
+                        </div>
+                    </form>
+                    {% else %}
+                        <div class="bg-white rounded pb_form_v1">
+
+                            <h2 class="mb-4 mt-0 text-center">User Information</h2>
+
+                            <div class="row">
+                                <div class="col-sm-7 bg-info border border-info">
+                                    <span class="font-weight-bold">Status:</span>
+                                </div>
+                                <div class="col-sm-5 bg-light border border-info">{{ user.status }}</div>
+                            </div>
+
+                            <div class="row" style="height: 3px"></div>
+
+                            <div class="row">
+                                <div class="col-sm-7 bg-info border border-info">
+                                    <span class="font-weight-bold">First Name:</span>
+                                </div>
+                                <div class="col-sm-5 bg-light border border-info">{{ user.first_name }}</div>
+                            </div>
+
+                            <div class="row" style="height: 3px"></div>
+
+                            <div class="row">
+                                <div class="col-sm-7 bg-info border border-info">
+                                    <span class="font-weight-bold">Last Name:</span>
+                                </div>
+                                <div class="col-sm-5 bg-light border border-info">{{ user.last_name }}</div>
+                            </div>
+
+                            <div class="row" style="height: 3px"></div>
+
+                            <div class="row">
+                                <div class="col-sm-7 bg-info border border-info">
+                                    <span class="font-weight-bold">Username:</span>
+                                </div>
+                                <div class="col-sm-5 bg-light border border-info">{{ user.username }}</div>
+                            </div>
+
+                            <div class="row" style="height: 3px"></div>
+
+                            <div class="row">
+                                <div class="col-sm-7 bg-info border border-info">
+                                    <span class="font-weight-bold">Enterprise Number:</span>
+
+                                </div>
+                                <div class="col-sm-5 bg-light border border-info">{{ user.enterprise_number }}</div>
+                            </div>
+
+                            <div class="row" style="height: 3px"></div>
+
+                            <div class="row">
+                                <div class="col-sm-7 bg-info border border-info">
+                                    <span class="font-weight-bold">CI Number:</span>
+                                </div>
+                                <div class="col-sm-5 bg-light border border-info">{{ user.ci_number }}</div>
+                            </div>
+
+                            <div class="row" style="height: 20px"></div>
+
+                            <div class="row">
+                                <a class="btn btn-primary btn-lg btn-block pb_btn-pill  btn-shadow-blue" href="{% url 'change_password' %}">
+                                    Change Password
+                                </a>
+                            </div>
+                        </div>
+
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END section -->
+{% endblock %}
+
+{% block service_section %}
+    <section class="pb_section bg-light pb_slant-white pb_pb-250" id="services">
+        <div class="container">
+            <div class="row">
+                <h1>Services</h1>
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Service</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for service in service_list %}
+                        <tr>
+                            <th scope="row">{{ service.name }}</th>
+                            <td>{{ service.description }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block distribution_list_section %}
+    <section class="pb_section bg-light pb_slant-white pb_pb-250" id="distribution">
+        <div class="container">
+            <div class="row">
+                <h1>Distribution List</h1>
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>List Name</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for distribution in distribution_list %}
+                        <tr>
+                            <th scope="row">{{ distribution.name }}</th>
+                            <td>{{ distribution.description }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    <!-- END section -->
+{% endblock %}
