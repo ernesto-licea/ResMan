@@ -104,7 +104,6 @@ class User(AbstractUser,PolymorphicModel):
     AbstractUser.get_full_name.short_description = _("Full Name")
 
 
-    @property
     def user_type(self):
         if str(self.polymorphic_ctype.model_class()).find("UserInstitutional") != -1:
             return _("Institutional")
@@ -114,6 +113,8 @@ class User(AbstractUser,PolymorphicModel):
             return _("Guest")
         else:
             return _("Superuser")
+
+    user_type.short_description = _("User Type")
 
     @property
     def session(self):
