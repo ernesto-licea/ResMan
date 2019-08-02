@@ -39,27 +39,27 @@ class User(AbstractUser,PolymorphicModel):
 
     objects = CustomUserManager()
     STATUS_LIST = [
-        (_('active'), _('Active')),
-        (_('blocked'), _('Blocked')),
-        (_('inactive'), _('Inactive')),
+        ('active', _('Active')),
+        ('blocked', _('Blocked')),
+        ('inactive', _('Inactive')),
     ]
 
     EMAIL_DOMAIN_LIST = [
-        (_('local'), _('Local')),
-        (_('national'), _('National')),
-        (_('international'), _('International')),
+        ('local', _('Local')),
+        ('national', _('National')),
+        ('international', _('International')),
     ]
 
     PROXY_DOMAIN_LIST = [
-        (_('local'), _('Local')),
-        (_('national'), _('National')),
-        (_('international'), _('International')),
+        ('local', _('Local')),
+        ('national', _('National')),
+        ('international', _('International')),
     ]
 
     PROXY_QUOTA_LIST = [
-        (_('daily'), _('Daily')),
-        (_('weekly'), _('Weekly')),
-        (_('monthly'), _('Monthly')),
+        ('daily', _('Daily')),
+        ('weekly', _('Weekly')),
+        ('monthly', _('Monthly')),
     ]
     is_staff = models.BooleanField(
         _('Informatics Staff'),
