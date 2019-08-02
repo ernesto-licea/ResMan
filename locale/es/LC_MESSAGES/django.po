@@ -810,3 +810,11 @@ msgstr "Datos de Servicio FTP"
 #: CustomUser/admin.py:580
 msgid "Additional Description"
 msgstr "Descripción Adicional"
+
+#: CustomUser/admin.py:117
+msgid "Area"
+msgstr "Área"
+
+#: CustomUser/models.py:118
+msgid "Department"
+msgstr "Departamento"
