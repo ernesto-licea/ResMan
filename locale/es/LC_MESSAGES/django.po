@@ -748,3 +748,7 @@ msgstr "Datos de Usuario"
 #: EntStructure/apps.py:7
 msgid "Enterprise Structure"
 msgstr "Estructura Empresarial"
+
+#: Services/apps.py:7
+msgid "Enterprise Services"
+msgstr "Servicios Empresariales"
