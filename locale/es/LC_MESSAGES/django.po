@@ -812,7 +812,8 @@ msgstr "Datos de Servicio FTP"
 msgid "Additional Description"
 msgstr "Descripción Adicional"
 
-#: CustomUser/admin.py:117
+#: CustomUser/models.py:117
+#: EntEstructure/models.py.py:23
 msgid "Area"
 msgstr "Área"
 
