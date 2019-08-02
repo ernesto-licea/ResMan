@@ -1,4 +1,6 @@
 from django.apps import AppConfig
+from django.utils.translation import gettext_lazy as _
+
 
 from CustomUser.signals.signals import save_ldap_user_signal, delete_ldap_user_signal, reset_user_password_signal, \
     auth_ldap_user_signal
@@ -9,7 +11,7 @@ from Services.signals.signals import save_ldap_group_signal, delete_ldap_group_s
 
 class LdapserverConfig(AppConfig):
     name = 'LdapServer'
-    verbose_name = 'Active Directory Servers'
+    verbose_name = _('Active Directory Servers')
 
     def ready(self):
         save_ldap_user_signal.connect(save_ldap_user,dispatch_uid='save_ldap_user')
