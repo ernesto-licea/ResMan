@@ -744,3 +744,7 @@ msgstr "Cambiar"
 #: CustomUser/apps.py:7
 msgid "User Data"
 msgstr "Datos de Usuario"
+
+#: EntStructure/apps.py:7
+msgid "Enterprise Structure"
+msgstr "Estructura Empresarial"
