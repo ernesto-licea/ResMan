@@ -766,6 +766,7 @@ msgstr "Tipo de Usuario"
 #: CustomUser/admin.py:504
 #: CustomUser/admin.py:617
 #: Services/admin.py:59
+#: LdapServer/admin.py:58
 msgid "Server Actions"
 msgstr "Acciones del Servidor"
 
