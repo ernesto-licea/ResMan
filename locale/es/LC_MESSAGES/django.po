@@ -760,3 +760,7 @@ msgstr "Servidores de Directiorio Activo"
 #: CustomUser/models.py:117
 msgid "User Type"
 msgstr "Tipo de Usuario"
+
+#: CustomUser/admin.py:162
+msgid "Server Actions"
+msgstr "Acciones del Servidor"
