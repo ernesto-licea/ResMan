@@ -761,6 +761,51 @@ msgstr "Servidores de Directiorio Activo"
 msgid "User Type"
 msgstr "Tipo de Usuario"
 
+<<<<<<< HEAD
 #: CustomUser/admin.py:162
 msgid "Server Actions"
 msgstr "Acciones del Servidor"
+=======
+#: CustomUser/admin.py:318
+#: CustomUser/admin.py:344
+#: CustomUser/admin.py:538
+#: CustomUser/admin.py:564
+msgid "Enterprise Data"
+msgstr "Datos Empresariales"
+
+#: CustomUser/admin.py:322
+#: CustomUser/admin.py:348
+#: CustomUser/admin.py:433
+#: CustomUser/admin.py:456
+#: CustomUser/admin.py:542
+#: CustomUser/admin.py:568
+msgid "Email Service Data"
+msgstr "Datos de Servicio de Correo Electrónico"
+
+#: CustomUser/admin.py:326
+#: CustomUser/admin.py:352
+#: CustomUser/admin.py:437
+#: CustomUser/admin.py:460
+#: CustomUser/admin.py:546
+#: CustomUser/admin.py:572
+msgid "Internet Service Data"
+msgstr "Datos de Servicio de Internet"
+
+#: CustomUser/admin.py:330
+#: CustomUser/admin.py:356
+#: CustomUser/admin.py:441
+#: CustomUser/admin.py:464
+#: CustomUser/admin.py:550
+#: CustomUser/admin.py:575
+msgid "FTP Service Data"
+msgstr "Datos de Servicio FTP"
+
+#: CustomUser/admin.py:334
+#: CustomUser/admin.py:360
+#: CustomUser/admin.py:445
+#: CustomUser/admin.py:468
+#: CustomUser/admin.py:554
+#: CustomUser/admin.py:580
+msgid "Additional Description"
+msgstr "Descripción Adicional"
+>>>>>>> 001
