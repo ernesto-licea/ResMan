@@ -315,23 +315,23 @@ class UserEnterpriseAdmin(UserAdminBase):
                 (None, {
                     'fields': ['date_joined','last_login','status', 'is_staff', 'username', 'password', 'retype_password', 'first_name', 'last_name', 'ci_number', 'services', 'distribution_list']
                 }),
-                ('Enterprise Data', {
+                (_('Enterprise Data'), {
                     # 'classes': ('collapse',),
                     'fields': ('enterprise_number', 'area', 'department', 'phone_number', 'extension_number', 'authorized_document'),
                 }),
-                ('Email Service Data', {
+                (_('Email Service Data'), {
                     # 'classes': ('collapse',),
                     'fields': ('email','email_buzon_size','email_message_size','email_domain'),
                 }),
-                ('Internet Service Data', {
+                (_('Internet Service Data'), {
                     # 'classes': ('collapse',),
                     'fields': ('internet_domain','internet_quota_type','internet_quota_size','internet_extra_quota_size'),
                 }),
-                ('FTP Service Data', {
+                (_('FTP Service Data'), {
                     # 'classes': ('collapse',),
                     'fields': ('ftp_folder','ftp_size'),
                 }),
-                ('Additional Description', {
+                (_('Additional Description'), {
                     # 'classes': ('collapse',),
                     'fields': ('note',),
                 }),
@@ -341,23 +341,23 @@ class UserEnterpriseAdmin(UserAdminBase):
                 (None, {
                     'fields': ['date_joined','last_login', 'status', 'is_staff', 'username', 'password', 'first_name', 'last_name', 'ci_number', 'services', 'distribution_list']
                 }),
-                ('Enterprise Data', {
+                (_('Enterprise Data'), {
                     # 'classes': ('collapse',),
                     'fields': ('enterprise_number', 'area', 'department', 'phone_number', 'extension_number', 'authorized_document'),
                 }),
-                ('Email Service Data', {
+                (_('Email Service Data'), {
                     # 'classes': ('collapse',),
                     'fields': ('email', 'email_buzon_size', 'email_message_size', 'email_domain'),
                 }),
-                ('Internet Service Data', {
+                (_('Internet Service Data'), {
                     # 'classes': ('collapse',),
                     'fields': ('internet_domain', 'internet_quota_type', 'internet_quota_size', 'internet_extra_quota_size'),
                 }),
-                ('FTP Service Data', {
+                (_('FTP Service Data'), {
                     # 'classes': ('collapse',),
                     'fields': ('ftp_folder', 'ftp_size'),
                 }),
-                ('Additional Description', {
+                (_('Additional Description'), {
                     # 'classes': ('collapse',),
                     'fields': ('note',),
                 }),
@@ -430,19 +430,19 @@ class UserInstitutionalAdmin(UserAdminBase):
                     'fields': ('date_joined','status', 'username', 'password', 'retype_password', 'first_name', 'last_name', 'services', 'distribution_list')
                 }),
 
-                ('Email Service Data', {
+                (_('Email Service Data'), {
                     # 'classes': ('collapse',),
                     'fields': ('email', 'email_buzon_size', 'email_message_size', 'email_domain'),
                 }),
-                ('Internet Service Data', {
+                (_('Internet Service Data'), {
                     # 'classes': ('collapse',),
                     'fields': ('internet_domain', 'internet_quota_type', 'internet_quota_size', 'internet_extra_quota_size'),
                 }),
-                ('FTP Service Data', {
+                (_('FTP Service Data'), {
                     # 'classes': ('collapse',),
                     'fields': ('ftp_folder', 'ftp_size'),
                 }),
-                ('Additional Description', {
+                (_('Additional Description'), {
                     # 'classes': ('collapse',),
                     'fields': ('note',),
                 }),
@@ -453,19 +453,19 @@ class UserInstitutionalAdmin(UserAdminBase):
                     'fields': ('date_joined','status', 'username', 'password', 'first_name', 'last_name', 'services', 'distribution_list')
                 }),
 
-                ('Email Service Data', {
+                (_('Email Service Data'), {
                     # 'classes': ('collapse',),
                     'fields': ('email', 'email_buzon_size', 'email_message_size', 'email_domain'),
                 }),
-                ('Internet Service Data', {
+                (_('Internet Service Data'), {
                     # 'classes': ('collapse',),
                     'fields': ('internet_domain', 'internet_quota_type', 'internet_quota_size', 'internet_extra_quota_size'),
                 }),
-                ('FTP Service Data', {
+                (_('FTP Service Data'), {
                     # 'classes': ('collapse',),
                     'fields': ('ftp_folder', 'ftp_size'),
                 }),
-                ('Additional Description', {
+                (_('Additional Description'), {
                     # 'classes': ('collapse',),
                     'fields': ('note',),
                 }),
@@ -535,23 +535,23 @@ class UserGuestAdmin(UserAdminBase):
                 (None, {
                     'fields': ('date_joined','status', 'username', 'password', 'retype_password', 'first_name', 'last_name', 'services', 'distribution_list')
                 }),
-                ('Enterprise Data', {
+                (_('Enterprise Data'), {
                     # 'classes': ('collapse',),
                     'fields': ('authorized_document',),
                 }),
-                ('Email Service Data', {
+                (_('Email Service Data'), {
                     # 'classes': ('collapse',),
                     'fields': ('email', 'email_buzon_size', 'email_message_size', 'email_domain'),
                 }),
-                ('Internet Service Data', {
+                (_('Internet Service Data'), {
                     # 'classes': ('collapse',),
                     'fields': ('internet_domain', 'internet_quota_type', 'internet_quota_size', 'internet_extra_quota_size'),
                 }),
-                ('FTP Service Data', {
+                (_('FTP Service Data'), {
                     # 'classes': ('collapse',),
                     'fields': ('ftp_folder', 'ftp_size'),
                 }),
-                ('Additional Description', {
+                (_('Additional Description'), {
                     # 'classes': ('collapse',),
                     'fields': ('note',),
                 }),
@@ -561,23 +561,23 @@ class UserGuestAdmin(UserAdminBase):
                 (None, {
                     'fields': ('date_joined','status', 'username', 'password', 'first_name', 'last_name', 'services', 'distribution_list')
                 }),
-                ('Enterprise Data', {
+                (_('Enterprise Data'), {
                     # 'classes': ('collapse',),
                     'fields': ('authorized_document',),
                 }),
-                ('Email Service Data', {
+                (_('Email Service Data'), {
                     # 'classes': ('collapse',),
                     'fields': ('email', 'email_buzon_size', 'email_message_size', 'email_domain'),
                 }),
-                ('Internet Service Data', {
+                (_('Internet Service Data'), {
                     # 'classes': ('collapse',),
                     'fields': ('internet_domain', 'internet_quota_type', 'internet_quota_size', 'internet_extra_quota_size'),
                 }),
-                ('FTP Service Data', {
+                (_('FTP Service Data'), {
                     # 'classes': ('collapse',),
                     'fields': ('ftp_folder', 'ftp_size'),
                 }),
-                ('Additional Description', {
+                (_('Additional Description'), {
                     # 'classes': ('collapse',),
                     'fields': ('note',),
                 }),
