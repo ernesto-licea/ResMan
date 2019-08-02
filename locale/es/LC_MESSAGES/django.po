@@ -752,3 +752,7 @@ msgstr "Estructura Empresarial"
 #: Services/apps.py:7
 msgid "Enterprise Services"
 msgstr "Servicios Empresariales"
+
+#: LdapServer/apps.py:14
+msgid "Active Directory Servers"
+msgstr "Servidores de Directiorio Activo"
