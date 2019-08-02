@@ -761,11 +761,13 @@ msgstr "Servidores de Directiorio Activo"
 msgid "User Type"
 msgstr "Tipo de Usuario"
 
-<<<<<<< HEAD
 #: CustomUser/admin.py:162
+#: CustomUser/admin.py:397
+#: CustomUser/admin.py:504
+#: CustomUser/admin.py:617
 msgid "Server Actions"
 msgstr "Acciones del Servidor"
-=======
+
 #: CustomUser/admin.py:318
 #: CustomUser/admin.py:344
 #: CustomUser/admin.py:538
@@ -808,4 +810,3 @@ msgstr "Datos de Servicio FTP"
 #: CustomUser/admin.py:580
 msgid "Additional Description"
 msgstr "Descripción Adicional"
->>>>>>> 001
