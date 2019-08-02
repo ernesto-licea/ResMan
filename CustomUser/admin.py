@@ -159,6 +159,7 @@ class UserAdmin(PolymorphicParentModelAdmin):
             reverse('admin:sync-user', args=[obj.pk]),
             _('Ldap Sync')
         )
+    server_action.short_description = _("Server Actions")
 
     def sync_data(self,request,user_id,*args,**kwargs):
         obj = self.get_object(request, user_id)
