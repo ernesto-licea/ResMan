@@ -3,6 +3,7 @@ import hashlib
 
 from django.conf.urls import url
 from django.contrib import admin, messages
+from ResMan.admin import admin_site
 
 # Register your models here.
 from django.contrib.admin.options import IS_POPUP_VAR
@@ -635,7 +636,7 @@ class UserGuestAdmin(UserAdminBase):
         delete_queryset(self,request,queryset)
 
 
-admin.site.register(User,UserAdmin)
-admin.site.register(UserEnterprise,UserEnterpriseAdmin)
-admin.site.register(UserInstitutional,UserInstitutionalAdmin)
-admin.site.register(UserGuest,UserGuestAdmin)
+admin_site.register(User,UserAdmin)
+admin_site.register(UserEnterprise,UserEnterpriseAdmin)
+admin_site.register(UserInstitutional,UserInstitutionalAdmin)
+admin_site.register(UserGuest,UserGuestAdmin)
