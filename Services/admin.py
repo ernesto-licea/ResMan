@@ -56,6 +56,7 @@ class ServiceAdmin(admin.ModelAdmin):
             reverse('admin:sync-service', args=[obj.pk]),
             _('sync')
         )
+    server_action.short_description = _("Server Actions")
 
     def sync_data(self,request,service_id,*args,**kwargs):
         obj = self.get_object(request,service_id)
