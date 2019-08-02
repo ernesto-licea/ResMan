@@ -261,7 +261,7 @@ msgstr "carpeta ftp"
 
 #: CustomUser/models.py:81 LdapServer/models.py:29
 msgid "ftp size"
-msgstr "tamaño ftp"
+msgstr "campo para tamaño ftp"
 
 #: CustomUser/models.py:82
 msgid "ftp md5 password"
@@ -506,7 +506,7 @@ msgstr "campo para tipo de cuota de internet"
 
 #: LdapServer/models.py:25
 msgid "internet quota size map"
-msgstr "campo para tamaÑo de cuota de internet"
+msgstr "campo para tamaño de cuota de internet"
 
 #: LdapServer/models.py:26
 msgid "internet extra quota size map"
@@ -514,7 +514,7 @@ msgstr "campo para tamaño extra de cutoa de internet"
 
 #: LdapServer/models.py:28
 msgid "ftp home"
-msgstr "inicio ftp"
+msgstr "campo para carpeta ftp"
 
 #: LdapServer/models.py:33
 msgid "Server Connection"
