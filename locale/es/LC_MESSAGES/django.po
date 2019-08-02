@@ -756,3 +756,7 @@ msgstr "Servicios Empresariales"
 #: LdapServer/apps.py:14
 msgid "Active Directory Servers"
 msgstr "Servidores de Directiorio Activo"
+
+#: CustomUser/models.py:117
+msgid "User Type"
+msgstr "Tipo de Usuario"
