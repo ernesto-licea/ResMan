@@ -1,4 +1,5 @@
 {% extends "UserInterface/index.html" %}
+{% load i18n %}
 
 {% block navbar %}
     {% include 'UserInterface/navbar.html' %}
@@ -10,25 +11,32 @@
             <div class="row align-items-center justify-content-center">
 
                 <div class="col-md-6">
-                    <h2 class="text-white pb_font-semibold-italic mb-3">System Features</h2>
+                    <h2 class="text-white pb_font-semibold-italic mb-3">{% trans 'System Features' %}</h2>
                     <div class="sub-heading">
                         <p class="mb-4">
                             <span style="font-size: xx-large">
                                 <i class="icon ion-android-done"></i>
                             </span>
-                            Can check the institutional <a href="#services">services</a> you have approved
+                            {% blocktrans with start='<a href="#services">' end='</a>' %}
+                            Can check the institutional {{ start }}Services{{ end }} you have approved
+                            {% endblocktrans %}
                         </p>
                         <p class="mb-4">
                             <span style="font-size: xx-large">
                                 <i class="icon ion-android-done"></i>
                             </span>
-                            Can check the institutional <a href="#services">distribution list</a> you belong
+                            {% blocktrans with start='<a href="#distribution">' end='</a>' %}
+                            Can check the institutional {{ start }}distribution list{{ end }} you belong
+                            {% endblocktrans %}
                         </p>
                         <p class="mb-4">
                             <span style="font-size: xx-large">
                                 <i class="icon ion-android-done"></i>
                             </span>
-                            Can change your <a href="#services">password</a> easily
+                            {% url 'change_password' as password_url %}
+                            {% blocktrans with start='<a href=' middle='>' end='</a>' %}
+                            Can change your {{ start }}{{ password_url }}{{ middle }}password{{ end }} easily
+                            {% endblocktrans %}
                         </p>
                     </div>
                 </div>
@@ -41,11 +49,11 @@
                     {% if user.is_anonymous %}
                     <form role="form" method="post" class="bg-white rounded pb_form_v1">{% csrf_token %}
 
-                        <h2 class="mb-4 mt-0 text-center">Enter your credentials</h2>
+                        <h2 class="mb-4 mt-0 text-center">{% trans 'Enter your credentials' %}</h2>
 
                         {% if error %}
                             <div role="alert" class="alert alert-danger">
-                              Invalid Username or Password.
+                              {% trans 'Invalid Username or Password' %}.
                             </div>
                         {% endif %}
 
@@ -74,11 +82,11 @@
                     {% else %}
                         <div class="bg-white rounded pb_form_v1">
 
-                            <h2 class="mb-4 mt-0 text-center">User Information</h2>
+                            <h2 class="mb-4 mt-0 text-center">{% trans 'User Information' %}</h2>
 
                             <div class="row">
                                 <div class="col-sm-7 bg-info border border-info">
-                                    <span class="font-weight-bold">Status:</span>
+                                    <span class="font-weight-bold">{% trans 'Status' %}:</span>
                                 </div>
                                 <div class="col-sm-5 bg-light border border-info">{{ user.status }}</div>
                             </div>
@@ -87,7 +95,7 @@
 
                             <div class="row">
                                 <div class="col-sm-7 bg-info border border-info">
-                                    <span class="font-weight-bold">First Name:</span>
+                                    <span class="font-weight-bold">{% trans 'First Name' %}:</span>
                                 </div>
                                 <div class="col-sm-5 bg-light border border-info">{{ user.first_name }}</div>
                             </div>
@@ -96,7 +104,7 @@
 
                             <div class="row">
                                 <div class="col-sm-7 bg-info border border-info">
-                                    <span class="font-weight-bold">Last Name:</span>
+                                    <span class="font-weight-bold">{% trans 'Last Name' %}:</span>
                                 </div>
                                 <div class="col-sm-5 bg-light border border-info">{{ user.last_name }}</div>
                             </div>
@@ -105,7 +113,7 @@
 
                             <div class="row">
                                 <div class="col-sm-7 bg-info border border-info">
-                                    <span class="font-weight-bold">Username:</span>
+                                    <span class="font-weight-bold">{% trans 'Username' %}:</span>
                                 </div>
                                 <div class="col-sm-5 bg-light border border-info">{{ user.username }}</div>
                             </div>
@@ -114,7 +122,7 @@
 
                             <div class="row">
                                 <div class="col-sm-7 bg-info border border-info">
-                                    <span class="font-weight-bold">Enterprise Number:</span>
+                                    <span class="font-weight-bold">{% trans 'Enterprise Number' %}:</span>
 
                                 </div>
                                 <div class="col-sm-5 bg-light border border-info">{{ user.enterprise_number }}</div>
@@ -124,7 +132,7 @@
 
                             <div class="row">
                                 <div class="col-sm-7 bg-info border border-info">
-                                    <span class="font-weight-bold">CI Number:</span>
+                                    <span class="font-weight-bold">{% trans 'CI Number' %}:</span>
                                 </div>
                                 <div class="col-sm-5 bg-light border border-info">{{ user.ci_number }}</div>
                             </div>
@@ -133,7 +141,7 @@
 
                             <div class="row">
                                 <a class="btn btn-primary btn-lg btn-block pb_btn-pill  btn-shadow-blue" href="{% url 'change_password' %}">
-                                    Change Password
+                                    {% trans 'Change Password' %}
                                 </a>
                             </div>
                         </div>
@@ -151,12 +159,12 @@
     <section class="pb_section bg-light pb_slant-white pb_pb-250" id="services">
         <div class="container">
             <div class="row">
-                <h1>Services</h1>
+                <h1>{% trans 'Services' %}</h1>
                 <table class="table table-striped">
                     <thead class="thead-dark">
                         <tr>
-                            <th>Service</th>
-                            <th>Description</th>
+                            <th>{% trans 'Service' %}</th>
+                            <th>{% trans 'Description' %}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -178,12 +186,12 @@
     <section class="pb_section bg-light pb_slant-white pb_pb-250" id="distribution">
         <div class="container">
             <div class="row">
-                <h1>Distribution List</h1>
+                <h1>{% trans 'Distribution List' %}</h1>
                 <table class="table table-striped">
                     <thead class="thead-dark">
                         <tr>
-                            <th>List Name</th>
-                            <th>Description</th>
+                            <th>{% trans 'List Name' %}</th>
+                            <th>{% trans 'Description' %}</th>
                         </tr>
                     </thead>
                     <tbody>

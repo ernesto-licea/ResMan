@@ -1,19 +1,18 @@
-{% load static %}
+{% load static %}{% load i18n %}
+{#{% language 'es' %}#}
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-		<title>ResMan- Sistema de Gestion de Usuarios</title>
-		<meta name="description" content="Free Bootstrap 4 Template by uicookies.com">
-		<meta name="keywords" content="Free website templates, Free bootstrap themes, Free template, Free bootstrap, Free website template">
+		<title>{% trans 'ResMan- User Management System' %}</title>
+		<meta name="description" content="User Management System">
+		<meta name="keywords" content="Management, System, Users, Services">
 
-{#        <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,400i,600|Montserrat:200,300,400" rel="stylesheet">#}
 
 		<link rel="stylesheet" href="{% static 'UserInterface/assets/css/bootstrap/bootstrap.css' %}">
         <link rel="stylesheet" href="{% static 'UserInterface/assets/fonts/ionicons/css/ionicons.min.css' %}">
-{#        <link rel="stylesheet" href="{% static 'UserInterface/assets/fonts/law-icons/font/flaticon.css' %}">#}
 
         <link rel="stylesheet" href="{% static 'UserInterface/assets/fonts/fontawesome/css/font-awesome.min.css' %}">
 
@@ -56,10 +55,10 @@
             <div class="row">
               <div class="col text-center">
                 <p class="pb_font-14">
-                    &copy; 2019. All Rights Reserved.
+                    &copy; 2019. {% trans 'All Rights Reserved' %}.
                     <br>
-                        <a href="#section-home">ResMan - Sistema de Gestion de Usuarios</a>
-                    by Ernesto Licea Martin
+                        <a href="#section-home">{% trans 'ResMan - Sistema de Gestion de Usuarios' %}</a>
+                    {% trans 'by' %} Ernesto Licea Martin
                 </p>
               </div>
             </div>
@@ -79,3 +78,4 @@
         <script src="{% static 'UserInterface/assets/js/main.js' %}"></script>
     </body>
 </html>
+{#{% endlanguage %}#}
