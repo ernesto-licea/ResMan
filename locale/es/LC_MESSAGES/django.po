@@ -702,8 +702,8 @@ msgid "List Name"
 msgstr "Nombre de Lista"
 
 #: UserInterface/templates/UserInterface/index.html:8
-msgid "ResMan - Sistema de Gestion de Usuarios"
-msgstr "ResMan- Sistema de Gestion de Usuarios"
+msgid "ResMan - User Management System"
+msgstr "ResMan - Sistema de Gestion de Usuarios"
 
 #: UserInterface/templates/UserInterface/index.html:57
 msgid "All Rights Reserved"
