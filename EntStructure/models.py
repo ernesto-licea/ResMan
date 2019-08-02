@@ -20,7 +20,7 @@ class Area(models.Model):
 
 class Department(models.Model):
     is_active = models.BooleanField(_('is active'), default=True)
-    area = models.ForeignKey(Area,on_delete=models.CASCADE)
+    area = models.ForeignKey(Area,on_delete=models.CASCADE,verbose_name=_('Area'))
     name = models.CharField(_('name'), max_length=50, default="", unique=True)
     responsible = models.CharField(_('responsible'), max_length=100, default="", blank=True)
     slugname = models.SlugField(_('slugname'),default="")
