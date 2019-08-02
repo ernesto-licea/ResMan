@@ -55,6 +55,7 @@ class LdapServerAdmin(admin.ModelAdmin):
             reverse('admin:test-server', args=[obj.pk]),
             _('Test Connection')
         )
+    server_action.short_description = _("Server Actions")
 
     def sync_data(self,request,ldap_server_id,*args,**kwargs):
         obj = self.get_object(request,ldap_server_id)
