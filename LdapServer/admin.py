@@ -8,6 +8,7 @@ from django.utils.http import urlquote
 from django.utils.translation import gettext_lazy as _
 
 from CustomUser.models import UserEnterprise, UserInstitutional, UserGuest
+from ResMan.admin import admin_site
 from Services.models import Service
 from .models import LdapServer
 
@@ -163,4 +164,4 @@ class LdapServerAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         super(LdapServerAdmin,self).save_model(request,obj,form,change)
 
-admin.site.register(LdapServer,LdapServerAdmin)
+admin_site.register(LdapServer,LdapServerAdmin)

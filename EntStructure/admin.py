@@ -1,13 +1,7 @@
-from django.conf.urls import url
-from django.contrib import admin, messages
-from django.contrib.admin.utils import quote
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-from django.utils.html import format_html
-from django.utils.http import urlquote
+from django.contrib import admin
 from django.utils.text import slugify
-from django.utils.translation import gettext_lazy as _
 
+from ResMan.admin import admin_site
 from .models import Area, Department
 
 
@@ -30,5 +24,5 @@ class DepartmentAdmin(admin.ModelAdmin):
         super(DepartmentAdmin,self).save_model(request,obj,form,change)
 
 
-admin.site.register(Area,AreaAdmin)
-admin.site.register(Department,DepartmentAdmin)
+admin_site.register(Area,AreaAdmin)
+admin_site.register(Department,DepartmentAdmin)

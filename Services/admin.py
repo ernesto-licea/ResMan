@@ -8,6 +8,7 @@ from django.utils.http import urlquote
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _, gettext_lazy
 
+from ResMan.admin import admin_site
 from ResMan.admin_actions import delete_selected_services
 from Services.forms import ServiceForm
 from .models import Service
@@ -122,4 +123,4 @@ class ServiceAdmin(admin.ModelAdmin):
         )
         return message
 
-admin.site.register(Service,ServiceAdmin)
+admin_site.register(Service,ServiceAdmin)
