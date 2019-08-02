@@ -394,6 +394,7 @@ class UserEnterpriseAdmin(UserAdminBase):
             reverse('admin:sync-user-enterprise', args=[obj.pk]),
             _('Ldap Sync')
         )
+    server_action.short_description = _("Server Actions")
 
     def sync_data(self,request,user_id,*args,**kwargs):
         obj = self.get_object(request, user_id)
@@ -500,6 +501,7 @@ class UserInstitutionalAdmin(UserAdminBase):
             reverse('admin:sync-user-institutional', args=[obj.pk]),
             _('Ldap Sync')
         )
+    server_action.short_description = _("Server Actions")
 
     def sync_data(self, request, user_id, *args, **kwargs):
         obj = self.get_object(request, user_id)
@@ -612,6 +614,7 @@ class UserGuestAdmin(UserAdminBase):
             reverse('admin:sync-user-guest', args=[obj.pk]),
             _('Ldap Sync')
         )
+    server_action.short_description = _("Server Actions")
 
     def sync_data(self, request, user_id, *args, **kwargs):
         obj = self.get_object(request, user_id)
