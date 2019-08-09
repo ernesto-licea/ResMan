@@ -92,7 +92,7 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
+AUTH_PASSWORD_VALIDATORS =[
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
@@ -104,6 +104,21 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+    {
+        'NAME': 'CustomUser.password_validation.RepeatPasswordAmount',
+        'OPTIONS':{
+            'num_amount':3
+        }
+    },
+    {
+        'NAME': 'CustomUser.password_validation.MinimumNumAmount',
+    },
+    {
+        'NAME': 'CustomUser.password_validation.MinimumUpperLetterAmount',
+    },
+    {
+        'NAME': 'CustomUser.password_validation.MinimumSymbolAmount',
     },
 ]
 
@@ -119,7 +134,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 LANGUAGES = [
     ('en', 'English'),
