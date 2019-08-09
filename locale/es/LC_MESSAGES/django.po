@@ -1,0 +1,823 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#: CustomUser/models.py:90 CustomUser/models.py:100
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-08-01 14:36-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: CustomUser/admin.py:39 CustomUser/admin.py:259 ResMan/admin_actions.py:35
+msgid "The {} \"{}\" was successfully deleted from ldap servers."
+msgstr "El {} \"{}\" fue elimindado satisfactoriamente de los servidores Ldap"
+
+#: CustomUser/admin.py:51
+#, python-format
+msgid "%(name)s object with primary key %(key)r does not exist."
+msgstr "El objeto %(name)s con llave primaria %(key)r no existe"
+
+#: CustomUser/admin.py:79 UserInterface/views.py:130
+msgid "Password changed successfully."
+msgstr "Contraseña cambiada satisfactoriamente"
+
+#: CustomUser/admin.py:101
+#, python-format
+msgid "Change password: %s"
+msgstr "Cambiar contraseña: %s"
+
+#: CustomUser/admin.py:156 CustomUser/admin.py:390 CustomUser/admin.py:496
+#: CustomUser/admin.py:608
+msgid "Reset Password"
+msgstr "Resetear Contraseña"
+
+#: CustomUser/admin.py:160 CustomUser/admin.py:394 CustomUser/admin.py:500
+#: CustomUser/admin.py:612
+msgid "Ldap Sync"
+msgstr "Sinc Ldap"
+
+#: CustomUser/admin.py:192 CustomUser/admin.py:247
+msgid "Data from user {} was successfully synchronized with ldap servers."
+msgstr "Los datos del usuario {} fueron sincronizados satisfactoriamente con los servidores Ldap"
+
+#: CustomUser/forms.py:20
+msgid "No password set."
+msgstr "No fue establecida contraseña."
+
+#: CustomUser/forms.py:25
+msgid "Invalid password format or unknown hashing algorithm."
+msgstr "Formato de contraseña invalido o algoritmo de hash desconocido"
+
+#: CustomUser/forms.py:60
+msgid "If you select email service this field is required."
+msgstr "Si el servicio email es seleccionado este campo es requerido"
+
+#: CustomUser/forms.py:67
+msgid "If you select internet service this field is required."
+msgstr "Si el servicio internet es seleccionado este campo es requerido"
+
+#: CustomUser/forms.py:74
+msgid "If you select ftp service this field is required."
+msgstr "Si el servicio ftp es seleccionado este campo es requerido."
+
+#: CustomUser/forms.py:89
+msgid "This username is being used as Service name."
+msgstr "Este nombre de usuario esta siendo usado como nombre de un Servicio"
+
+#: CustomUser/forms.py:100
+msgid "Invalid ci number."
+msgstr "Número CI invalido."
+
+#: CustomUser/forms.py:108
+msgid "Invalid enterprise number."
+msgstr "Número de solapín invalido."
+
+#: CustomUser/forms.py:117
+msgid "Invalid phone number."
+msgstr "Número de teléfono invalido."
+
+#: CustomUser/forms.py:125
+msgid "Invalid extension number."
+msgstr "Número de extensión invalido."
+
+#: CustomUser/forms.py:133
+msgid "Retype Password"
+msgstr "Confirmar Contraseña"
+
+#: CustomUser/forms.py:136
+msgid "Confirm the previous password."
+msgstr "Confirme la contraseña anterior."
+
+#: CustomUser/forms.py:158
+msgid "Passwords do not match."
+msgstr "Las contraseñas no coinciden."
+
+#: CustomUser/forms.py:164
+msgid "Password"
+msgstr "Contraseña"
+
+#: CustomUser/forms.py:166
+msgid ""
+"Raw passwords are not stored, so there is no way to see this user's "
+"password, but you can change the password using <a href=\"{}\">this form</a>."
+msgstr ""
+"Contraseñas en texto plano no son almacendas, por lo que no hay forma de visualizarlas,"
+"esta puede ser cambiada usando <a href=\"{}\">este formulario</a>."
+
+#: CustomUser/models.py:18
+msgid "password"
+msgstr "contraseña"
+
+#: CustomUser/models.py:19
+msgid "date password"
+msgstr "fecha de la contraseña"
+
+#: CustomUser/models.py:23
+msgid "password history"
+msgstr "histórico de contraseña"
+
+#: CustomUser/models.py:24
+msgid "passwords history"
+msgstr "históricos de contraseñas"
+
+#: CustomUser/models.py:42
+msgid "active"
+msgstr "activo"
+
+#: CustomUser/models.py:42
+msgid "Active"
+msgstr "Activo"
+
+#: CustomUser/models.py:43
+msgid "blocked"
+msgstr "bloqueado"
+
+#: CustomUser/models.py:43
+msgid "Blocked"
+msgstr "Bloqueado"
+
+#: CustomUser/models.py:44
+msgid "inactive"
+msgstr "inactivo"
+
+#: CustomUser/models.py:44
+msgid "Inactive"
+msgstr "Inactivo"
+
+#: CustomUser/models.py:48 CustomUser/models.py:54
+msgid "local"
+msgstr "local"
+
+#: CustomUser/models.py:48 CustomUser/models.py:54
+msgid "Local"
+msgstr "Local"
+
+#: CustomUser/models.py:49 CustomUser/models.py:55
+msgid "national"
+msgstr "nacional"
+
+#: CustomUser/models.py:49 CustomUser/models.py:55
+msgid "National"
+msgstr "Nacional"
+
+#: CustomUser/models.py:50 CustomUser/models.py:56
+msgid "international"
+msgstr "internacional"
+
+#: CustomUser/models.py:50 CustomUser/models.py:56
+msgid "International"
+msgstr "Internacional"
+
+#: CustomUser/models.py:60
+msgid "daily"
+msgstr "diario"
+
+#: CustomUser/models.py:60
+msgid "Daily"
+msgstr "Diario"
+
+#: CustomUser/models.py:61
+msgid "weekly"
+msgstr "semanal"
+
+#: CustomUser/models.py:61
+msgid "Weekly"
+msgstr "Semanal"
+
+#: CustomUser/models.py:62
+msgid "monthly"
+msgstr "mensual"
+
+#: CustomUser/models.py:62
+msgid "Monthly"
+msgstr "Mensual"
+
+#: CustomUser/models.py:65
+msgid "Informatics Staff"
+msgstr "Equipo de Informáticos"
+
+#: CustomUser/models.py:67
+msgid "Designates whether the user can log into this admin site."
+msgstr "Define si el usuario puede entrar al sitio de administración"
+
+#: CustomUser/models.py:69
+msgid "status"
+msgstr "estado"
+
+#: CustomUser/models.py:70
+msgid "password date"
+msgstr "fecha de contraseña"
+
+#: CustomUser/models.py:71
+msgid "first name"
+msgstr "nombre"
+
+#: CustomUser/models.py:72
+msgid "last name"
+msgstr "apellidos"
+
+#: CustomUser/models.py:73
+msgid "email buzon size"
+msgstr "tamaño del buzón de correos"
+
+#: CustomUser/models.py:74
+msgid "email messages size"
+msgstr "tamaño de los mensajes de correo"
+
+#: CustomUser/models.py:75
+msgid "email domain reach"
+msgstr "alcance del correo"
+
+#: CustomUser/models.py:76
+msgid "internet quota type"
+msgstr "tipo de cuota de internet"
+
+#: CustomUser/models.py:77
+msgid "internet quota size"
+msgstr "tamaño de cuota de internet"
+
+#: CustomUser/models.py:78
+msgid "internet extra quota size"
+msgstr "tamaño extra de cuota de internet"
+
+#: CustomUser/models.py:79
+msgid "internet domain reach"
+msgstr "alcance de internet"
+
+#: CustomUser/models.py:80
+msgid "ftp folder"
+msgstr "carpeta ftp"
+
+#: CustomUser/models.py:81 LdapServer/models.py:29
+msgid "ftp size"
+msgstr "campo para tamaño ftp"
+
+#: CustomUser/models.py:82
+msgid "ftp md5 password"
+msgstr "contraseña md5 del ftp"
+
+#: CustomUser/models.py:83
+msgid "session Key"
+msgstr "llave de sesión"
+
+#: CustomUser/models.py:86 Services/models.py:41
+msgid "services"
+msgstr "servicios"
+
+#: CustomUser/models.py:96
+msgid "distribution list"
+msgstr "lista de distribución"
+
+#: CustomUser/models.py:104
+msgid "Full Name"
+msgstr "Nombre Completo"
+
+#: CustomUser/models.py:110
+msgid "Institutional"
+msgstr "Institucional"
+
+#: CustomUser/models.py:112
+msgid "Enterprise"
+msgstr "Empresarial"
+
+#: CustomUser/models.py:114
+msgid "Guest"
+msgstr "Invitado"
+
+#: CustomUser/models.py:116
+msgid "Superuser"
+msgstr "Superusuario"
+
+#: CustomUser/models.py:162
+msgid "institutional user"
+msgstr "usuario institucional"
+
+#: CustomUser/models.py:163
+msgid "institutional users"
+msgstr "usuarios institucionales"
+
+#: CustomUser/models.py:170
+msgid "enterprise number"
+msgstr "solapín"
+
+#: CustomUser/models.py:171
+msgid "ci number"
+msgstr "número de CI"
+
+#: CustomUser/models.py:172
+msgid "phone number"
+msgstr "número de teléfono"
+
+#: CustomUser/models.py:173
+msgid "extension number"
+msgstr "número de extensión"
+
+#: CustomUser/models.py:174 CustomUser/models.py:185
+msgid "authorized document"
+msgstr "documento que autoriza"
+
+#: CustomUser/models.py:175 CustomUser/models.py:186
+msgid "note"
+msgstr "nota"
+
+#: CustomUser/models.py:181
+msgid "enterprise user"
+msgstr "usuario empresarial"
+
+#: CustomUser/models.py:182
+msgid "enterprise users"
+msgstr "usuarios empresariales"
+
+#: CustomUser/models.py:190
+msgid "guest user"
+msgstr "usuario invitado"
+
+#: CustomUser/models.py:191
+msgid "guest users"
+msgstr "usuarios invitados"
+
+#: CustomUser/password_validation.py:18
+#, python-format
+msgid "This password must contain at least %(num_amount)d number%(plural)s."
+msgstr "Su contraseña debe contener al menos %(num_amount)d número%(plural)s."
+
+#: CustomUser/password_validation.py:28
+msgid "Your password must contain at least %(num_amount)d number%(plural)s."
+msgstr "Su contraseña debe contener al menos %(num_amount)d número%(plural)s."
+
+#: CustomUser/password_validation.py:42
+#, python-format
+msgid ""
+"This password must contain at least %(num_amount)d upper letter%(plural)s."
+msgstr "Su contraseña debe contener al menos %(num_amount)d mayúscula%(plural)s."
+
+#: CustomUser/password_validation.py:52
+#, python-format
+msgid ""
+"Your password must contain at least %(num_amount)d upper letter%(plural)s."
+msgstr "Su contraseña debe contener al menos %(num_amount)d mayúscula%(plural)s."
+
+#: CustomUser/password_validation.py:66
+#, python-format
+msgid "This password must contain at least %(num_amount)d symbol%(plural)s."
+msgstr "Su contraseña debe contener al menos %(num_amount)d símbolo%(plural)s."
+
+#: CustomUser/password_validation.py:76
+#, python-format
+msgid "Your password must contain at least %(num_amount)d symbol%(plural)s."
+msgstr "Esta contraseña debe contener al menos %(num_amount)d símbolo%(plural)s."
+
+#: CustomUser/password_validation.py:93
+msgid "This password can not be the current password."
+msgstr "Su contraseña no pude ser la misma usada actualmente"
+
+#: CustomUser/password_validation.py:100
+#, python-format
+msgid ""
+"This password can not be the current password or the last %(num_amount)s password"
+"%(plural)s used previously."
+msgstr "Su contraseña no pude ser la actual o las %(num_amount)s usada%(plural)s anteriormente."
+
+#: CustomUser/password_validation.py:120
+#, python-format
+msgid ""
+"Your can not use the current password or the last %(num_amount)s password"
+"%(plural)s used previously."
+msgstr "Su contraseña no pude ser la actual o las %(num_amount)s usada%(plural)s anteriormente."
+
+#: EntStructure/models.py:8 EntStructure/models.py:22 LdapServer/models.py:8
+#: Services/models.py:13
+msgid "is active"
+msgstr "está activo"
+
+#: EntStructure/models.py:9 EntStructure/models.py:24 LdapServer/models.py:9
+#: Services/models.py:14
+msgid "name"
+msgstr "nombre"
+
+#: EntStructure/models.py:10 EntStructure/models.py:25
+msgid "responsible"
+msgstr "responsable"
+
+#: EntStructure/models.py:11 EntStructure/models.py:26 Services/models.py:18
+msgid "slugname"
+msgstr "slugname"
+
+#: EntStructure/models.py:18
+msgid "enterprise area"
+msgstr "Área Empresarial"
+
+#: EntStructure/models.py:19
+msgid "enterprise areas"
+msgstr "áreas empresariales"
+
+#: EntStructure/models.py:33
+msgid "enterprise department"
+msgstr "departamento empresarial"
+
+#: EntStructure/models.py:34
+msgid "enterprise departments"
+msgstr "departamentos empresariales"
+
+#: LdapServer/admin.py:52 Services/admin.py:57
+msgid "sync"
+msgstr "sinc"
+
+#: LdapServer/admin.py:56
+msgid "Test Connection"
+msgstr "Probar Conexión"
+
+#: LdapServer/admin.py:115
+msgid "Data was sent to server {} successfully."
+msgstr "Los datos fueron enviados al servidor {} correctamente."
+
+#: LdapServer/admin.py:151
+msgid "Connection to server {} was successfully established."
+msgstr "Conexión al servidor {} fue establecida satisfactoriamente."
+
+#: LdapServer/ldap/actions.py:34 LdapServer/ldap/actions.py:58
+#: LdapServer/ldap/actions.py:86 LdapServer/ldap/actions.py:115
+#: LdapServer/ldap/actions.py:139
+msgid "Active Directory {} says: {}."
+msgstr "Directorio Activo {} responde: {}."
+
+#: LdapServer/models.py:10
+msgid "domain name"
+msgstr "nombre de dominio"
+
+#: LdapServer/models.py:11
+msgid "domain"
+msgstr "dominio"
+
+#: LdapServer/models.py:12
+msgid "search base"
+msgstr "base de búsqueda"
+
+#: LdapServer/models.py:13
+msgid "server host"
+msgstr "servidor"
+
+#: LdapServer/models.py:14
+msgid "server port"
+msgstr "puerto"
+
+#: LdapServer/models.py:15
+msgid "start tls"
+msgstr "usar tls"
+
+#: LdapServer/models.py:16
+msgid "admin username"
+msgstr "usuario administrador"
+
+#: LdapServer/models.py:17
+msgid "admin password"
+msgstr "contraseña"
+
+#: LdapServer/models.py:19
+msgid "email domain map"
+msgstr "campo para dominio del correo"
+
+#: LdapServer/models.py:20
+msgid "email buzon size map"
+msgstr "campo para tamaño del buzón de correo"
+
+#: LdapServer/models.py:21
+msgid "email message size map"
+msgstr "campo para tamaño de los mensajes de correo"
+
+#: LdapServer/models.py:23
+msgid "internet domain map"
+msgstr "campo para dominio de internet"
+
+#: LdapServer/models.py:24
+msgid "internet quota type map"
+msgstr "campo para tipo de cuota de internet"
+
+#: LdapServer/models.py:25
+msgid "internet quota size map"
+msgstr "campo para tamaño de cuota de internet"
+
+#: LdapServer/models.py:26
+msgid "internet extra quota size map"
+msgstr "campo para tamaño extra de cutoa de internet"
+
+#: LdapServer/models.py:28
+msgid "ftp home"
+msgstr "campo para carpeta ftp"
+
+#: LdapServer/models.py:33
+msgid "Server Connection"
+msgstr "Conexión del Servidor"
+
+#: LdapServer/models.py:43
+msgid "active directory server"
+msgstr "servidor de directorio activo"
+
+#: LdapServer/models.py:44
+msgid "active directory servers"
+msgstr "servidores de directorio activo"
+
+#: ResMan/admin_actions.py:41
+#, python-format
+msgid "Successfully deleted %(count)d %(items)s."
+msgstr "Eliminado satisfactoriamente %(count)d %(items)s."
+
+#: ResMan/admin_actions.py:50
+#, python-format
+msgid "Cannot delete %(name)s"
+msgstr "No puede eliminar %(name)s"
+
+#: ResMan/admin_actions.py:52
+msgid "Are you sure?"
+msgstr "Está Seguro?"
+
+#: Services/admin.py:91
+msgid "The service \"{}\" was successfully deleted from ldap servers."
+msgstr "El servicio \"{}\" fue eliminado satisfactoriamente de los servidores ldap"
+
+#: Services/admin.py:106
+#, python-format
+msgid "Delete selected %(verbose_name_plural)s"
+msgstr "Eliminar %(verbose_name_plural)s seleccionados"
+
+#: Services/admin.py:119
+msgid "Data from service {} was successfully synchronized with ldap servers."
+msgstr "Los datos del servicio {} fueron sincronizados satisfactoriamente con los servidores ldap."
+
+#: Services/forms.py:15
+msgid "If Type of Service is Email Distribution List this field is required."
+msgstr "Si el tipo de servicio es lista de distribución este campo es requerido."
+
+#: Services/models.py:9
+#: UserInterface/templates/UserInterface/dashboard.html:166
+#: UserInterface/templates/UserInterface/password.html:87
+msgid "Service"
+msgstr "Servicio"
+
+#: Services/models.py:10
+msgid "Email Distribution List"
+msgstr "Lista de Distribución de Correos"
+
+#: Services/models.py:15
+msgid "Type of Service"
+msgstr "Tipo de Servicio"
+
+#: Services/models.py:16
+msgid "email"
+msgstr "correo"
+
+#: Services/models.py:17
+#: UserInterface/templates/UserInterface/dashboard.html:167
+#: UserInterface/templates/UserInterface/dashboard.html:194
+#: UserInterface/templates/UserInterface/password.html:88
+#: UserInterface/templates/UserInterface/password.html:116
+msgid "Description"
+msgstr "Descripción"
+
+#: Services/models.py:40
+msgid "service"
+msgstr "servicio"
+
+#: UserInterface/forms.py:28 UserInterface/forms.py:30
+msgid "New password"
+msgstr "Nueva contraseña"
+
+#: UserInterface/forms.py:39 UserInterface/forms.py:42
+msgid "New password confirmation"
+msgstr "Confirmación de nueva contraseña"
+
+#: UserInterface/forms.py:49 UserInterface/forms.py:53
+msgid "Old password"
+msgstr "Contraseña Anterior"
+
+#: UserInterface/templates/UserInterface/dashboard.html:14
+msgid "System Features"
+msgstr "Características del Sistema"
+
+#: UserInterface/templates/UserInterface/dashboard.html:20
+#, python-format
+msgid ""
+"\n"
+"                            Can check the institutional %(start)sServices"
+"%(end)s you have approved\n"
+"                            "
+msgstr ""
+"\n"
+"                            Puede chequear los %(start)sServicios"
+"%(end)s institucionales que le fueron aprobados\n"
+"                            "
+
+#: UserInterface/templates/UserInterface/dashboard.html:28
+#, python-format
+msgid ""
+"\n"
+"                            Can check the institutional "
+"%(start)sdistribution list%(end)s you belong\n"
+"                            "
+msgstr ""
+"\n"
+"                            Puede chequear las "
+"%(start)slistas de distribución%(end)s institucionales a las que pertenece\n"
+"                            "
+
+#: UserInterface/templates/UserInterface/dashboard.html:37
+#, python-format
+msgid ""
+"\n"
+"                            Can change your %(start)s%(password_url)s"
+"%(middle)spassword%(end)s easily\n"
+"                            "
+msgstr ""
+"\n"
+"                            Puede cambiar su %(start)s%(password_url)s"
+"%(middle)scontraseña%(end)s de forma sencilla\n"
+"                            "
+
+#: UserInterface/templates/UserInterface/dashboard.html:52
+msgid "Enter your credentials"
+msgstr "Entre sus credenciales"
+
+#: UserInterface/templates/UserInterface/dashboard.html:56
+msgid "Invalid Username or Password"
+msgstr "Nombre de usuario o contraseña inválida"
+
+#: UserInterface/templates/UserInterface/dashboard.html:85
+msgid "User Information"
+msgstr "Información de Usuario"
+
+#: UserInterface/templates/UserInterface/dashboard.html:89
+msgid "Status"
+msgstr "Estado"
+
+#: UserInterface/templates/UserInterface/dashboard.html:98
+msgid "First Name"
+msgstr "Nombre"
+
+#: UserInterface/templates/UserInterface/dashboard.html:107
+msgid "Last Name"
+msgstr "Apellidos"
+
+#: UserInterface/templates/UserInterface/dashboard.html:116
+msgid "Username"
+msgstr "Usuario"
+
+#: UserInterface/templates/UserInterface/dashboard.html:125
+msgid "Enterprise Number"
+msgstr "Solapín"
+
+#: UserInterface/templates/UserInterface/dashboard.html:135
+msgid "CI Number"
+msgstr "Número de CI"
+
+#: UserInterface/templates/UserInterface/dashboard.html:144
+msgid "Change Password"
+msgstr "Cambiar Contraseña"
+
+#: UserInterface/templates/UserInterface/dashboard.html:162
+#: UserInterface/templates/UserInterface/navbar.html:15
+#: UserInterface/templates/UserInterface/password.html:83
+msgid "Services"
+msgstr "Servicios"
+
+#: UserInterface/templates/UserInterface/dashboard.html:189
+#: UserInterface/templates/UserInterface/navbar.html:16
+#: UserInterface/templates/UserInterface/password.html:111
+msgid "Distribution List"
+msgstr "Listas de Distibución"
+
+#: UserInterface/templates/UserInterface/dashboard.html:193
+#: UserInterface/templates/UserInterface/password.html:115
+msgid "List Name"
+msgstr "Nombre de Lista"
+
+#: UserInterface/templates/UserInterface/index.html:8
+msgid "ResMan - User Management System"
+msgstr "ResMan - Sistema de Gestion de Usuarios"
+
+#: UserInterface/templates/UserInterface/index.html:57
+msgid "All Rights Reserved"
+msgstr "Todos los derechos reservados"
+
+#: UserInterface/templates/UserInterface/index.html:59
+msgid "ResMan- User Management System"
+msgstr "ResMan - Sistema de Gestion de Usuarios"
+
+#: UserInterface/templates/UserInterface/index.html:60
+msgid "by"
+msgstr "por"
+
+#: UserInterface/templates/UserInterface/navbar.html:4
+msgid "User Management System"
+msgstr "Sistema de Gestion de Usuarios"
+
+#: UserInterface/templates/UserInterface/navbar.html:12
+msgid "Home"
+msgstr "Inicio"
+
+#: UserInterface/templates/UserInterface/navbar.html:19
+msgid "Logout"
+msgstr "Salir"
+
+#: UserInterface/templates/UserInterface/password.html:14
+msgid "Password Requirements"
+msgstr "Requerimientos de la Contraseña"
+
+#: UserInterface/templates/UserInterface/password.html:27
+msgid "Change your password"
+msgstr "Cambie su contraseña"
+
+#: UserInterface/templates/UserInterface/password.html:69
+msgid "Change"
+msgstr "Cambiar"
+
+#: CustomUser/apps.py:7
+msgid "User Data"
+msgstr "Datos de Usuario"
+
+#: EntStructure/apps.py:7
+msgid "Enterprise Structure"
+msgstr "Estructura Empresarial"
+
+#: Services/apps.py:7
+msgid "Enterprise Services"
+msgstr "Servicios Empresariales"
+
+#: LdapServer/apps.py:14
+msgid "Active Directory Servers"
+msgstr "Servidores de Directiorio Activo"
+
+#: CustomUser/models.py:117
+msgid "User Type"
+msgstr "Tipo de Usuario"
+
+#: CustomUser/admin.py:162
+#: CustomUser/admin.py:397
+#: CustomUser/admin.py:504
+#: CustomUser/admin.py:617
+#: Services/admin.py:59
+#: LdapServer/admin.py:58
+msgid "Server Actions"
+msgstr "Acciones del Servidor"
+
+#: CustomUser/admin.py:318
+#: CustomUser/admin.py:344
+#: CustomUser/admin.py:538
+#: CustomUser/admin.py:564
+msgid "Enterprise Data"
+msgstr "Datos Empresariales"
+
+#: CustomUser/admin.py:322
+#: CustomUser/admin.py:348
+#: CustomUser/admin.py:433
+#: CustomUser/admin.py:456
+#: CustomUser/admin.py:542
+#: CustomUser/admin.py:568
+msgid "Email Service Data"
+msgstr "Datos de Servicio de Correo Electrónico"
+
+#: CustomUser/admin.py:326
+#: CustomUser/admin.py:352
+#: CustomUser/admin.py:437
+#: CustomUser/admin.py:460
+#: CustomUser/admin.py:546
+#: CustomUser/admin.py:572
+msgid "Internet Service Data"
+msgstr "Datos de Servicio de Internet"
+
+#: CustomUser/admin.py:330
+#: CustomUser/admin.py:356
+#: CustomUser/admin.py:441
+#: CustomUser/admin.py:464
+#: CustomUser/admin.py:550
+#: CustomUser/admin.py:575
+msgid "FTP Service Data"
+msgstr "Datos de Servicio FTP"
+
+#: CustomUser/admin.py:334
+#: CustomUser/admin.py:360
+#: CustomUser/admin.py:445
+#: CustomUser/admin.py:468
+#: CustomUser/admin.py:554
+#: CustomUser/admin.py:580
+msgid "Additional Description"
+msgstr "Descripción Adicional"
+
+#: CustomUser/models.py:117
+#: EntEstructure/models.py.py:23
+msgid "Area"
+msgstr "Área"
+
+#: CustomUser/models.py:118
+msgid "Department"
+msgstr "Departamento"
