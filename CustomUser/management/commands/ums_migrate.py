@@ -37,7 +37,8 @@ class Command(BaseCommand):
                 name="Todos",
                 service_type="distribution",
                 email="todos@cnic.cu",
-                description="Lista de distribución que incluye todos los usuarios del sistema."
+                description="Lista de distribución que incluye todos los usuarios del sistema.",
+                slugname='todos'
             )
 
             self.stdout.write(self.style.SUCCESS("Distribution List: %s" %todos.name))
