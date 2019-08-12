@@ -12,13 +12,35 @@ from Services.models import Service
 class Command(BaseCommand):
     help = 'Migrate from ums database'
 
-    # def add_arguments(self, parser):
-    #     parser.add_argument('poll_id', nargs='+', type=int)
+    def add_arguments(self, parser):
+        parser.add_argument('db_host', type=str)
+        parser.add_argument('db_name', type=str)
+        parser.add_argument('db_user', type=str)
+        parser.add_argument('db_passwd', type=str)
 
     def handle(self, *args, **options):
+        db_host = options['db_host']
+        db_name = options['db_name']
+        db_user = options['db_user']
+        db_passwd = options['db_passwd']
+
+
         serv_internet = Service.objects.get(name='Internet')
         serv_mail = Service.objects.get(name='Email')
         serv_chat = Service.objects.get(name='Chat')
+
+        #Crear Lista de Distribución Todos
+        try:
+            todos = Service.objects.get(name="Todos")
+        except Service.DoesNotExist:
+            todos = Service.objects.create(
+                name="Todos",
+                service_type="distribution",
+                email="todos@cnic.cu",
+                description="Lista de distribución que incluye todos los usuarios del sistema."
+            )
+
+            self.stdout.write(self.style.SUCCESS("Distribution List: %s" %todos.name))
 
         internet_service = False
         mail_service = False
@@ -34,7 +56,7 @@ class Command(BaseCommand):
 
 
 
-        con = MySQLdb.connect(host="10.26.0.11", user="ums", passwd="ums505", db="ums")
+        con = MySQLdb.connect(host=db_host, user=db_user, passwd=db_passwd, db=db_name)
         c = con.cursor()
         c.execute("Select * from accounts_account where active=1")
         count = 0
@@ -145,6 +167,8 @@ class Command(BaseCommand):
 
             for s in user_services:
                 user.services.add(s)
+
+            user.distribution_list.add(todos)
 
             user.save()
 
