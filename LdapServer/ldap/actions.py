@@ -31,9 +31,10 @@ def save_ldap_user(sender,**kwargs):
             )
             obj_repr = format_html('<a href="{}">{}</a>', urlquote(obj_url), server)
             message = format_html(
-                _("Active Directory {} says: {}."),
+                _("Active Directory {} says: {}. for user: {}"),
                 obj_repr,
-                e
+                e,
+                user.get_full_name()
             )
             raise Exception(message)
 
