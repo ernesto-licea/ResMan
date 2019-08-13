@@ -148,8 +148,8 @@ class Command(BaseCommand):
             user.username=username
             user.first_name=first_name
             user.last_name=last_name
-            user.ci_number=personal_ID
-            user.enterprise_number=entity_ID
+            user.ci_number=personal_ID.replace(" ","")
+            user.enterprise_number=entity_ID.replace(" ","")
             user.area=area
             user.department=dpto
             user.email_domain = account_type_dicc[email_account_type]
@@ -170,6 +170,8 @@ class Command(BaseCommand):
                 user.services.add(s)
 
             user.distribution_list.add(todos)
+
+            self.stdout.write(self.style.SUCCESS("User: %s, CI: %s" % (user.username,user.ci_number)))
 
             user.save()
 
