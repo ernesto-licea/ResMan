@@ -49,7 +49,7 @@ class LdapUser:
         connection.bind()
 
         query = 'cn: {}'.format(
-            self.user.username,
+            self.user.get_full_name(),
         )
 
         cursor_reader = Reader(connection,self.person,self.server.search_base,query=query)
@@ -64,12 +64,12 @@ class LdapUser:
         else:
             ldap_user = cursor_writer.new(
                 dn="CN={},{}".format(
-                    self.user.username,
+                    self.user.get_full_name(),
                     self.server.search_base
                 )
             )
 
-            ldap_user.cn = self.user.username
+            ldap_user.cn = self.user.get_full_name()
             ldap_user.username = self.user.username[:20]
             ldap_user.logon = "{}@{}".format(self.user.username,self.server.domain)
             ldap_user.entry_commit_changes()

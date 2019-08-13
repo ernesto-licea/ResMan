@@ -306,7 +306,7 @@ class UserEnterpriseAdmin(UserAdminBase):
 
     def get_readonly_fields(self, request, obj=None):
         if obj:
-            return self.readonly_fields + ('username',)
+            return self.readonly_fields + ('username','first_name','last_name')
         return self.readonly_fields
 
 
@@ -422,7 +422,7 @@ class UserInstitutionalAdmin(UserAdminBase):
 
     def get_readonly_fields(self, request, obj=None):
         if obj:
-            return self.readonly_fields + ('username',)
+            return self.readonly_fields + ('username','first_name','last_name')
         return self.readonly_fields
 
     def get_fieldsets(self, request, obj=None):
@@ -529,7 +529,7 @@ class UserGuestAdmin(UserAdminBase):
 
     def get_readonly_fields(self, request, obj=None):
         if obj:
-            return self.readonly_fields + ('username',)
+            return self.readonly_fields + ('username','first_name','last_name')
         return self.readonly_fields
 
     def get_fieldsets(self, request, obj=None):
