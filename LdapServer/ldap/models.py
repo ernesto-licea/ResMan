@@ -31,6 +31,10 @@ class LdapUser:
         self.person += AttrDef(server.ftp_home, key='ftp_folder')
         self.person += AttrDef(server.ftp_size, key='ftp_size')
 
+        self.query = 'username: {}'.format(
+            self.user.username,
+        )
+
     def save(self):
         ldap_server = Server(
             host = self.server.server_host,
@@ -48,11 +52,7 @@ class LdapUser:
         )
         connection.bind()
 
-        query = 'cn: {}'.format(
-            self.user.get_full_name(),
-        )
-
-        cursor_reader = Reader(connection,self.person,self.server.search_base,query=query)
+        cursor_reader = Reader(connection,self.person,self.server.search_base,query=self.query)
         cursor_reader.search()
 
         cursor_writer = Writer.from_cursor(cursor_reader)
@@ -172,11 +172,7 @@ class LdapUser:
         )
         connection.bind()
 
-        query = 'cn: {}'.format(
-            self.user.username,
-        )
-
-        cursor_reader = Reader(connection, self.person, self.server.search_base, query=query)
+        cursor_reader = Reader(connection, self.person, self.server.search_base, query=self.query)
         cursor_reader.search()
         cursor_writer = Writer.from_cursor(cursor_reader)
         if cursor_reader.entries:
@@ -203,11 +199,7 @@ class LdapUser:
         )
         connection.bind()
 
-        query = 'cn: {}'.format(
-            self.user.username,
-        )
-
-        cursor_reader = Reader(connection, self.person, self.server.search_base, query=query)
+        cursor_reader = Reader(connection, self.person, self.server.search_base, query=self.query)
         cursor_reader.search()
         cursor_writer = Writer.from_cursor(cursor_reader)
 
@@ -235,11 +227,7 @@ class LdapUser:
         )
         connection.bind()
 
-        query = 'cn: {}'.format(
-            self.user.username,
-        )
-
-        cursor_reader = Reader(connection, self.person, self.server.search_base, query=query)
+        cursor_reader = Reader(connection, self.person, self.server.search_base, query=self.query)
         cursor_reader.search()
         connection.unbind()
 
