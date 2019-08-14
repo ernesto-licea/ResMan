@@ -86,6 +86,14 @@
 
                             <div class="row">
                                 <div class="col-sm-7 bg-info border border-info">
+                                    <span class="font-weight-bold">{% trans 'User Type' %}:</span>
+                                </div>
+                                <div class="col-sm-5 bg-light border border-info">{{ user.user_type }}</div>
+                            </div>
+
+                            <div class="row" style="height: 3px"></div>
+                            <div class="row">
+                                <div class="col-sm-7 bg-info border border-info">
                                     <span class="font-weight-bold">{% trans 'Status' %}:</span>
                                 </div>
                                 <div class="col-sm-5 bg-light border border-info">{{ user.status }}</div>
@@ -120,6 +128,7 @@
 
                             <div class="row" style="height: 3px"></div>
 
+                            {% if user.user_enterprise %}
                             <div class="row">
                                 <div class="col-sm-7 bg-info border border-info">
                                     <span class="font-weight-bold">{% trans 'Enterprise Number' %}:</span>
@@ -130,12 +139,23 @@
 
                             <div class="row" style="height: 3px"></div>
 
+
                             <div class="row">
                                 <div class="col-sm-7 bg-info border border-info">
                                     <span class="font-weight-bold">{% trans 'CI Number' %}:</span>
                                 </div>
                                 <div class="col-sm-5 bg-light border border-info">{{ user.ci_number }}</div>
                             </div>
+
+                            <div class="row" style="height: 3px"></div>
+
+                            <div class="row">
+                                <div class="col-sm-7 bg-info border border-info">
+                                    <span class="font-weight-bold">{% trans 'Área' %}:</span>
+                                </div>
+                                <div class="col-sm-5 bg-light border border-info">{{ user.area.name }}</div>
+                            </div>
+                            {% endif %}
 
                             <div class="row" style="height: 20px"></div>
 

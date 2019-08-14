@@ -20,8 +20,8 @@ def get_default_data(request):
     else:
         return {
             'user':request.user,
-            "service_list": request.user.services.filter(is_active=True, service_type='security'),
-            "distribution_list": request.user.services.filter(is_active=True, service_type='distribution'),
+            "service_list": request.user.services.filter(is_active=True),
+            "distribution_list": request.user.distribution_list.filter(is_active=True),
         }
 
 

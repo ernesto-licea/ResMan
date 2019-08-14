@@ -116,6 +116,13 @@ class User(AbstractUser,PolymorphicModel):
 
     user_type.short_description = _("User Type")
 
+    def user_enterprise(self):
+        if str(self.polymorphic_ctype.model_class()).find("UserEnterprise") != -1:
+            return True
+        return False
+
+    user_type.short_description = _("User Type")
+
     @property
     def session(self):
         return base64.b64decode(self.session_key.encode('utf-8')).decode()
