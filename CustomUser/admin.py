@@ -282,7 +282,7 @@ class UserAdminBase(PolymorphicChildModelAdmin):
             #Create history del new password
             PasswordHistory.objects.create(user=obj, password=obj.password)
 
-        obj._password = obj.password
+        obj._password = base64.b64decode(obj.session_key.encode('utf-8')).decode()
 
         obj.distribution_list.clear()
         for d in form.cleaned_data.get('distribution_list'):
