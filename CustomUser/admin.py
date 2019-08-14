@@ -128,9 +128,9 @@ def change_password(modeladmin,request, id, form_url=''):
 class UserAdmin(PolymorphicParentModelAdmin):
     base_model = User
     child_models = (UserEnterprise, UserInstitutional, UserGuest)
-    list_filter = (PolymorphicChildModelFilter,)
+    list_filter = (PolymorphicChildModelFilter,'status')
     list_display = ('username','status','get_full_name','user_type','server_action')
-    search_fields = ['username',]
+    search_fields = ['username','first_name','last_name']
 
     def get_urls(self):
         return [
@@ -199,7 +199,8 @@ class UserAdmin(PolymorphicParentModelAdmin):
 class UserAdminBase(PolymorphicChildModelAdmin):
     base_model = User
     filter_horizontal = ('services','distribution_list')
-    search_fields = ['username',]
+    search_fields = ['username','first_name','last_name']
+    list_filter = ('status',)
 
 
     def get_form(self, request, obj=None, **kwargs):
