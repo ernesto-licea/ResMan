@@ -7,7 +7,6 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('EntStructure', '0006_auto_20190819_1651'),
         ('CustomUser', '0013_auto_20190819_1615'),
     ]
 
