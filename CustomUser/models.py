@@ -70,6 +70,7 @@ class User(AbstractUser,PolymorphicModel):
     password_date = models.DateTimeField(_('password date'),default=timezone.now,blank=True)
     first_name = models.CharField(_('first name'), max_length=30)
     last_name = models.CharField(_('last name'), max_length=150)
+    email = models.EmailField(_('email address'), blank=True,unique=True)
     email_buzon_size = models.PositiveIntegerField(_('email buzon size'),default=0,blank=True,null=True)
     email_message_size = models.PositiveIntegerField(_('email messages size'),default=0,blank=True,null=True)
     email_domain = models.CharField(_('email domain reach'),max_length=20, choices=EMAIL_DOMAIN_LIST ,default=EMAIL_DOMAIN_LIST[0][0],blank=True)
@@ -102,6 +103,10 @@ class User(AbstractUser,PolymorphicModel):
     )
 
     AbstractUser.get_full_name.short_description = _("Full Name")
+
+    area = models.ForeignKey(Area, on_delete=models.SET_NULL, default=None, null=True, verbose_name=_("Area"))
+    department = models.ForeignKey(Department, on_delete=models.SET_NULL, default=None, null=True,
+                                   verbose_name=_("Department"))
 
 
     def user_type(self):
@@ -181,8 +186,6 @@ class UserEnterprise(User):
     extension_number = models.CharField(_('extension number'),max_length=10,default="",blank=True)
     authorized_document= models.FileField(_('authorized document'),upload_to=user_directory_path, blank=True)
     note = models.TextField(_('note'),blank=True)
-    area = models.ForeignKey(Area,on_delete=models.SET_NULL, default=None, null=True,verbose_name=_("Area"))
-    department = models.ForeignKey(Department,on_delete=models.SET_NULL, default=None, null=True,verbose_name=_("Department"))
 
     class Meta(User.Meta):
         db_table = 'auth_user_enterprise'
