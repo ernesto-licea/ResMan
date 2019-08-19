@@ -281,7 +281,7 @@ class LdapGroup:
             )
 
             ldap_group.cn = self.group.name
-            ldap_group.slug_name = self.group.slugname
+            ldap_group.slug_name = self.group.name
 
         if self.group.service_type == 'security':
             ldap_group.type = -2147483646
