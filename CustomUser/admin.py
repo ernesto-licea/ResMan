@@ -432,7 +432,10 @@ class UserInstitutionalAdmin(UserAdminBase):
                 (None, {
                     'fields': ('date_joined','status', 'username', 'password', 'retype_password', 'first_name', 'last_name', 'services', 'distribution_list')
                 }),
-
+                (_('Enterprise Data'), {
+                    # 'classes': ('collapse',),
+                    'fields': ('area', 'department',),
+                }),
                 (_('Email Service Data'), {
                     # 'classes': ('collapse',),
                     'fields': ('email', 'email_buzon_size', 'email_message_size', 'email_domain'),
@@ -454,6 +457,10 @@ class UserInstitutionalAdmin(UserAdminBase):
             fieldsets = (
                 (None, {
                     'fields': ('date_joined','status', 'username', 'password', 'first_name', 'last_name', 'services', 'distribution_list')
+                }),
+                (_('Enterprise Data'), {
+                    # 'classes': ('collapse',),
+                    'fields': ('area', 'department',),
                 }),
 
                 (_('Email Service Data'), {
@@ -541,7 +548,7 @@ class UserGuestAdmin(UserAdminBase):
                 }),
                 (_('Enterprise Data'), {
                     # 'classes': ('collapse',),
-                    'fields': ('authorized_document',),
+                    'fields': ('area','department','authorized_document'),
                 }),
                 (_('Email Service Data'), {
                     # 'classes': ('collapse',),
@@ -567,7 +574,7 @@ class UserGuestAdmin(UserAdminBase):
                 }),
                 (_('Enterprise Data'), {
                     # 'classes': ('collapse',),
-                    'fields': ('authorized_document',),
+                    'fields': ('area', 'department', 'authorized_document'),
                 }),
                 (_('Email Service Data'), {
                     # 'classes': ('collapse',),
