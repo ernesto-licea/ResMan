@@ -1,5 +1,7 @@
+from django.conf.urls import url
 from django.contrib import admin, messages
 from django.contrib.admin.utils import quote
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.http import urlquote
@@ -13,7 +15,40 @@ from .models import Area, Department
 class AreaAdmin(admin.ModelAdmin):
     model = Area
     fields = ('is_active','name','responsible')
-    list_display = ('name','is_active','responsible')
+    list_display = ('name','is_active','responsible','server_action')
+
+    def get_urls(self):
+        urls = super(AreaAdmin, self).get_urls()
+        custom_urls = [
+            url(
+                r'^(?P<area_id>.+)/sync/$',
+                self.admin_site.admin_view(self.sync_data),
+                name='sync-area',
+            ),
+        ]
+        return custom_urls + urls
+
+    def sync_data(self,request,area_id,*args,**kwargs):
+        obj = self.get_object(request,area_id)
+
+        ldap_error = obj.ldap_save()
+
+        if ldap_error:
+            self.message_user(request, ldap_error, messages.ERROR)
+        else:
+            self.message_user(request, self._sync_message(obj), messages.SUCCESS)
+
+        # Return changelist view
+        url = reverse('admin:%s_%s_changelist' % (self.model._meta.app_label, self.model._meta.model_name))
+        return HttpResponseRedirect(url)
+
+    def server_action(self, obj):
+        return format_html(
+            '<a class="button" href="{}">{}</a>&nbsp;',
+            reverse('admin:sync-area', args=[obj.pk]),
+            _('sync')
+        )
+    server_action.short_description = _("Server Actions")
 
     def _sync_message(self,obj):
         opts = obj._meta
