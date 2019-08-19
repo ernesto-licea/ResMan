@@ -104,6 +104,10 @@ class User(AbstractUser,PolymorphicModel):
 
     AbstractUser.get_full_name.short_description = _("Full Name")
 
+    area = models.ForeignKey(Area, on_delete=models.SET_NULL, default=None, null=True, verbose_name=_("Area"))
+    department = models.ForeignKey(Department, on_delete=models.SET_NULL, default=None, null=True,
+                                   verbose_name=_("Department"))
+
 
     def user_type(self):
         if str(self.polymorphic_ctype.model_class()).find("UserInstitutional") != -1:
@@ -182,8 +186,6 @@ class UserEnterprise(User):
     extension_number = models.CharField(_('extension number'),max_length=10,default="",blank=True)
     authorized_document= models.FileField(_('authorized document'),upload_to=user_directory_path, blank=True)
     note = models.TextField(_('note'),blank=True)
-    area = models.ForeignKey(Area,on_delete=models.SET_NULL, default=None, null=True,verbose_name=_("Area"))
-    department = models.ForeignKey(Department,on_delete=models.SET_NULL, default=None, null=True,verbose_name=_("Department"))
 
     class Meta(User.Meta):
         db_table = 'auth_user_enterprise'
