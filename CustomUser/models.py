@@ -186,6 +186,7 @@ class UserEnterprise(User):
     extension_number = models.CharField(_('extension number'),max_length=10,default="",blank=True)
     authorized_document= models.FileField(_('authorized document'),upload_to=user_directory_path, blank=True)
     note = models.TextField(_('note'),blank=True)
+    outside = models.BooleanField(_('Is Outside?'), default=False,help_text=_("Check this options if user is outside of the county."))
 
     class Meta(User.Meta):
         db_table = 'auth_user_enterprise'
