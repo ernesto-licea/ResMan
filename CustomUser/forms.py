@@ -6,6 +6,7 @@ from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX, identify_hashe
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _, gettext
 
+from CustomUser.models import User
 from Services.models import Service
 
 
@@ -77,6 +78,17 @@ class UserFormBase(forms.ModelForm):
                 data = str(cleaned_data.get(field))
                 if data in ["", "None"] and exist_ftp_service:
                     self.add_error(field, ftp_error_message)
+
+        first_name = cleaned_data.get('first_name')
+        last_name = cleaned_data.get('last_name')
+        if first_name and last_name:
+            try:
+                user = User.objects.get(first_name=first_name,last_name=last_name)
+                print(user.get_full_name())
+                full_name_error = _('The fullname "%s" already exist') %user.get_full_name()
+                self.add_error('last_name',full_name_error)
+            except User.DoesNotExist:
+                pass
 
 
         return cleaned_data
