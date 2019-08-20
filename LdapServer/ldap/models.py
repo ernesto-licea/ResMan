@@ -85,7 +85,7 @@ class LdapUser:
         ldap_user.full_name = self.user.get_full_name()
 
         if self.user.email:
-            ldap_user.email = self.user.email
+            ldap_user.email = self.user.email.strip().split("@")[0]
 
         if self.user.email_domain:
             ldap_user.email_domain = self.user.email_domain
@@ -294,7 +294,7 @@ class LdapGroup:
             ldap_group.type = -2147483646
         else:
             ldap_group.type = 2
-            ldap_group.email = self.group.email
+            ldap_group.email = self.group.email.strip().split("@")[0]
 
         ldap_group.entry_commit_changes()
 
