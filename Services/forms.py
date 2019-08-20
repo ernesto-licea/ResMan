@@ -2,6 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
+from CustomUser.models import User
 from EntStructure.models import Area
 
 
@@ -27,3 +28,13 @@ class ServiceForm(forms.ModelForm):
             except Area.DoesNotExist:
                 pass
         return name
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email',False)
+        if email:
+            try:
+                user = User.objects.get(email=email)
+                raise ValidationError(_("This email is being used by system user"))
+            except User.DoesNotExist:
+                pass
+        return email
