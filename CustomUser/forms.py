@@ -125,6 +125,16 @@ class UserFormBase(forms.ModelForm):
                 raise ValidationError(_('Invalid extension number.'))
         return extension_number
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email',False)
+        if email:
+            try:
+                service = Service.objects.get(email=email)
+                raise ValidationError(_("This email is being used by enterprise service or distribution list"))
+            except Service.DoesNotExist:
+                pass
+        return email
+
 
 
 
