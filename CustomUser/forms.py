@@ -6,6 +6,7 @@ from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX, identify_hashe
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _, gettext
 
+from CustomUser.models import User
 from Services.models import Service
 
 
@@ -78,6 +79,17 @@ class UserFormBase(forms.ModelForm):
                 if data in ["", "None"] and exist_ftp_service:
                     self.add_error(field, ftp_error_message)
 
+        first_name = cleaned_data.get('first_name')
+        last_name = cleaned_data.get('last_name')
+        if first_name and last_name:
+            try:
+                user = User.objects.get(first_name=first_name,last_name=last_name)
+                print(user.get_full_name())
+                full_name_error = _('The fullname "%s" already exist') %user.get_full_name()
+                self.add_error('last_name',full_name_error)
+            except User.DoesNotExist:
+                pass
+
 
         return cleaned_data
 
@@ -124,6 +136,16 @@ class UserFormBase(forms.ModelForm):
             if not pattern.match(extension_number):
                 raise ValidationError(_('Invalid extension number.'))
         return extension_number
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email',False)
+        if email:
+            try:
+                service = Service.objects.get(email=email)
+                raise ValidationError(_("This email is being used by enterprise service or distribution list"))
+            except Service.DoesNotExist:
+                pass
+        return email
 
 
 

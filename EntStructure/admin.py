@@ -8,6 +8,7 @@ from django.utils.http import urlquote
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _, gettext_lazy
 
+from EntStructure.forms import AreaForm
 from ResMan.admin import admin_site
 from .models import Area, Department
 
@@ -16,6 +17,7 @@ class AreaAdmin(admin.ModelAdmin):
     model = Area
     fields = ('is_active','name','responsible')
     list_display = ('name','is_active','responsible','server_action')
+    form = AreaForm
 
     def get_urls(self):
         urls = super(AreaAdmin, self).get_urls()
