@@ -90,10 +90,10 @@ class LdapUser:
         if self.user.email_domain:
             ldap_user.email_domain = self.user.email_domain
 
-        if self.user.email_buzon_size:
+        if str(self.user.email_buzon_size):
             ldap_user.email_buzon_size = self.user.email_buzon_size
 
-        if self.user.email_message_size:
+        if str(self.user.email_message_size):
             ldap_user.email_message_size = self.user.email_message_size
 
         if self.user.internet_domain:
@@ -102,16 +102,16 @@ class LdapUser:
         if self.user.internet_quota_type:
             ldap_user.internet_quota_type = self.user.internet_quota_type
 
-        if self.user.internet_quota_size:
+        if str(self.user.internet_quota_size):
             ldap_user.internet_quota_size = self.user.internet_quota_size
 
-        if self.user.internet_extra_quota_size:
+        if str(self.user.internet_extra_quota_size):
             ldap_user.internet_extra_quota_size = self.user.internet_extra_quota_size
 
         if self.user.ftp_folder:
             ldap_user.ftp_folder = self.user.ftp_folder
 
-        if self.user.ftp_size:
+        if str(self.user.ftp_size):
             ldap_user.ftp_size = self.user.ftp_size
 
         ldap_user.entry_commit_changes()
