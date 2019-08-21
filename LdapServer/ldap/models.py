@@ -91,7 +91,7 @@ class LdapUser:
             ldap_user.email_domain = self.user.email_domain
 
         if str(self.user.email_buzon_size):
-            ldap_user.email_buzon_size = self.user.email_buzon_size
+            ldap_user.email_buzon_size = self.user.email_buzon_size*1024*1024
 
         if str(self.user.email_message_size):
             ldap_user.email_message_size = self.user.email_message_size
