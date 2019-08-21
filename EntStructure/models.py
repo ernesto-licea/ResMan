@@ -11,7 +11,7 @@ class Area(models.Model):
     slugname = models.SlugField(_('slugname'),default="")
 
     def ldap_save(self,server=None):
-        self.service_type = 'security'
+        self.service_type = 'area'
         signal = getattr(signals, 'save_ldap_group_signal')
         receivers = signal.send_robust(sender=self.__class__, obj=self,server=server)
         for function, error in receivers:
