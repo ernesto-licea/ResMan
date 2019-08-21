@@ -297,7 +297,7 @@ class LdapGroup:
             ldap_group.type = -2147483646
         else:
             ldap_group.type = 2
-            ldap_group.email = self.group.email
+            #ldap_group.email = self.group.email
             ldap_group.email_canonical = self.group.email.strip().split("@")[0]
 
         ldap_group.entry_commit_changes()
