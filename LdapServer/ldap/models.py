@@ -253,6 +253,7 @@ class LdapGroup:
         self.obj += AttrDef('extensionName', key='email_canonical')
         self.obj += AttrDef('sAMAccountName', key='slug_name')
         self.obj += AttrDef('groupType', key='type')
+        self.obj += AttrDef('flags', key='flags')
 
     def save(self):
         ldap_server = Server(
@@ -295,6 +296,10 @@ class LdapGroup:
 
         if self.group.service_type == 'security':
             ldap_group.type = -2147483646
+        elif self.group.service_type == 'area':
+            ldap_group.type = -2147483646
+            ldap_group.flags = 25
+
         else:
             ldap_group.type = 2
             #ldap_group.email = self.group.email
