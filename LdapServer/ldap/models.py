@@ -16,6 +16,7 @@ class LdapUser:
         self.person += AttrDef('displayName', key='full_name')
         self.person += AttrDef('userPrincipalName', key='logon')
         self.person += AttrDef('mail', key='email')
+        self.person += AttrDef('extensionName', key='email_canonical')
         self.person += AttrDef('userAccountControl', key='control')
         self.person += AttrDef('memberOf', key='groups')
 
@@ -86,6 +87,7 @@ class LdapUser:
 
         if self.user.email:
             ldap_user.email = self.user.email
+            ldap_user.email_canonical = self.user.email.strip().split("@")[0]
 
         if self.user.email_domain:
             ldap_user.email_domain = self.user.email_domain
@@ -248,6 +250,7 @@ class LdapGroup:
         self.obj += AttrDef('objectClass', key='object_class')
         self.obj += AttrDef('cn', key='cn')
         self.obj += AttrDef('mail', key='email')
+        self.obj += AttrDef('extensionName', key='email_canonical')
         self.obj += AttrDef('sAMAccountName', key='slug_name')
         self.obj += AttrDef('groupType', key='type')
 
@@ -295,6 +298,7 @@ class LdapGroup:
         else:
             ldap_group.type = 2
             ldap_group.email = self.group.email
+            ldap_group.email_canonical = self.group.email.strip().split("@")[0]
 
         ldap_group.entry_commit_changes()
 
