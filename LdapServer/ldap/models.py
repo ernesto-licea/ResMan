@@ -135,13 +135,14 @@ class LdapUser:
                     self.server.search_base
                 )
             )
-        self.user.area.ldap_save()
-        groups.append(
-            "CN={},{}".format(
-                self.user.area.name,
-                self.server.search_base
+        if self.user.area:
+            self.user.area.ldap_save()
+            groups.append(
+                "CN={},{}".format(
+                    self.user.area.name,
+                    self.server.search_base
+                )
             )
-        )
 
         connection.extend.microsoft.remove_members_from_groups(ldap_user.entry_dn,ldap_user.groups.values)
         connection.extend.microsoft.add_members_to_groups(ldap_user.entry_dn,groups)

@@ -43,9 +43,7 @@ class Command(BaseCommand):
 
             self.stdout.write(self.style.SUCCESS("Distribution List: %s" %todos.name))
 
-        internet_service = False
-        mail_service = False
-        chat_service = False
+
 
         email_account_type = 'local'
         account_type_dicc = {
@@ -62,6 +60,11 @@ class Command(BaseCommand):
         c.execute("Select * from accounts_account where active=1")
         count = 0
         for user_row in c.fetchall():
+            internet_service = False
+            mail_service = False
+            chat_service = False
+
+
             id = user_row[0]
             active = user_row[1]
             active_begin = user_row[2]
