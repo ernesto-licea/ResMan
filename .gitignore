@@ -107,3 +107,4 @@ venv.bak/
 .idea
 ResMan/settings_local.py
 tasks
+media/
