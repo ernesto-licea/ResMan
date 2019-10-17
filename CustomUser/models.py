@@ -1,6 +1,8 @@
 import base64
 import hashlib
 from django.conf import settings
+from django.contrib.admin.models import LogEntry
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.utils import timezone
@@ -162,6 +164,17 @@ class User(AbstractUser,PolymorphicModel):
             if error:
                 return False
         return True
+
+    def get_last_history(self):
+        return LogEntry.objects.filter(
+            object_id=self.id,
+            content_type__id__exact=ContentType.objects.get_for_model(self._meta.model).id).order_by("action_time").last()
+
+    def get_active_services(self):
+        return self.services.filter(is_active=True)
+
+    def get_active_distribution_list(self):
+        return self.distribution_list.filter(is_active=True)
 
     class Meta(AbstractUser.Meta):
         db_table = 'auth_user'
