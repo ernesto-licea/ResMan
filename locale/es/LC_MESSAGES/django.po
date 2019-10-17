@@ -711,7 +711,7 @@ msgstr "Todos los derechos reservados"
 
 #: UserInterface/templates/UserInterface/index.html:59
 msgid "ResMan- User Management System"
-msgstr "ResMan - Sistema de Gestion de Usuarios"
+msgstr "ResMan - Sistema de Gestión de Usuarios"
 
 #: UserInterface/templates/UserInterface/index.html:60
 msgid "by"
