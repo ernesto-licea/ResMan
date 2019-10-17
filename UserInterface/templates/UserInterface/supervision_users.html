@@ -87,12 +87,12 @@
                             {% if objects.has_previous %}
                             <li class="page-item {% if not objects.previous_page_number %}disabled {% endif %}">
                                 <a class="page-link" href="?page=1{% if search %}&q={{ search }}{% endif %}">
-                                    &laquo; {% trans 'First' %}
+                                     {% trans 'First' %}
                                 </a>
                             </li>
                             <li class="page-item {% if not objects.previous_page_number %}disabled {% endif %}">
                                 <a class="page-link" href="?page={{ contacts.previous_page_number }}{% if search %}&q={{ search }}{% endif %}">
-                                    {% trans 'Previous' %}
+                                    &laquo;     {% trans 'Previous' %}
                                 </a>
                             </li>
                             {% endif %}
