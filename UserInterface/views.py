@@ -2,6 +2,7 @@ import base64
 import hashlib
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.hashers import make_password
+from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -151,6 +152,49 @@ def change_password(request):
         return render(request, 'UserInterface/password.html', data)
     else:
         return HttpResponseRedirect(reverse('dashboard'))
+
+def supervision_users(request):
+    data = get_default_data(request)
+
+    page = request.GET.get('page')
+    search = request.GET.get('q')
+
+    if not page:
+        page = 1
+
+    if not search:
+        search = ""
+
+    if search:
+        object_list = User.objects.filter(username__icontains=search).order_by('-date_joined')
+    else:
+        object_list = User.objects.all().order_by('-date_joined')
+    p = Paginator(object_list, 25)
+
+
+
+    if int(page) > p.num_pages:
+        page = p.num_pages
+
+    if int(page)<=5:
+        initial = 1
+    else:
+        initial = int((int(page)-1)/5)
+        initial = initial*5 +1
+
+    if p.num_pages <= 5:
+        end = p.num_pages + 1
+    else:
+        end = initial + 5 if initial+5 < p.num_pages else p.num_pages + 1
+
+
+    data.update({
+        'objects':p.get_page(page),
+        'page_show_range':range(int(initial),int(end)),
+        'search':search
+    })
+    return render(request, 'UserInterface/supervision_users.html', data)
+
 
 def logout_view(request):
     logout(request)
