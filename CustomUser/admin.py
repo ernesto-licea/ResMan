@@ -315,7 +315,7 @@ class UserEnterpriseAdmin(UserAdminBase):
         if not obj:
             fielsets = (
                 (None, {
-                    'fields': ['date_joined','last_login','status', 'is_staff', 'username', 'password', 'retype_password', 'first_name', 'last_name', 'ci_number', 'services', 'distribution_list']
+                    'fields': ['date_joined','last_login','status', 'is_staff','is_supervisor', 'username', 'password', 'retype_password', 'first_name', 'last_name', 'ci_number', 'services', 'distribution_list']
                 }),
                 (_('Enterprise Data'), {
                     # 'classes': ('collapse',),
@@ -341,7 +341,7 @@ class UserEnterpriseAdmin(UserAdminBase):
         else:
             fielsets = (
                 (None, {
-                    'fields': ['date_joined','last_login', 'status', 'is_staff', 'username', 'password', 'first_name', 'last_name', 'ci_number', 'services', 'distribution_list']
+                    'fields': ['date_joined','last_login', 'status', 'is_staff','is_supervisor', 'username', 'password', 'first_name', 'last_name', 'ci_number', 'services', 'distribution_list']
                 }),
                 (_('Enterprise Data'), {
                     # 'classes': ('collapse',),
