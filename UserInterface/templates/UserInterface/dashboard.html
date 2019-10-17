@@ -188,7 +188,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for service in service_list %}
+                        {% for service in user.get_active_services %}
                         <tr>
                             <th scope="row">{{ service.name }}</th>
                             <td>{{ service.description }}</td>
@@ -215,7 +215,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for distribution in distribution_list %}
+                        {% for distribution in user.get_active_distribution_list %}
                         <tr>
                             <th scope="row">{{ distribution.name }}</th>
                             <td>{{ distribution.description }}</td>
