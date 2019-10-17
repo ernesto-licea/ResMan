@@ -191,7 +191,8 @@ def supervision_users(request):
     data.update({
         'objects':p.get_page(page),
         'page_show_range':range(int(initial),int(end)),
-        'search':search
+        'search':search,
+        'users_menu':'active'
     })
     return render(request, 'UserInterface/supervision_users.html', data)
 
