@@ -821,3 +821,47 @@ msgstr "Área"
 #: CustomUser/models.py:118
 msgid "Department"
 msgstr "Departamento"
+
+#: UserInterface/templates/UserInterface/navbar.html:22
+msgid "Users"
+msgstr "Usuarios"
+
+#: UserInterface/templates/UserInterface/navbar.html:19
+msgid "Supervision"
+msgstr "Supervisión"
+
+#: UserInterface/templates/UserInterface/supervision_users.html:19
+msgid "User List"
+msgstr "Lista de Usuarios"
+
+#: UserInterface/templates/UserInterface/supervision_users.html:39
+msgid "Modified Date"
+msgstr "Fecha Modificación"
+
+#: UserInterface/templates/UserInterface/supervision_users.html:40
+msgid "Modified By"
+msgstr "Modificado Por"
+
+#: UserInterface/templates/UserInterface/supervision_users.html:79
+msgid "to"
+msgstr "al"
+
+#: UserInterface/templates/UserInterface/supervision_users.html:79
+msgid "of"
+msgstr "de"
+
+#: UserInterface/templates/UserInterface/supervision_users.html:90
+msgid "First"
+msgstr "Primero"
+
+#: UserInterface/templates/UserInterface/supervision_users.html:95
+msgid "Previous"
+msgstr "Anterior"
+
+#: UserInterface/templates/UserInterface/supervision_users.html:123
+msgid "Last"
+msgstr "Último"
+
+#: UserInterface/templates/UserInterface/supervision_users.html:118
+msgid "Next"
+msgstr "Siguiente"
