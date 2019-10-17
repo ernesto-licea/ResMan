@@ -865,3 +865,11 @@ msgstr "Último"
 #: UserInterface/templates/UserInterface/supervision_users.html:118
 msgid "Next"
 msgstr "Siguiente"
+
+#: UserInterface/templates/UserInterface/supervision_users.html:45
+msgid "Attachment"
+msgstr "Adjunto"
+
+#: UserInterface/templates/UserInterface/supervision_users.html:74
+msgid "Download"
+msgstr "Descargar"
