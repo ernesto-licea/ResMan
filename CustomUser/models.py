@@ -68,6 +68,11 @@ class User(AbstractUser,PolymorphicModel):
         default=False,
         help_text=_('Designates whether the user can log into this admin site.'),
     )
+    is_supervisor = models.BooleanField(
+        _('Supervisor Staff'),
+        default=False,
+        help_text=_('Designates whether the user can supervise system data.'),
+    )
     status = models.CharField(_('status'),max_length=20, choices=STATUS_LIST, default=STATUS_LIST[0][0])
     password_date = models.DateTimeField(_('password date'),default=timezone.now,blank=True)
     first_name = models.CharField(_('first name'), max_length=30)
