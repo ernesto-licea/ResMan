@@ -47,7 +47,7 @@
                             <th scope="row">{{ service.name }}</th>
                             <td>{{ service.description }}</td>
                             <td>{{ service.services_set.all.count }}</td>
-                            <td>
+                            <td style="width: 50%">
                                 {% for user in service.services_set.all %}
                                     <span class="badge badge-pill badge-secondary">{{ user.username }}</span>
                                 {% endfor %}
