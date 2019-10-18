@@ -105,6 +105,8 @@ venv.bak/
 
 .git
 .idea
-ResMan/settings_local.py
+ResMan/settings.py
 tasks
 media/
+tasks
+static

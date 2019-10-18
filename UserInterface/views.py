@@ -8,8 +8,10 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext
+
 from CustomUser.models import User, PasswordHistory
 from LdapServer.models import LdapServer
+from Services.models import Service
 from UserInterface.forms import LoginForm, UserPasswordChangeForm
 
 
@@ -195,6 +197,86 @@ def supervision_users(request):
         'users_menu':'active'
     })
     return render(request, 'UserInterface/supervision_users.html', data)
+
+def supervision_services(request):
+    data = get_default_data(request)
+
+    page = request.GET.get('page')
+    search = request.GET.get('q')
+
+    if not page:
+        page = 1
+
+    if not search:
+        search = ""
+
+    if search:
+        object_list = Service.objects.filter(name__icontains=search,is_active=True,service_type='security').order_by("-id")
+    else:
+        object_list = Service.objects.filter(is_active=True,service_type='security').order_by("-id")
+    p = Paginator(object_list, 5)
+
+    if int(page) > p.num_pages:
+        page = p.num_pages
+
+    if int(page) <= 5:
+        initial = 1
+    else:
+        initial = int((int(page) - 1) / 5)
+        initial = initial * 5 + 1
+
+    if p.num_pages <= 5:
+        end = p.num_pages + 1
+    else:
+        end = initial + 5 if initial + 5 < p.num_pages else p.num_pages + 1
+
+    data.update({
+        'objects': p.get_page(page),
+        'page_show_range': range(int(initial), int(end)),
+        'search': search,
+        'services_menu': 'active'
+    })
+    return render(request, 'UserInterface/supervision_services.html', data)
+
+def supervision_distribution_list(request):
+    data = get_default_data(request)
+
+    page = request.GET.get('page')
+    search = request.GET.get('q')
+
+    if not page:
+        page = 1
+
+    if not search:
+        search = ""
+
+    if search:
+        object_list = Service.objects.filter(name__icontains=search,is_active=True,service_type='distribution').order_by("-id")
+    else:
+        object_list = Service.objects.filter(is_active=True,service_type='distribution').order_by("-id")
+    p = Paginator(object_list, 5)
+
+    if int(page) > p.num_pages:
+        page = p.num_pages
+
+    if int(page) <= 5:
+        initial = 1
+    else:
+        initial = int((int(page) - 1) / 5)
+        initial = initial * 5 + 1
+
+    if p.num_pages <= 5:
+        end = p.num_pages + 1
+    else:
+        end = initial + 5 if initial + 5 < p.num_pages else p.num_pages + 1
+
+    data.update({
+        'objects': p.get_page(page),
+        'page_show_range': range(int(initial), int(end)),
+        'search': search,
+        'distribution_list_menu': 'active'
+    })
+    return render(request, 'UserInterface/supervision_distribution_list.html', data)
 
 
 def logout_view(request):
