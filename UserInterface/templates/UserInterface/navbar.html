@@ -20,7 +20,7 @@
                             </a>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item {{ users_menu }}" href="{% url 'supervision_users' %}">{% trans 'Users' %}</a>
-                            <a class="dropdown-item {{ services_menu }}" href="#">{% trans 'Services' %}</a>
+                            <a class="dropdown-item {{ services_menu }}" href="{% url 'supervision_services' %}">{% trans 'Services' %}</a>
                             <a class="dropdown-item {{ distribution_list_menu }}" href="#">{% trans 'Distribution List' %}</a>
                           </div>
                         </div>
