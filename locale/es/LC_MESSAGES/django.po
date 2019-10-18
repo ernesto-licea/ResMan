@@ -873,3 +873,15 @@ msgstr "Adjunto"
 #: UserInterface/templates/UserInterface/supervision_users.html:74
 msgid "Download"
 msgstr "Descargar"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:19
+msgid "Services List"
+msgstr "Lista de Servicios"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:38
+msgid "Name"
+msgstr "Nombre"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "Users Number"
+msgstr "Número de Usuarios"
