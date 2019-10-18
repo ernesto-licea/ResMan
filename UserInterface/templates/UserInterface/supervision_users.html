@@ -32,7 +32,7 @@
             </div>
             <div class="row">
 
-                <table class="table table-striped" style="font-size: 14px">
+                <table class="table table-striped" style="font-size: 13px">
                     <thead class="thead-dark">
                         <tr>
                             <th>{% trans 'Username' %}</th>
@@ -60,18 +60,21 @@
                             <td>{{ user.area }}</td>
                             <td>
                                 {% for service in user.get_active_services %}
-                                    {{ service }}{% if not forloop.last %},{% endif %}
+                                    <span class="badge badge-pill badge-primary">{{ service }}</span>
                                 {% endfor %}
                             </td>
                             <td>
                                 {% for distribution_list in user.get_active_distribution_list %}
-                                    {{ distribution_list }}{% if not forloop.last %},{% endif %}
+                                    <span class="badge badge-pill badge-secondary">{{ distribution_list }}</span>
                                 {% endfor %}
                             </td>
                             <td>{{ user.user_type }}</td>
-                            <td>
+                            <td style="text-align: center">
                                 {% if user.authorized_document %}
-                                    <a href="{{ user.authorized_document.url }}">{% trans 'Download' %}</a>
+
+                                    <a href="{{ user.authorized_document.url }}">
+                                        <i class="fa fa-2x fa-file-pdf-o pb_color-danger"></i>
+                                    </a>
                                 {% endif %}
                             </td>
                         </tr>
