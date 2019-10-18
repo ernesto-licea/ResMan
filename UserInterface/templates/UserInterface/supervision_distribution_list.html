@@ -1,0 +1,123 @@
+{% extends "UserInterface/index.html" %}
+{% load i18n %}
+
+{% block navbar %}
+    {% include 'UserInterface/navbar.html' %}
+{% endblock %}
+
+{% block home_section %}
+    <section class="pb_cover_v3 overflow-hidden cover-bg-indigo cover-bg-opacity text-left pb_gradient_v1" style="height: 10vh" id="section-home">
+
+    </section>
+    <!-- END section -->
+{% endblock %}
+
+{% block service_section %}
+    <section class="pb_section bg-light pb_slant-white pb_pb-250" style="padding: 3em 0"  id="services">
+        <div class="container">
+            <div class="row">
+                <h1>{% trans 'Distribution List' %}</h1>
+            </div>
+            <div class="row">
+                <table class="table table-striped">
+                    <thead>
+                        <th>
+                            <form method="get">
+                                <input type="text" name="q" size="40" value="{{ search }}">
+                                <input type="submit" value="{% trans 'Search' %}">
+                            </form>
+                        </th>
+                    </thead>
+                </table>
+            </div>
+            <div class="row">
+
+                <table class="table table-striped" style="font-size: 13px">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>{% trans 'Name' %}</th>
+                            <th>{% trans 'Email' %}</th>
+                            <th>{% trans 'Description' %}</th>
+                            <th>{% trans 'Users Number' %}</th>
+                            <th>{% trans 'Users' %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for distribution_list in objects %}
+                        <tr>
+                            <th scope="row">{{ distribution_list.name }}</th>
+                            <td>{{ distribution_list.email }}</td>
+                            <td>{{ distribution_list.description }}</td>
+                            <td>{{ distribution_list.distribution_list_set.all.count }}</td>
+                            <td style="width: 50%">
+                                {% for user in distribution_list.distribution_list_set.all %}
+                                    <span class="badge badge-pill badge-secondary">{{ user.username }}</span>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="row">
+                {% if not objects.paginator.count == 1 %}
+                <div class="col-sm-3">
+                    <p>
+                        {% trans 'Services' %} {{ objects.start_index }} {% trans 'to' %} {{ objects.end_index }} {% trans 'of' %} {{ objects.paginator.count }}
+                    </p>
+                </div>
+                {% endif %}
+                {% if not objects.paginator.num_pages == 1 %}
+                <div class="col-sm-9">
+                    <nav aria-label="...">
+                        <ul class="pagination justify-content-end">
+                            {% if objects.has_previous %}
+                            <li class="page-item {% if not objects.previous_page_number %}disabled {% endif %}">
+                                <a class="page-link" href="?page=1{% if search %}&q={{ search }}{% endif %}">
+                                     {% trans 'First' %}
+                                </a>
+                            </li>
+                            <li class="page-item {% if not objects.previous_page_number %}disabled {% endif %}">
+                                <a class="page-link" href="?page={{ contacts.previous_page_number }}{% if search %}&q={{ search }}{% endif %}">
+                                    &laquo;     {% trans 'Previous' %}
+                                </a>
+                            </li>
+                            {% endif %}
+
+                            {% for page in page_show_range %}
+                                {% if objects.number == page %}
+                                    <li class="page-item active">
+                                        <a class="page-link" href="?page={{ page }}{% if search %}&q={{ search }}{% endif %}">
+                                            {{ page }}
+                                            <span class="sr-only">(current)</span>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page }}{% if search %}&q={{ search }}{% endif %}">{{ page }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if objects.has_next %}
+                            <li class="page-item {% if not objects.next_page_number %}disabled {% endif %}">
+                                <a class="page-link" href="?page={{ objects.next_page_number }}{% if search %}&q={{ search }}{% endif %}">
+                                    {% trans 'Next' %} &raquo;
+                                </a>
+                            </li>
+                            <li class="page-item {% if not objects.next_page_number %}disabled {% endif %}">
+                                <a class="page-link" href="?page={{ objects.paginator.num_pages }}{% if search %}&q={{ search }}{% endif %}">
+                                    {% trans 'Last' %}
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
