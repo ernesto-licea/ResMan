@@ -885,3 +885,7 @@ msgstr "Nombre"
 #: UserInterface/templates/UserInterface/supervision_services.html:40
 msgid "Users Number"
 msgstr "Número de Usuarios"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "Creation Date"
+msgstr "Fecha de Creación"
