@@ -694,7 +694,7 @@ msgstr "Servicios"
 #: UserInterface/templates/UserInterface/navbar.html:16
 #: UserInterface/templates/UserInterface/password.html:111
 msgid "Distribution List"
-msgstr "Listas de Distibución"
+msgstr "Listas de Distribución"
 
 #: UserInterface/templates/UserInterface/dashboard.html:193
 #: UserInterface/templates/UserInterface/password.html:115
