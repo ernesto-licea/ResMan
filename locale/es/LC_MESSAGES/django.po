@@ -889,3 +889,83 @@ msgstr "Número de Usuarios"
 #: UserInterface/templates/UserInterface/supervision_services.html:40
 msgid "Creation Date"
 msgstr "Fecha de Creación"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "external database"
+msgstr "Base de Datos Externa"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "external databases"
+msgstr "Bases de Datos Externas"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "External DBs to check"
+msgstr "Bases de Datos Externas para Chequeo"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "type of database server"
+msgstr "Tipo de Servidor de Base de Datos"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "DB server"
+msgstr "Servidor BD"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "DB port"
+msgstr "Puerto BD"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "DB name"
+msgstr "Nombre BD"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "DB username"
+msgstr "Usuario BD"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "DB password"
+msgstr "Contraseña BD"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "DB SQL query"
+msgstr "Consulta SQL"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "user field"
+msgstr "Campo de Usuario"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "user action"
+msgstr "Acción de Usuario"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "Disable"
+msgstr "Deshabilitar"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "notification email"
+msgstr "Correo electrónico de notificación"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "description"
+msgstr "descripción"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "Is Outside?"
+msgstr "Está en el Extranjero?"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "You can use %s in your SQL query and it will be replaced for user field value chosen."
+msgstr "Usted puede usar %s en la consulta SQL para ser remplazado por el valor del campo de usuario escogido."
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "User: %(user)s was successfully %(action)s"
+msgstr "Usuario: %(user)s fue correctamente %(action)s"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "Disabled"
+msgstr "Deshabilitado"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "Deleted"
+msgstr "Eliminado"
