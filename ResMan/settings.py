@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'LdapServer',
     'Services',
     'UserInterface',
+    'CheckExternalDB',
 ]
 
 MIDDLEWARE = [
