@@ -12,7 +12,7 @@
                 <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">{% trans 'Home' %}</a></li>
 
                 {% if not user.is_anonymous %}
-                    {% if user.is_supervisor %}
+                    {% if user.is_supervisor or user.is_superuser %}
                     <li class="nav-item cta-btn ml-xl-2 ml-lg-2 ml-md-0 ml-sm-0 ml-0" style="margin-right: 15px">
                         <div class="dropdown">
                             <a style="border: solid 1px; color:white; border-color:rgba(255,255,255,0.5)" class="nav-link dropdown-toggle pb_rounded-4" href="" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
