@@ -1,0 +1,16 @@
+{% load i18n %}
+{% trans 'Hello' %}
+
+{% if changed_users %}
+{% trans 'The following users were modified as result of checking agains external database: ' %}"{{ externaldb.name }}"
+
+{% for obj in changed_users %}
+{% trans 'User' %}: {{ obj.user.username }}, {% trans 'Message' %}: {{ obj.message }}
+
+{% endfor %}
+{% else %}
+{% trans 'No users were modified as result of checking agains external database: ' %}"{{ externaldb.name }}"
+{% endif %}
+
+
+{% trans 'ResMan - User Management System' %}

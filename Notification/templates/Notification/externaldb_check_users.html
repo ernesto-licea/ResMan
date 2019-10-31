@@ -1,0 +1,241 @@
+{% load i18n %}
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+	<meta content="initial-scale=1.0" name="viewport">
+	<meta content="telephone=no" name="format-detection">
+	<title></title>
+	<style type="text/css">
+		body {
+			width: 100%;
+			margin: 0;
+			padding: 0;
+			-webkit-font-smoothing: antialiased;
+		}
+		@media only screen and (max-width: 600px) {
+			table[class="table-row"] {
+				float: none !important;
+				width: 98% !important;
+				padding-left: 20px !important;
+				padding-right: 20px !important;
+			}
+			table[class="table-row-fixed"] {
+				float: none !important;
+				width: 98% !important;
+			}
+			table[class="table-col"], table[class="table-col-border"] {
+				float: none !important;
+				width: 100% !important;
+				padding-left: 0 !important;
+				padding-right: 0 !important;
+				table-layout: fixed;
+			}
+			td[class="table-col-td"] {
+				width: 100% !important;
+			}
+			table[class="table-col-border"] + table[class="table-col-border"] {
+				padding-top: 12px;
+				margin-top: 12px;
+				border-top: 1px solid #E8E8E8;
+			}
+			table[class="table-col"] + table[class="table-col"] {
+				margin-top: 15px;
+			}
+			td[class="table-row-td"] {
+				padding-left: 0 !important;
+				padding-right: 0 !important;
+			}
+			table[class="navbar-row"] , td[class="navbar-row-td"] {
+				width: 100% !important;
+			}
+			img {
+				max-width: 100% !important;
+				display: inline !important;
+			}
+			img[class="pull-right"] {
+				float: right;
+				margin-left: 11px;
+				max-width: 125px !important;
+				padding-bottom: 0 !important;
+			}
+			img[class="pull-left"] {
+				float: left;
+				margin-right: 11px;
+				max-width: 125px !important;
+				padding-bottom: 0 !important;
+			}
+			table[class="table-space"], table[class="header-row"] {
+				float: none !important;
+				width: 98% !important;
+			}
+			td[class="header-row-td"] {
+				width: 100% !important;
+			}
+		}
+		@media only screen and (max-width: 480px) {
+			table[class="table-row"] {
+				padding-left: 16px !important;
+				padding-right: 16px !important;
+			}
+		}
+		@media only screen and (max-width: 320px) {
+			table[class="table-row"] {
+				padding-left: 12px !important;
+				padding-right: 12px !important;
+			}
+		}
+		@media only screen and (max-width: 608px) {
+			td[class="table-td-wrap"] {
+				width: 100% !important;
+			}
+		}
+	</style>
+</head>
+<body bgcolor="#E4E6E9" marginwidth="0" marginheight="0" topmargin="0" leftmargin="0" style="font-family: Arial, sans-serif; font-size:13px; color: #444444; min-height: 200px;">
+
+    <table cellspacing="0" cellpadding="0" border="0" bgcolor="#E4E6E9" width="100%" height="100%">
+        <tbody>
+            <tr>
+                <td bgcolor="#E4E6E9" align="center" width="100%" valign="top" style="background-color:#E4E6E9; min-height: 200px;">
+                    <!--Header of template-->
+                    <table cellspacing="0" cellpadding="0" border="0" bgcolor="#438eb9" width="100%" style="table-layout: auto; width: 100%; background-color: #438eb9;">
+                        <tbody>
+                            <tr>
+                                <td bgcolor="#438eb9" align="center" width="100%" valign="top" style="width: 100%; background-color: #438eb9;">
+                                    <table cellspacing="0" cellpadding="0" border="0" width="600" height="50" style="table-layout: fixed;" class="table-row-fixed">
+                                        <tbody>
+                                            <tr>
+                                                <td align="left" width="600" valign="middle" height="50" data-skipstyle="true" class="navbar-row-td">
+                                                    <table cellspacing="0" cellpadding="0" border="0" width="600" style="table-layout: auto; padding-right: 16px; padding-left: 16px; width: 600px;" class="table-row">
+                                                        <tbody>
+                                                            <tr style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px;">
+                                                                <td align="left" valign="middle" style="padding-right: 16px; font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal; vertical-align: middle;" class="table-row-td">
+                                                                    <a style="color: #ffffff; text-decoration: none; padding: 10px 0px; font-size: 18px; line-height: 20px; height: auto; background-color: transparent;" href="#">
+                                                                        {% trans 'ResMan - User Management System' %}
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!--End Header of template-->
+
+                    <!--Blank Space-->
+                    <table cellspacing="0" cellpadding="0" border="0" bgcolor="#FFFFFF" width="600" height="8" style="height: 8px; font-size: 0px; line-height: 0; width: 600px; background-color: #ffffff;" class="table-space"><tbody><tr><td bgcolor="#FFFFFF" align="left" width="600" valign="middle" height="8" style="height: 8px; width: 600px; background-color: #ffffff;" class="table-space-td">&nbsp;</td></tr></tbody></table>
+                    <!--End Blank Space-->
+
+                    <!--Body of Template-->
+                    <table cellspacing="0" cellpadding="0" border="0" bgcolor="#FFFFFF" width="600" style="table-layout: fixed; background-color: #ffffff;" class="table-row-fixed">
+                        <tbody>
+                            <tr>
+                                <td align="left" valign="top" style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal; padding-left: 24px; padding-right: 24px;" class="table-row-fixed-td">
+                                    <table cellspacing="0" cellpadding="0" border="0" align="left" style=" table-layout: fixed;" class="table-col">
+                                        <tbody>
+                                            <tr>
+                                                <td align="left" valign="top" style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal;" class="table-col-td">
+                                                    <!-- Subject of Template -->
+                                                    <table cellspacing="0" cellpadding="0" border="0" style="table-layout: fixed;" class="header-row">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td align="left" valign="top" style="font-size: 20px; margin: 0px; font-family: Arial, sans-serif; font-weight: normal; line-height: 19px; color: #478fca; padding-bottom: 10px; padding-top: 15px;" class="header-row-td">
+                                                                    {% trans 'Hello,' %}
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <!-- End Subject of Template -->
+
+                                                    <!--Blank Space-->
+                                                    <table cellspacing="0" cellpadding="0" border="0" bgcolor="#FFFFFF" height="8" style="height: 8px; font-size: 0px; line-height: 0; background-color: #ffffff;" class="table-space"><tbody><tr><td bgcolor="#FFFFFF" align="left" width="600" valign="middle" height="8" style="height: 8px; width: 600px; background-color: #ffffff;" class="table-space-td">&nbsp;</td></tr></tbody></table>
+                                                    <!--End Blank Space-->
+
+                                                    <!-- Content of body -->
+                                                    {% if changed_users %}
+                                                        <p style="margin: 0px; font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px;">
+                                                            {% trans 'The following users were modified as result of checking agains external database: ' %}"{{ externaldb.name }}"
+                                                        </p>
+
+                                                        <!--Blank Space-->
+                                                        <table cellspacing="0" cellpadding="0" border="0" bgcolor="#FFFFFF" height="8" style="height: 8px; font-size: 0px; line-height: 0; background-color: #ffffff;" class="table-space"><tbody><tr><td bgcolor="#FFFFFF" align="left" width="600" valign="middle" height="8" style="height: 8px; width: 600px; background-color: #ffffff;" class="table-space-td">&nbsp;</td></tr></tbody></table>
+                                                        <!--End Blank Space-->
+
+                                                        {% for obj in changed_users %}
+                                                        <p style="margin: 0px; font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px;">
+                                                            <b>{% trans 'User' %}:</b> {{ obj.user.username }}, <b>{% trans 'Message' %}:</b> {{ obj.message }}
+                                                        </p>
+                                                        {% endfor %}
+
+                                                    {% else %}
+                                                        <p style="margin: 0px; font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px;">
+                                                            {% trans 'No users were modified as result of checking agains external database: ' %}"{{ externaldb.name }}"
+                                                        </p>
+
+                                                        <!--Blank Space-->
+                                                        <table cellspacing="0" cellpadding="0" border="0" bgcolor="#FFFFFF" height="8" style="height: 8px; font-size: 0px; line-height: 0; background-color: #ffffff;" class="table-space"><tbody><tr><td bgcolor="#FFFFFF" align="left" width="600" valign="middle" height="8" style="height: 8px; width: 600px; background-color: #ffffff;" class="table-space-td">&nbsp;</td></tr></tbody></table>
+                                                        <!--End Blank Space-->
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!--End Body of Template-->
+
+                    <!--Blank Space-->
+                    <table cellspacing="0" cellpadding="0" border="0" bgcolor="#FFFFFF" width="600" height="32" style="height: 32px; font-size: 0px; line-height: 0; width: 600px; background-color: #ffffff;" class="table-space"><tbody><tr><td bgcolor="#FFFFFF" align="center" width="600" valign="middle" height="32" style="height: 32px; width: 600px; padding-left: 18px; padding-right: 18px; background-color: #ffffff;" class="table-space-td">&nbsp;<table cellspacing="0" cellpadding="0" border="0" bgcolor="#E8E8E8" width="100%" height="0"><tbody><tr><td bgcolor="#E8E8E8" align="left" width="100%" valign="top" height="1" style="height: 1px; font-size:0;">&nbsp;</td></tr></tbody></table></td></tr></tbody></table>
+                    <!--End Blank Space-->
+
+                    <!--Footer of Template-->
+                    <table cellspacing="0" cellpadding="0" border="0" bgcolor="#FFFFFF" width="600" style="table-layout: fixed; background-color: #ffffff;" class="table-row">
+                        <tbody>
+                            <tr>
+                                <td align="left" valign="top" style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal; padding-left: 36px; padding-right: 36px;" class="table-row-td">
+                                    <table cellspacing="0" cellpadding="0" border="0" align="left" width="528" style="table-layout: fixed;" class="table-col">
+                                        <tbody>
+                                            <tr>
+                                                <td align="left" width="528" valign="top" style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal;" class="table-col-td">
+                                                    <!-- Content of footer-->
+                                                    <div style="font-family: Arial, sans-serif; line-height: 19px; color: #777777; font-size: 14px; text-align: center;">
+                                                        <p class="pb_font-14">
+                                                            &copy; 2019. {% trans 'All Rights Reserved' %}.
+                                                            <br>
+                                                                <a href="#section-home">{% trans 'ResMan - User Management System' %}</a>
+                                                            {% trans 'by' %} Ernesto Licea Martin
+                                                        </p>
+                                                    </div>
+
+                                                    <!--Blank Space-->
+                                                    <table cellspacing="0" cellpadding="0" border="0" bgcolor="#FFFFFF" width="528" height="8" style="height: 8px; font-size: 0px; line-height: 0; width: 528px; background-color: #ffffff;" class="table-space"><tbody><tr><td bgcolor="#FFFFFF" align="left" width="528" valign="middle" height="8" style="height: 8px; width: 528px; background-color: #ffffff;" class="table-space-td">&nbsp;</td></tr></tbody></table>
+                                                    <!--End Blank Space-->
+
+
+                                                    <!-- End Content of footer-->
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!--Footer of Template-->
+
+                    <!--Blank Space-->
+                    <table cellspacing="0" cellpadding="0" border="0" bgcolor="#FFFFFF" width="600" height="14" style="height: 14px; font-size: 0px; line-height: 0; width: 600px; background-color: #ffffff;" class="table-space"><tbody><tr><td bgcolor="#FFFFFF" align="left" width="600" valign="middle" height="14" style="height: 14px; width: 600px; background-color: #ffffff;" class="table-space-td">&nbsp;</td></tr></tbody></table>
+	                <!--End Blank Space-->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
