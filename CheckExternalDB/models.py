@@ -4,6 +4,7 @@ import MySQLdb
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from CheckExternalDB.signals.signals import externaldb_check_user_signal
 from CustomUser.models import UserEnterprise
 
 
@@ -79,6 +80,9 @@ class ExternalDB(models.Model):
                     )
             cursor.close()
             conn.close()
+
+        externaldb_check_user_signal.send(sender=self.__class__,externaldb=self,changed_users=user_changed)
+
         return user_changed
 
 
