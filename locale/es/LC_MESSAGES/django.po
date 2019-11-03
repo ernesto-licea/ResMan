@@ -1001,3 +1001,7 @@ msgstr "Hola"
 #: UserInterface/templates/UserInterface/supervision_services.html:40
 msgid "ResMan - Result of the user check against external database '%(database)s'"
 msgstr "ResMan - Resultado del chequeo de usuarios contra base de datos externa '%(database)s'"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "Error in connection, Server {} says: %(error)s"
+msgstr "Error en la conexión, Servidor {} responde: %(error)s"
