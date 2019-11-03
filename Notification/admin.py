@@ -44,13 +44,11 @@ def change_password(modeladmin,request, id, form_url=''):
 
             return HttpResponseRedirect(
                 reverse(
-                    '%s:%s_%s_change' % (
+                    '%s:%s_%s_changelist' % (
                         modeladmin.admin_site.name,
                         email_server._meta.app_label,
                         email_server._meta.model_name,
-                    ),
-                    args=(email_server.pk,),
-                )
+                ))
             )
     else:
         form = SetEmailServerPasswordForm(email_server)
