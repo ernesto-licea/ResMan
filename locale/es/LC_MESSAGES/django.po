@@ -1021,3 +1021,11 @@ msgstr ""
 #: UserInterface/templates/UserInterface/supervision_services.html:40
 msgid "Enter a new password for the email server user: <strong>%(username)s</strong>"
 msgstr "Entre una nueva contraseña para el usuario del servidor de correo elecrónico: <strong>%(username)s</strong>"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "ResMan - Test Connection"
+msgstr "ResMan - Prueba de Conexión"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "If you receive this email the connection was successfully established."
+msgstr "Si este email es recibido la prueba de conexión fue exitosa."
