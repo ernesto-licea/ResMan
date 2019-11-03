@@ -52,6 +52,14 @@ class EmailServerAdmin(admin.ModelAdmin):
             fail_silently=False,
             timeout=10
         )
+
+        obj_url = reverse(
+            'admin:%s_%s_change' % (opts.app_label, opts.model_name),
+            args=(quote(obj.pk),),
+            current_app=self.admin_site.name,
+        )
+        obj_repr = format_html('<a href="{}">{}</a>', urlquote(obj_url), obj)
+
         try:
             msg = EmailMessage(
                 subject=_('Resman - Test Connection'),
@@ -62,19 +70,19 @@ class EmailServerAdmin(admin.ModelAdmin):
             )
             msg.send()
 
-            obj_url = reverse(
-                'admin:%s_%s_change' % (opts.app_label, opts.model_name),
-                args=(quote(obj.pk),),
-                current_app=self.admin_site.name,
-            )
-            obj_repr = format_html('<a href="{}">{}</a>', urlquote(obj_url), obj)
+
             message = format_html(
                 _("Connection to server {} was successfully established."),
                 obj_repr
             )
             self.message_user(request, message, messages.SUCCESS)
+
         except Exception as e:
-            self.message_user(request,e,messages.ERROR)
+            message = format_html(
+                _("Error in connection, Server {} says: %(error)s") %{'error':e},
+                obj_repr
+            )
+            self.message_user(request,message,messages.ERROR)
 
         # Return changelist view
         url = reverse('admin:%s_%s_changelist' % (self.model._meta.app_label, self.model._meta.model_name))
