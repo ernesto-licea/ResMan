@@ -142,7 +142,7 @@ class EmailServerAdmin(admin.ModelAdmin):
             host=obj.email_server,
             port=obj.email_port,
             username=obj.email_username,
-            password=obj.email_password,
+            password=base64.b64decode(obj.email_password).decode('utf-8'),
             use_tls=obj.use_tls,
             fail_silently=False,
             timeout=10
@@ -157,7 +157,7 @@ class EmailServerAdmin(admin.ModelAdmin):
 
         try:
             msg = EmailMessage(
-                subject=_('Resman - Test Connection'),
+                subject=_('ResMan - Test Connection'),
                 body= _("If you receive this email the connection was successfully established."),
                 from_email=obj.email_username,
                 to=[obj.email_username,],
