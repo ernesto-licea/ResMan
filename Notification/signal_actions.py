@@ -1,46 +1,51 @@
-from django.conf import settings
-from django.core.mail import EmailMultiAlternatives, get_connection
+from django.core.mail import EmailMultiAlternatives
 from django.core.mail.backends.smtp import EmailBackend
-from django.template import Context
 from django.template.loader import get_template
+from django.apps import apps
+from django.utils.translation import gettext_lazy as _
 
 
 def notification_externaldb_check_user(sender,**kwargs):
     changed_users = kwargs['changed_users']
     externaldb = kwargs['externaldb']
+    if externaldb.email:
+        html_content = get_template(
+            "Notification/externaldb_check_users.html").render(
+            {
+                "changed_users":changed_users,
+                "externaldb": externaldb
+            })
 
-    html_content = get_template(
-        "Notification/externaldb_check_users.html").render(
-        {
-            "changed_users":changed_users,
+        # Crear correo text
+        text_content = get_template(
+            "Notification/externaldb_check_users.txt").render({
+            "changed_users": changed_users,
             "externaldb": externaldb
         })
 
-    # Crear correo text
-    text_content = get_template(
-        "Notification/externaldb_check_users.txt").render({
-        "changed_users": changed_users,
-        "externaldb": externaldb
-    })
+        appconfig = apps.get_app_config('Notification')
+        EmailServer = appconfig.get_model('EmailServer', 'EmailServer')
+        email_server_list = EmailServer.objects.filter(is_active=True)
 
-    backend = EmailBackend(
-        host='192.168.1.2',
-        port=25,
-        username='ernesto@finlay.edu.cu',
-        password='Marioneta.pc123',
-        use_tls=True
-    )
+        for server in email_server_list:
 
-    # Enviar correo
-    msg = EmailMultiAlternatives(
-        subject="prueba",
-        body=text_content,
-        from_email='ernesto@finlay.edu.cu',
-        to=['ernesto@finlay.edu.cu',],
-        connection=backend
-    )
-    msg.attach_alternative(html_content, "text/html")
-    try:
-        msg.send()
-    except Exception as e:
-        print(e)
+            backend = EmailBackend(
+                host=server.email_server,
+                port=server.email_port,
+                username=server.email_username,
+                password=server.email_password,
+                use_tls=server.use_tls,
+                fail_silently=True,
+                timeout=10
+            )
+
+            # Enviar correo
+            msg = EmailMultiAlternatives(
+                subject=_("RestMan - Result of the user check against external database '%s'" %externaldb.name),
+                body=text_content,
+                from_email=server.email_username,
+                to=[externaldb.email,],
+                connection=backend
+            )
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
