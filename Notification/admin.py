@@ -94,7 +94,10 @@ class EmailServerAdmin(admin.ModelAdmin):
 
     def get_form(self, request, obj=None, **kwargs):
         if obj:
-            kwargs['form'] = EmailServerFormEdit
+            if obj.email_username and obj.email_password:
+                kwargs['form'] = EmailServerFormEdit
+            else:
+                kwargs['form'] = EmailServerFormAdd
         else:
             kwargs['form'] = EmailServerFormAdd
         return super().get_form(request, obj, **kwargs)
@@ -184,8 +187,13 @@ class EmailServerAdmin(admin.ModelAdmin):
         return HttpResponseRedirect(url)
 
     def save_model(self, request, obj, form, change):
+
         if not change:
             obj.email_password = base64.b64encode(obj.email_password.encode('utf-8')).decode()
+        else:
+            if not form.initial.get('email_password'):
+                obj.email_password = base64.b64encode(obj.email_password.encode('utf-8')).decode()
+
         super(EmailServerAdmin,self).save_model(request,obj,form,change)
 
 admin_site.register(EmailServer,EmailServerAdmin)
