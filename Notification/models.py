@@ -8,7 +8,7 @@ class EmailServer(models.Model):
     is_active = models.BooleanField(_('is active'), default=True)
     name = models.CharField(_('name'), max_length=100, default="", unique=True)
     email_server = models.CharField(_('server name or IP'), max_length=128, default="")
-    auth_required = models.BooleanField(_('authentication required'),default=False)
+    auth_required = models.BooleanField(_('authentication required?'),default=False)
     email_port = models.PositiveIntegerField(_('server port'), default=25)
     email_username = models.CharField(_('username'),max_length=100,default="",blank=True)
     email_password = models.CharField(_('password'), max_length=100, default="",blank=True)
