@@ -1,3 +1,4 @@
+import base64
 from django.conf.urls import url
 from django.contrib import admin, messages
 from django.contrib.admin.options import IS_POPUP_VAR
@@ -31,10 +32,10 @@ def change_password(modeladmin,request, id, form_url=''):
         form = SetEmailServerPasswordForm(email_server, request.POST)
         if form.is_valid():
 
-            #password = form.cleaned_data.get('password1')
-            #user = form.save(commit=False)
-            #user._password = password
-            form.save()
+            email_password = form.cleaned_data.get('password1')
+            email_server = form.save(commit=False)
+            email_server.email_password = base64.b64encode(email_password.encode('utf-8')).decode()
+            email_server.save()
 
             change_message = modeladmin.construct_change_message(request, form, None)
             modeladmin.log_change(request, email_server, change_message)
@@ -183,6 +184,8 @@ class EmailServerAdmin(admin.ModelAdmin):
         return HttpResponseRedirect(url)
 
     def save_model(self, request, obj, form, change):
+        if not change:
+            obj.email_password = base64.b64encode(obj.email_password.encode('utf-8')).decode()
         super(EmailServerAdmin,self).save_model(request,obj,form,change)
 
 admin_site.register(EmailServer,EmailServerAdmin)
