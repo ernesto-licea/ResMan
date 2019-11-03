@@ -37,12 +37,7 @@ class EmailServerForm(forms.ModelForm):
         return cleaned_data
 
 class EmailServerFormAdd(EmailServerForm):
-    retype_password = forms.CharField(
-        label=_('Retype Password'),
-        widget=forms.PasswordInput(attrs={'class': 'vTextField'}),
-        max_length=150,
-        help_text=_('Confirm the previous password.')
-    )
+
     class Meta(EmailServerForm.Meta):
         widgets = {
             'email_password': forms.PasswordInput(attrs={'class': 'vTextField'}),
@@ -51,13 +46,6 @@ class EmailServerFormAdd(EmailServerForm):
 
     def clean(self):
         cleaned_data  = super(EmailServerFormAdd, self).clean()
-        password = cleaned_data.get('email_password',False)
-        retype_password = cleaned_data.get('retype_password',False)
-
-        if password and retype_password:
-            if password != retype_password:
-                self.add_error('retype_password',_('Passwords do not match.'))
-
         return cleaned_data
 
 class EmailServerFormEdit(EmailServerForm):
