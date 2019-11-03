@@ -41,7 +41,7 @@ def notification_externaldb_check_user(sender,**kwargs):
 
             # Enviar correo
             msg = EmailMultiAlternatives(
-                subject=_("RestMan - Result of the user check against external database '%s'" %externaldb.name),
+                subject=_("ResMan - Result of the user check against external database '%(database)s'") %{'database':externaldb.name},
                 body=text_content,
                 from_email=server.email_username,
                 to=[externaldb.email,],
