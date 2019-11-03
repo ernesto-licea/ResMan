@@ -1008,7 +1008,7 @@ msgstr "Error en la conexión, Servidor {} responde: %(error)s"
 
 #: UserInterface/templates/UserInterface/supervision_services.html:40
 msgid "For security reasons this password is hidden"
-msgstr "Por razones de seguridad esta contraseña es ocultada."
+msgstr "Por razones de seguridad esta contraseña está oculta."
 
 #: CustomUser/forms.py:166
 msgid ""
@@ -1029,3 +1029,11 @@ msgstr "ResMan - Prueba de Conexión"
 #: UserInterface/templates/UserInterface/supervision_services.html:40
 msgid "If you receive this email the connection was successfully established."
 msgstr "Si este email es recibido la prueba de conexión fue exitosa."
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "authentication required?"
+msgstr "Autenticación es Requerida?"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "If authentication is required this field can not be empty."
+msgstr "Si la autenticación es obligatoria este campo debe ser rellenado."
