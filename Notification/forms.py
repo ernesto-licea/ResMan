@@ -34,6 +34,14 @@ class EmailServerForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super(EmailServerForm, self).clean()
+        auth_required = cleaned_data.get('auth_required')
+        if auth_required:
+            email_username = cleaned_data.get('email_username')
+            email_password = cleaned_data.get('email_password')
+            if not email_username:
+                self.add_error('email_username', _('If authentication is required this field can not be empty.'))
+            if not email_password:
+                self.add_error('email_password', _('If authentication is required this field can not be empty.'))
         return cleaned_data
 
 class EmailServerFormAdd(EmailServerForm):
