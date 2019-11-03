@@ -969,3 +969,35 @@ msgstr "Deshabilitado"
 #: UserInterface/templates/UserInterface/supervision_services.html:40
 msgid "Deleted"
 msgstr "Eliminado"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "email servers"
+msgstr "servidores de correo electrónico"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "email server"
+msgstr "servidor de correo electrónico"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "server name or IP"
+msgstr "nombre del servidor o dirección IP"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "use tls?"
+msgstr "Usar TLS?"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "The following users were modified as result of checking agains external database: "
+msgstr "Los siguientes usuarios fueron modificados como resultado del chequeo contra la base de datos externa: "
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "No user was modified as result of checking agains external database: "
+msgstr "Ningún usuario fue modificado como resultado del chequeo contra la base de datos externa: "
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "Hello"
+msgstr "Hola"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "ResMan - Result of the user check against external database '%(database)s'"
+msgstr "ResMan - Resultado del chequeo de usuarios contra base de datos externa '%(database)s'"
