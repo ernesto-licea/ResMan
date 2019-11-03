@@ -6,7 +6,7 @@ from Notification.signal_actions import notification_externaldb_check_user
 
 class NotificationConfig(AppConfig):
     name = 'Notification'
-    verbose_name = _('Email Servers')
+    verbose_name = _('email servers')
 
 
     def ready(self):
