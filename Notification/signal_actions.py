@@ -1,3 +1,5 @@
+import base64
+
 from django.core.mail import EmailMultiAlternatives
 from django.core.mail.backends.smtp import EmailBackend
 from django.template.loader import get_template
@@ -33,7 +35,7 @@ def notification_externaldb_check_user(sender,**kwargs):
                 host=server.email_server,
                 port=server.email_port,
                 username=server.email_username,
-                password=server.email_password,
+                password=base64.b64decode(server.email_password).decode('utf-8'),
                 use_tls=server.use_tls,
                 fail_silently=True,
                 timeout=10
