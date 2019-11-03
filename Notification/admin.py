@@ -103,10 +103,7 @@ class EmailServerAdmin(admin.ModelAdmin):
         return super().get_form(request, obj, **kwargs)
 
     def get_fields(self, request, obj=None):
-        if obj:
-            return ['is_active','name', 'email_server', 'email_port','email_username','email_password','use_tls']
-        else:
-            return ['is_active','name', 'email_server', 'email_port','email_username','email_password','retype_password','use_tls']
+            return ['is_active','name', 'email_server', 'email_port','auth_required','email_username','email_password','use_tls']
 
     def get_urls(self):
         urls = super(EmailServerAdmin, self).get_urls()
