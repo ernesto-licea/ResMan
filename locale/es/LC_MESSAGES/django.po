@@ -1005,3 +1005,19 @@ msgstr "ResMan - Resultado del chequeo de usuarios contra base de datos externa 
 #: UserInterface/templates/UserInterface/supervision_services.html:40
 msgid "Error in connection, Server {} says: %(error)s"
 msgstr "Error en la conexión, Servidor {} responde: %(error)s"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "For security reasons this password is hidden"
+msgstr "Por razones de seguridad esta contraseña es ocultada."
+
+#: CustomUser/forms.py:166
+msgid ""
+"Raw passwords are not stored, so there is no way to see this server's "
+"password, but you can change the password using <a href=\"{}\">this form</a>."
+msgstr ""
+"Contraseñas en texto plano no son almacendas, por lo que no hay forma de visualizarlas,"
+"esta puede ser cambiada usando <a href=\"{}\">este formulario</a>."
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "Enter a new password for the email server user: <strong>%(username)s</strong>"
+msgstr "Entre una nueva contraseña para el usuario del servidor de correo elecrónico: <strong>%(username)s</strong>"
