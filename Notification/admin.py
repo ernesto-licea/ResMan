@@ -137,6 +137,12 @@ class EmailServerAdmin(admin.ModelAdmin):
         obj = self.get_object(request,emailserver_id)
         opts = obj._meta
 
+        obj_url = reverse(
+            'admin:%s_%s_change' % (opts.app_label, opts.model_name),
+            args=(quote(obj.pk),),
+            current_app=self.admin_site.name,
+        )
+        obj_repr = format_html('<a href="{}">{}</a>', urlquote(obj_url), obj)
 
         backend = EmailBackend(
             host=obj.email_server,
@@ -148,14 +154,7 @@ class EmailServerAdmin(admin.ModelAdmin):
             timeout=10
         )
 
-        obj_url = reverse(
-            'admin:%s_%s_change' % (opts.app_label, opts.model_name),
-            args=(quote(obj.pk),),
-            current_app=self.admin_site.name,
-        )
-        obj_repr = format_html('<a href="{}">{}</a>', urlquote(obj_url), obj)
-
-        try:
+        if obj.auth_required:
             msg = EmailMessage(
                 subject=_('ResMan - Test Connection'),
                 body= _("If you receive this email the connection was successfully established."),
@@ -163,8 +162,17 @@ class EmailServerAdmin(admin.ModelAdmin):
                 to=[obj.email_username,],
                 connection=backend
             )
-            msg.send()
+        else:
+            msg = EmailMessage(
+                subject=_('ResMan - Test Connection'),
+                body=_("If you receive this email the connection was successfully established."),
+                from_email="ResMan",
+                to=['ernesto@finlay.edu.cu', ],
+                connection=backend
+            )
 
+        try:
+            a = msg.send()
 
             message = format_html(
                 _("Connection to server {} was successfully established."),
@@ -174,8 +182,9 @@ class EmailServerAdmin(admin.ModelAdmin):
 
         except Exception as e:
             message = format_html(
-                _("Error in connection, Server {} says: %(error)s") %{'error':e},
-                obj_repr
+                _("Error in connection, Server {} says: {}"),
+                obj_repr,
+                str(e)
             )
             self.message_user(request,message,messages.ERROR)
 
@@ -184,12 +193,16 @@ class EmailServerAdmin(admin.ModelAdmin):
         return HttpResponseRedirect(url)
 
     def save_model(self, request, obj, form, change):
-
-        if not change:
-            obj.email_password = base64.b64encode(obj.email_password.encode('utf-8')).decode()
-        else:
-            if not form.initial.get('email_password'):
+        if obj.auth_required:
+            if not change:
                 obj.email_password = base64.b64encode(obj.email_password.encode('utf-8')).decode()
+            else:
+                if not form.initial.get('email_password'):
+                    obj.email_password = base64.b64encode(obj.email_password.encode('utf-8')).decode()
+        else:
+            obj.email_username = ""
+            obj.email_password = ""
+            obj.use_tls = False
 
         super(EmailServerAdmin,self).save_model(request,obj,form,change)
 
