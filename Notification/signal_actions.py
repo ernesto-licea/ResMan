@@ -31,21 +31,34 @@ def notification_externaldb_check_user(sender,**kwargs):
 
         for server in email_server_list:
 
-            backend = EmailBackend(
-                host=server.email_server,
-                port=server.email_port,
-                username=server.email_username,
-                password=base64.b64decode(server.email_password).decode('utf-8'),
-                use_tls=server.use_tls,
-                fail_silently=True,
-                timeout=10
-            )
+            if server.auth_required:
+                backend = EmailBackend(
+                    host=server.email_server,
+                    port=server.email_port,
+                    username=server.email_username,
+                    password=base64.b64decode(server.email_password).decode('utf-8'),
+                    use_tls=server.use_tls,
+                    fail_silently=True,
+                    timeout=10
+                )
+                mail_from = server.email_username
+            else:
+                backend = EmailBackend(
+                    host=server.email_server,
+                    port=server.email_port,
+                    username="",
+                    password="",
+                    use_tls=False,
+                    fail_silently=True,
+                    timeout=10
+                )
+                mail_from = "ResMan"
 
             # Enviar correo
             msg = EmailMultiAlternatives(
                 subject=_("ResMan - Result of the user check against external database '%(database)s'") %{'database':externaldb.name},
                 body=text_content,
-                from_email=server.email_username,
+                from_email=mail_from,
                 to=[externaldb.email,],
                 connection=backend
             )
