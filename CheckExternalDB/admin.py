@@ -86,7 +86,7 @@ class ExternalDBAdmin(admin.ModelAdmin):
     model = ExternalDB
     list_display = ('name','is_active','db_type','db_host','db_port','user_action','database_action')
 
-    fields = ['is_active','name','db_type','db_host','db_port','db_name','db_username','db_password','db_query','user_field','user_action','email','description']
+    fields = ['is_active','name','db_type','db_host','db_port','db_name','db_username','db_password','db_query','user_field','user_action','notify_informatics_staff','notify_supervisors_staff','email','description']
 
 
     def get_form(self, request, obj=None, **kwargs):
