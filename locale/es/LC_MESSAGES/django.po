@@ -1041,3 +1041,7 @@ msgstr "Si la autenticación es obligatoria este campo debe ser rellenado."
 #: UserInterface/templates/UserInterface/supervision_services.html:40
 msgid "Enter a new password for the database server user: <strong>%(username)s</strong>"
 msgstr "Entre una nueva contraseña para el usuario del servidor de base de datos: <strong>%(username)s</strong>"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "Database Action"
+msgstr "Acción de Base de Datos"
