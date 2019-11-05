@@ -1049,3 +1049,11 @@ msgstr "Acción de Base de Datos"
 #: UserInterface/templates/UserInterface/supervision_services.html:40
 msgid "No user was modified as result of checking agains external database: {}"
 msgstr "Ningún usuario fue modificado como resultado del chequeo contra la base de datos externa: {}"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "Type"
+msgstr "Tipo de Usuario"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "Supervisor Staff"
+msgstr "Equipo de Supervisores"
