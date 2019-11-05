@@ -1,15 +1,15 @@
 import base64
-
 from django.conf.urls import url
 from django.contrib import admin, messages
 from django.contrib.admin.options import IS_POPUP_VAR
-from django.contrib.admin.utils import unquote
+from django.contrib.admin.utils import unquote, quote
 from django.contrib.auth.admin import sensitive_post_parameters_m
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect, Http404
 from django.template.response import TemplateResponse
 from django.urls import reverse, path
 from django.utils.html import format_html, escape
+from django.utils.http import urlquote
 from django.utils.translation import gettext_lazy as _, gettext
 from CheckExternalDB.forms import ExternalDBFormEdit, ExternalDBFormAdd, SetExternalDBPasswordForm
 from ResMan.admin import admin_site
@@ -85,7 +85,6 @@ def change_password(modeladmin,request, id, form_url=''):
 class ExternalDBAdmin(admin.ModelAdmin):
     model = ExternalDB
     list_display = ('name','is_active','db_type','db_host','db_port','user_action','database_action')
-    list_filter = ('is_active',)
 
     fields = ['is_active','name','db_type','db_host','db_port','db_name','db_username','db_password','db_query','user_field','user_action','email','description']
 
@@ -112,9 +111,14 @@ class ExternalDBAdmin(admin.ModelAdmin):
                 name='server_password_change',
             ),
             url(
-                r'^(?P<external_db_id>.+)/check/$',
+                r'^(?P<external_db_id>.+)/check_users/$',
                 self.admin_site.admin_view(self.check_users),
                 name='check-users',
+            ),
+            url(
+                r'^(?P<external_db_id>.+)/check_connection/$',
+                self.admin_site.admin_view(self.check_connection),
+                name='check-connection',
             )
         ]
         return custom_urls + urls
@@ -128,9 +132,41 @@ class ExternalDBAdmin(admin.ModelAdmin):
             '<a class="button" href="{}">{}</a>&nbsp;',
             reverse('admin:check-users', args=[obj.pk]),
             _('Check Users')
+        ) + format_html(
+            '<a class="button" href="{}">{}</a>&nbsp;',
+            reverse('admin:check-connection', args=[obj.pk]),
+            _('Test Connection')
         )
     database_action.short_description = _("Database Action")
 
+    def check_connection(self,request,external_db_id,*args,**kwargs):
+        obj = self.get_object(request,external_db_id)
+        opts = obj._meta
+
+        obj_url = reverse(
+            'admin:%s_%s_change' % (opts.app_label, opts.model_name),
+            args=(quote(obj.pk),),
+            current_app=self.admin_site.name,
+        )
+        obj_repr = format_html('<a href="{}">{}</a>', urlquote(obj_url), obj)
+
+        status,error = obj.check_connection()
+        if status:
+            message = format_html(
+                _("Connection to server {} was successfully established."),
+                obj_repr
+            )
+        else:
+            message = format_html(
+                _("Error in connection, Server {} says: {}"),
+                obj_repr,
+                error
+            )
+        self.message_user(request, message, messages.SUCCESS if status else messages.ERROR)
+
+        # Return changelist view
+        url = reverse('admin:%s_%s_changelist' % (self.model._meta.app_label, self.model._meta.model_name))
+        return HttpResponseRedirect(url)
 
     def check_users(self,request,external_db_id,*args,**kwargs):
         obj = self.get_object(request,external_db_id)
