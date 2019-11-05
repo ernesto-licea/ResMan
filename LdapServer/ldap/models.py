@@ -1,5 +1,5 @@
 from ldap3 import ObjectDef, AttrDef, Server, Connection, NTLM, ALL, Reader, Writer
-
+import base64
 
 class LdapUser:
     def __init__(self,server,user):
@@ -47,7 +47,7 @@ class LdapUser:
         connection = Connection(
             server = ldap_server,
             user = self.server.admin_username,
-            password = self.server.admin_password,
+            password = base64.b64decode(self.server.admin_password).decode('utf-8'),
             raise_exceptions = True,
             authentication = NTLM
         )
@@ -267,7 +267,7 @@ class LdapGroup:
         connection = Connection(
             server = ldap_server,
             user = self.server.admin_username,
-            password = self.server.admin_password,
+            password = base64.b64decode(self.server.admin_password).decode('utf-8'),
             raise_exceptions = True,
             authentication = NTLM
         )
