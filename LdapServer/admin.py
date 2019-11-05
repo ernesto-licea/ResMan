@@ -8,6 +8,7 @@ from django.utils.http import urlquote
 from django.utils.translation import gettext_lazy as _
 
 from CustomUser.models import UserEnterprise, UserInstitutional, UserGuest
+from LdapServer.forms import LdapServerFormEdit, LdapServerFormAdd
 from ResMan.admin import admin_site
 from Services.models import Service
 from .models import LdapServer
@@ -29,6 +30,13 @@ class LdapServerAdmin(admin.ModelAdmin):
             ),
         }),
     )
+
+    def get_form(self, request, obj=None, **kwargs):
+        if obj:
+            kwargs['form'] = LdapServerFormEdit
+        else:
+            kwargs['form'] = LdapServerFormAdd
+        return super().get_form(request, obj, **kwargs)
 
     def get_urls(self):
         urls = super(LdapServerAdmin, self).get_urls()
