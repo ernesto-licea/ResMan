@@ -170,11 +170,34 @@ class ExternalDBAdmin(admin.ModelAdmin):
 
     def check_users(self,request,external_db_id,*args,**kwargs):
         obj = self.get_object(request,external_db_id)
+        opts = obj._meta
 
-        user_changed = obj.check_users()
+        obj_url = reverse(
+            'admin:%s_%s_change' % (opts.app_label, opts.model_name),
+            args=(quote(obj.pk),),
+            current_app=self.admin_site.name,
+        )
+        obj_repr = format_html('<a href="{}">{}</a>', urlquote(obj_url), obj)
 
-        for user in user_changed:
-            self.message_user(request,user['message'], messages.SUCCESS)
+        status,user_changed,error = obj.check_users()
+
+        if status:
+            if user_changed:
+                for user in user_changed:
+                    self.message_user(request,user['message'], messages.SUCCESS)
+            else:
+                message = format_html(
+                    _("No user was modified as result of checking agains external database: {}"),
+                    obj_repr
+                )
+                self.message_user(request, message, messages.SUCCESS)
+        else:
+            message = format_html(
+                _("Error in connection, Server {} says: {}"),
+                obj_repr,
+                error
+            )
+            self.message_user(request, message, messages.ERROR)
 
         # Return changelist view
         url = reverse('admin:%s_%s_changelist' % (self.model._meta.app_label, self.model._meta.model_name))
