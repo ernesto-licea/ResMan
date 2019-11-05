@@ -66,7 +66,7 @@ class LdapServerFormEdit(LdapServerForm):
         # field does not have access to the initial value
         return self.initial.get('db_password')
 
-class SetExternalDBPasswordForm(forms.Form):
+class SetLdapServerPasswordForm(forms.Form):
     """
     A form that lets a user change set their password without entering the old
     password
