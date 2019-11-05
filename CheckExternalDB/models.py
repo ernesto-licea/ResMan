@@ -33,6 +33,8 @@ class ExternalDB(models.Model):
     db_query = models.CharField(_('DB SQL query'),default="",max_length=1024,
                                 help_text=_('You can use %s in your SQL query and it will be replaced for user field value chosen.'))
     user_field = models.CharField(_('user field'),choices=USER_FIELDS,default=USER_FIELDS[0][0],max_length=100)
+    notify_informatics_staff = models.BooleanField(_('notify informatics staff?'), default=True)
+    notify_supervisors_staff = models.BooleanField(_('notify supervisor staff?'), default=True)
     user_action = models.CharField(_('user action'),choices=USER_ACTION,default=USER_ACTION[0][0],max_length=20)
     email = models.EmailField(_('notification email'), default="", blank=True)
     creation_date = models.DateTimeField(_('creation date'),auto_now_add=True)
