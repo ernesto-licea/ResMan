@@ -214,6 +214,7 @@ class LdapServerAdmin(admin.ModelAdmin):
             username='testuser',
             first_name= 'TestUser',
             last_name= 'TestUser',
+            email = "testuser@dot.com",
             email_domain='local',
             internet_quota_type='daily',
             internet_domain='local'
