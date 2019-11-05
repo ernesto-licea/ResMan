@@ -248,6 +248,8 @@ class LdapServerAdmin(admin.ModelAdmin):
 
 
     def save_model(self, request, obj, form, change):
+        if not change:
+            obj.admin_password = base64.b64encode(obj.admin_password.encode('utf-8')).decode()
         super(LdapServerAdmin,self).save_model(request,obj,form,change)
 
 admin_site.register(LdapServer,LdapServerAdmin)
