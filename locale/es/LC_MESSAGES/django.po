@@ -1057,3 +1057,11 @@ msgstr "Tipo de Usuario"
 #: UserInterface/templates/UserInterface/supervision_services.html:40
 msgid "Supervisor Staff"
 msgstr "Equipo de Supervisores"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "notify informatics staff?"
+msgstr "noficar al equipo de informáticos?"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "notify supervisor staff?"
+msgstr "notificar al equipo de supervisores?"
