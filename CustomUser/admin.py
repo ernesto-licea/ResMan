@@ -35,6 +35,7 @@ def delete_queryset(modeladmin,request,queryset):
         ldap_error = obj.delete()
         if ldap_error:
             modeladmin.message_user(request, ldap_error, messages.ERROR)
+            return True
         else:
             if LdapServer.objects.all().count():
                 message = _('The {} "{}" was successfully deleted from ldap servers.'.format(
@@ -178,7 +179,7 @@ class UserAdmin(PolymorphicParentModelAdmin):
         return HttpResponseRedirect(url)
 
     def delete_queryset(self, request, queryset):
-        delete_queryset(self,request,queryset)
+        return delete_queryset(self,request,queryset)
 
     def _sync_message(self,obj):
         opts = obj._meta
@@ -414,7 +415,7 @@ class UserEnterpriseAdmin(UserAdminBase):
         return HttpResponseRedirect(url)
 
     def delete_queryset(self, request, queryset):
-        delete_queryset(self,request,queryset)
+        return delete_queryset(self,request,queryset)
 
 class UserInstitutionalAdmin(UserAdminBase):
     base_model = UserInstitutional
@@ -528,7 +529,7 @@ class UserInstitutionalAdmin(UserAdminBase):
         return HttpResponseRedirect(url)
 
     def delete_queryset(self, request, queryset):
-        delete_queryset(self,request,queryset)
+        return delete_queryset(self,request,queryset)
 
 class UserGuestAdmin(UserAdminBase):
     base_model = UserGuest
@@ -641,7 +642,7 @@ class UserGuestAdmin(UserAdminBase):
         return HttpResponseRedirect(url)
 
     def delete_queryset(self, request, queryset):
-        delete_queryset(self,request,queryset)
+        return delete_queryset(self,request,queryset)
 
 
 admin_site.register(User,UserAdmin)
