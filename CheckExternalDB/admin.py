@@ -1,3 +1,5 @@
+import base64
+
 import MySQLdb
 import pymssql
 from django.conf.urls import url
@@ -7,6 +9,7 @@ from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
+from CheckExternalDB.forms import ExternalDBFormEdit, ExternalDBFormAdd
 from CustomUser.models import UserEnterprise
 from ResMan.admin import admin_site
 
@@ -22,7 +25,17 @@ class ExternalDBAdmin(admin.ModelAdmin):
     fields = ['is_active','name','db_type','db_host','db_port','db_name','db_username','db_password','db_query','user_field','user_action','email','description']
 
 
+    def get_form(self, request, obj=None, **kwargs):
+        if obj:
+            kwargs['form'] = ExternalDBFormEdit
+        else:
+            kwargs['form'] = ExternalDBFormAdd
+        return super().get_form(request, obj, **kwargs)
+
+
     def save_model(self, request, obj, form, change):
+        if not change:
+            obj.db_password = base64.b64encode(obj.db_password.encode('utf-8'))
         super(ExternalDBAdmin,self).save_model(request,obj,form,change)
 
     def get_urls(self):
