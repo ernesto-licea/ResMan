@@ -1,3 +1,4 @@
+import base64
 import pymssql
 
 import MySQLdb
@@ -44,9 +45,19 @@ class ExternalDB(models.Model):
         user_list = UserEnterprise.objects.filter(status='active')
         for user in user_list:
             if self.db_type == 'sql':
-                conn = pymssql.connect(host=self.db_host, user=self.db_username, password=self.db_password, database=self.db_name)
+                conn = pymssql.connect(
+                    host=self.db_host,
+                    user=self.db_username,
+                    password=base64.b64decode(self.db_password).decode('utf-8'),
+                    database=self.db_name
+                )
             else:
-                conn = MySQLdb.connect(host=self.db_host, user=self.db_username, passwd=self.db_password, db=self.db_name)
+                conn = MySQLdb.connect(
+                    host=self.db_host,
+                    user=self.db_username,
+                    passwd=base64.b64decode(self.db_password).decode('utf-8'),
+                    db=self.db_name
+                )
 
             cursor = conn.cursor()
             cursor.execute(self.db_query %getattr(user,self.user_field))
