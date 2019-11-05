@@ -13,7 +13,6 @@ from django.utils.http import urlquote
 from django.utils.translation import gettext_lazy as _, gettext
 from CheckExternalDB.forms import ExternalDBFormEdit, ExternalDBFormAdd, SetExternalDBPasswordForm
 from ResMan.admin import admin_site
-
 from CheckExternalDB.models import ExternalDB
 
 def change_password(modeladmin,request, id, form_url=''):
