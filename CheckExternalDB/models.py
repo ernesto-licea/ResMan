@@ -39,60 +39,71 @@ class ExternalDB(models.Model):
     description = models.TextField(_('description'),blank=True)
 
     def check_users(self):
-        user_changed = []
-        user_list = UserEnterprise.objects.filter(status='active')
-        for user in user_list:
-            if self.db_type == 'sql':
-                conn = pymssql.connect(
-                    host=self.db_host,
-                    user=self.db_username,
-                    password=base64.b64decode(self.db_password).decode('utf-8'),
-                    database=self.db_name
-                )
-            else:
-                conn = MySQLdb.connect(
-                    host=self.db_host,
-                    user=self.db_username,
-                    passwd=base64.b64decode(self.db_password).decode('utf-8'),
-                    db=self.db_name
-                )
 
-            cursor = conn.cursor()
-            cursor.execute(self.db_query %getattr(user,self.user_field))
-
-            if not cursor.rowcount:
-                if self.user_action == 'delete':
-                    ldap_error = user.delete()
-
-                else:
-                    user.status = 'inactive'
-                    user.save()
-                    ldap_error = user.ldap_save()
-
-                if ldap_error:
-                    user_changed.append(
-                        {
-                            'user': user,
-                            'message': ldap_error
-                        }
+        status = {
+            'status':True,
+            'user_changed':[],
+            'error':''
+        }
+        try:
+            user_changed = []
+            user_list = UserEnterprise.objects.filter(status='active')
+            for user in user_list:
+                if self.db_type == 'sql':
+                    conn = pymssql.connect(
+                        host=self.db_host,
+                        user=self.db_username,
+                        password=base64.b64decode(self.db_password).decode('utf-8'),
+                        database=self.db_name
                     )
                 else:
-                    user_changed.append(
-                        {
-                            'user': user,
-                            'message': _('User: %(user)s was successfully %(action)s') % {
-                                'user': user.username,
-                                'action': _('Disabled') if self.user_action == 'disable' else _('Deleted')
+                    conn = MySQLdb.connect(
+                        host=self.db_host,
+                        user=self.db_username,
+                        passwd=base64.b64decode(self.db_password).decode('utf-8'),
+                        db=self.db_name
+                    )
+
+                cursor = conn.cursor()
+                cursor.execute(self.db_query %getattr(user,self.user_field))
+
+                if not cursor.rowcount:
+                    if self.user_action == 'delete':
+                        ldap_error = user.delete()
+
+                    else:
+                        user.status = 'inactive'
+                        user.save()
+                        ldap_error = user.ldap_save()
+
+                    if ldap_error:
+                        user_changed.append(
+                            {
+                                'user': user,
+                                'message': ldap_error
                             }
+                        )
+                    else:
+                        user_changed.append(
+                            {
+                                'user': user,
+                                'message': _('User: %(user)s was successfully %(action)s') % {
+                                    'user': user.username,
+                                    'action': _('Disabled') if self.user_action == 'disable' else _('Deleted')
+                                }
 
-                        }
-                    )
-            cursor.close()
-            conn.close()
+                            }
+                        )
+                cursor.close()
+                conn.close()
+            status['user_changed'] = user_changed
+            externaldb_check_user_signal.send(sender=self.__class__, externaldb=self, changed_users=user_changed)
 
-        externaldb_check_user_signal.send(sender=self.__class__,externaldb=self,changed_users=user_changed)
+        except Exception as e:
+            status['status'] = False
+            status['error'] = str(e)
 
-        return user_changed
+        return [status['status'],status['user_changed'],status['error']]
 
     def check_connection(self):
         try:
