@@ -46,7 +46,7 @@ class LdapUser:
 
         connection = Connection(
             server = ldap_server,
-            user = self.server.admin_username,
+            user = "{}\{}".format(self.server.domain_name,self.server.admin_username),
             password = base64.b64decode(self.server.admin_password).decode('utf-8'),
             raise_exceptions = True,
             authentication = NTLM
@@ -175,8 +175,8 @@ class LdapUser:
 
         connection = Connection(
             server=ldap_server,
-            user=self.server.admin_username,
-            password=self.server.admin_password,
+            user="{}\{}".format(self.server.domain_name, self.server.admin_username),
+            password=base64.b64decode(self.server.admin_password).decode('utf-8'),
             raise_exceptions=True,
             authentication=NTLM
         )
@@ -202,8 +202,8 @@ class LdapUser:
 
         connection = Connection(
             server=ldap_server,
-            user=self.server.admin_username,
-            password=self.server.admin_password,
+            user="{}\{}".format(self.server.domain_name, self.server.admin_username),
+            password=base64.b64decode(self.server.admin_password).decode('utf-8'),
             raise_exceptions=True,
             authentication=NTLM
         )
@@ -266,7 +266,7 @@ class LdapGroup:
 
         connection = Connection(
             server = ldap_server,
-            user = self.server.admin_username,
+            user = "{}\{}".format(self.server.domain_name,self.server.admin_username),
             password = base64.b64decode(self.server.admin_password).decode('utf-8'),
             raise_exceptions = True,
             authentication = NTLM
@@ -321,8 +321,8 @@ class LdapGroup:
 
         connection = Connection(
             server=ldap_server,
-            user=self.server.admin_username,
-            password=self.server.admin_password,
+            user="{}\{}".format(self.server.domain_name, self.server.admin_username),
+            password=base64.b64decode(self.server.admin_password).decode('utf-8'),
             raise_exceptions=True,
             authentication=NTLM
         )
