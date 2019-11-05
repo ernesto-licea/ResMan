@@ -10,7 +10,7 @@ from django.utils.translation import gettext_lazy as _
 def notification_externaldb_check_user(sender,**kwargs):
     changed_users = kwargs['changed_users']
     externaldb = kwargs['externaldb']
-    if externaldb.email:
+    if externaldb.email or externaldb.notify_informatics_staff or externaldb.notify_supervisors_staff:
         html_content = get_template(
             "Notification/externaldb_check_users.html").render(
             {
@@ -24,6 +24,20 @@ def notification_externaldb_check_user(sender,**kwargs):
             "changed_users": changed_users,
             "externaldb": externaldb
         })
+
+        email_users = []
+        appconfig = apps.get_app_config('CustomUser')
+        User = appconfig.get_model('User','User')
+        staff_users = User.objects.filter(is_active=True,is_staff=True)
+        supervisor_users = User.objects.filter(is_active=True,is_supervisor=True)
+        for user in staff_users:
+            if user.email and user.email not in email_users:
+                email_users.append(user.email)
+        for user in supervisor_users:
+            if user.email and user.email not in email_users:
+                email_users.append(user.email)
+        if externaldb.email and externaldb.email not in email_users:
+            email_users.append(externaldb.email)
 
         appconfig = apps.get_app_config('Notification')
         EmailServer = appconfig.get_model('EmailServer', 'EmailServer')
@@ -59,7 +73,7 @@ def notification_externaldb_check_user(sender,**kwargs):
                 subject=_("ResMan - Result of the user check against external database '%(database)s'") %{'database':externaldb.name},
                 body=text_content,
                 from_email=mail_from,
-                to=[externaldb.email,],
+                to=email_users,
                 connection=backend
             )
             msg.attach_alternative(html_content, "text/html")
