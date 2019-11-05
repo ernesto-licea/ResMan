@@ -1,10 +1,8 @@
 import base64
 import pymssql
-
 import MySQLdb
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-
 from CheckExternalDB.signals.signals import externaldb_check_user_signal
 from CustomUser.models import UserEnterprise
 
@@ -96,6 +94,31 @@ class ExternalDB(models.Model):
 
         return user_changed
 
+    def check_connection(self):
+        try:
+            user = UserEnterprise.objects.filter(status='active').first()
+            if self.db_type == 'sql':
+                conn = pymssql.connect(
+                    host=self.db_host,
+                    user=self.db_username,
+                    password=base64.b64decode(self.db_password).decode('utf-8'),
+                    database=self.db_name
+                )
+            else:
+                conn = MySQLdb.connect(
+                    host=self.db_host,
+                    user=self.db_username,
+                    passwd=base64.b64decode(self.db_password).decode('utf-8'),
+                    db=self.db_name
+                )
+
+            cursor = conn.cursor()
+            cursor.execute(self.db_query %getattr(user,self.user_field))
+            cursor.close()
+            conn.close()
+            return [True,'']
+        except Exception as e:
+            return [False,str(e)]
 
     def __str__(self):
         return self.name
