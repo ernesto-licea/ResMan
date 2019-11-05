@@ -1045,3 +1045,7 @@ msgstr "Entre una nueva contraseña para el usuario del servidor de base de dato
 #: UserInterface/templates/UserInterface/supervision_services.html:40
 msgid "Database Action"
 msgstr "Acción de Base de Datos"
+
+#: UserInterface/templates/UserInterface/supervision_services.html:40
+msgid "No user was modified as result of checking agains external database: {}"
+msgstr "Ningún usuario fue modificado como resultado del chequeo contra la base de datos externa: {}"
