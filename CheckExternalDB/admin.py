@@ -100,7 +100,7 @@ class ExternalDBAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if not change:
-            obj.db_password = base64.b64encode(obj.db_password.encode('utf-8'))
+            obj.db_password = base64.b64encode(obj.db_password.encode('utf-8')).decode()
         super(ExternalDBAdmin,self).save_model(request,obj,form,change)
 
     def get_urls(self):
