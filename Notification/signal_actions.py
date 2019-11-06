@@ -28,14 +28,19 @@ def notification_externaldb_check_user(sender,**kwargs):
         email_users = []
         appconfig = apps.get_app_config('CustomUser')
         User = appconfig.get_model('User','User')
-        staff_users = User.objects.filter(is_active=True,is_staff=True)
-        supervisor_users = User.objects.filter(is_active=True,is_supervisor=True)
-        for user in staff_users:
-            if user.email and user.email not in email_users:
-                email_users.append(user.email)
-        for user in supervisor_users:
-            if user.email and user.email not in email_users:
-                email_users.append(user.email)
+
+        if externaldb.notify_informatics_staff:
+            staff_users = User.objects.filter(is_active=True, is_staff=True)
+            for user in staff_users:
+                if user.email and user.email not in email_users:
+                    email_users.append(user.email)
+
+        if externaldb.notify_supervisors_staff:
+            supervisor_users = User.objects.filter(is_active=True,is_supervisor=True)
+            for user in supervisor_users:
+                if user.email and user.email not in email_users:
+                    email_users.append(user.email)
+
         if externaldb.email and externaldb.email not in email_users:
             email_users.append(externaldb.email)
 
