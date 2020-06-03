@@ -1,0 +1,8 @@
+sudo apt-get install unixodbc-dev freetds-dev freetds-bin tdsodbc
+
+Editar el fichero /etc/odbcinst.ini y dejarlo con el siguiente contenido
+
+[FreeTDS]
+Description=FreeTDS Driver
+Driver=/usr/lib/x86_64-linux-gnu/odbc/libtdsodbc.so
+Setup=/usr/lib/x86_64-linux-gnu/odbc/libtdsS.so
