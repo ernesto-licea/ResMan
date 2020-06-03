@@ -1,6 +1,6 @@
 import base64
-import pymssql
 import MySQLdb
+import pyodbc
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from CheckExternalDB.signals.signals import externaldb_check_user_signal
@@ -52,12 +52,16 @@ class ExternalDB(models.Model):
             user_list = UserEnterprise.objects.filter(status='active')
             for user in user_list:
                 if self.db_type == 'sql':
-                    conn = pymssql.connect(
-                        host=self.db_host,
-                        user=self.db_username,
-                        password=base64.b64decode(self.db_password).decode('utf-8'),
-                        database=self.db_name
+                    conn_data = 'DRIVER=FreeTDS;SERVER={server};PORT={port};DATABASE={database};UID={user};PWD={passwd}'.format(
+                        server = self.db_host,
+                        port = self.db_port,
+                        database = self.db_name,
+                        user = self.db_username,
+                        passwd = base64.b64decode(self.db_password).decode('utf-8')
                     )
+
+                    conn = pyodbc.connect(conn_data)
+
                 else:
                     conn = MySQLdb.connect(
                         host=self.db_host,
@@ -111,12 +115,15 @@ class ExternalDB(models.Model):
         try:
             user = UserEnterprise.objects.filter(status='active').first()
             if self.db_type == 'sql':
-                conn = pymssql.connect(
-                    host=self.db_host,
+                conn_data = 'DRIVER=FreeTDS;SERVER={server};PORT={port};DATABASE={database};UID={user};PWD={passwd}'.format(
+                    server=self.db_host,
+                    port=self.db_port,
+                    database=self.db_name,
                     user=self.db_username,
-                    password=base64.b64decode(self.db_password).decode('utf-8'),
-                    database=self.db_name
+                    passwd=base64.b64decode(self.db_password).decode('utf-8')
                 )
+                conn = pyodbc.connect(conn_data)
+
             else:
                 conn = MySQLdb.connect(
                     host=self.db_host,
