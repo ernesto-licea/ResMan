@@ -145,7 +145,21 @@ class UserAdmin(PolymorphicParentModelAdmin):
                self.admin_site.admin_view(self.sync_data),
                name='sync-user',
             ),
+            url(
+               r'^(?P<user_id>.+)/get_password/$',
+               self.admin_site.admin_view(self.get_password),
+               name='get-password',
+            ),
         ] + super().get_urls()
+
+    def get_password(self,request,user_id,*args,**kwargs):
+        obj = self.get_object(request, user_id)
+        if request.user.is_superuser:
+            self.message_user(request, self._get_password_message(obj), messages.SUCCESS)
+
+        # Return changelist view
+        url = reverse('admin:%s_%s_changelist' % (self.model._meta.app_label, self.model._meta.model_name))
+        return HttpResponseRedirect(url)
 
     @sensitive_post_parameters_m
     def user_password_change(self, request, id, form_url=''):
@@ -194,6 +208,23 @@ class UserAdmin(PolymorphicParentModelAdmin):
         message = format_html(
             _("Data from user {} was successfully synchronized with ldap servers."),
             obj_repr
+        )
+        return message
+
+    def _get_password_message(self,obj):
+        opts = obj._meta
+
+        # Construct message to return
+        obj_url = reverse(
+            'admin:%s_%s_change' % (opts.app_label, opts.model_name),
+            args=(quote(obj.pk),),
+            current_app=self.admin_site.name,
+        )
+        obj_repr = format_html('<a href="{}">{}</a>', urlquote(obj_url), obj)
+        message = format_html(
+            _("Password for user {} is: '{}'."),
+            obj_repr,
+            base64.b64decode(obj.session_key.encode('utf-8')).decode()
         )
         return message
 
