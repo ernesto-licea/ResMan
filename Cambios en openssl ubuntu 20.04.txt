@@ -1,0 +1,25 @@
+En ubuntu 20.04 openssl viene con una suite de encryptación mas potente que Windows Server
+por lo que es necesario en el servidor donde se instala la aplicación realizar la siguiente
+configuración
+
+1. Modificar fichero /etc/ssl/openssl.cnf
+
+Agregar al inicio del fichero
+---------------------------------------
+
+openssl_conf = default_conf
+
+Agregar al final del fichero
+---------------------------------------
+
+[ default_conf ]
+
+ssl_conf = ssl_sect
+
+[ssl_sect]
+
+system_default = ssl_default_sect
+
+[ssl_default_sect]
+MinProtocol = TLSv1.2
+CipherString = DEFAULT:@SECLEVEL=1
