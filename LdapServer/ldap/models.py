@@ -1,4 +1,6 @@
-from ldap3 import ObjectDef, AttrDef, Server, Connection, NTLM, ALL, Reader, Writer
+import ssl
+
+from ldap3 import ObjectDef, AttrDef, Server, Connection, NTLM, ALL, Reader, Writer, Tls
 import base64
 
 class LdapUser:
@@ -41,7 +43,8 @@ class LdapUser:
             host = self.server.server_host,
             port = self.server.server_port,
             use_ssl = self.server.start_tls,
-            get_info=ALL
+            get_info=ALL,
+            tls=Tls(validate=ssl.CERT_NONE)
         )
 
         connection = Connection(
@@ -170,7 +173,8 @@ class LdapUser:
             host=self.server.server_host,
             port=self.server.server_port,
             use_ssl=self.server.start_tls,
-            get_info=ALL
+            get_info=ALL,
+            tls=Tls(validate=ssl.CERT_NONE)
         )
 
         connection = Connection(
@@ -197,7 +201,8 @@ class LdapUser:
             host=self.server.server_host,
             port=self.server.server_port,
             use_ssl=self.server.start_tls,
-            get_info=ALL
+            get_info=ALL,
+            tls=Tls(validate=ssl.CERT_NONE)
         )
 
         connection = Connection(
@@ -225,7 +230,8 @@ class LdapUser:
             host=self.server.server_host,
             port=self.server.server_port,
             use_ssl=self.server.start_tls,
-            get_info=ALL
+            get_info=ALL,
+            tls=Tls(validate=ssl.CERT_NONE)
         )
 
         connection = Connection(
@@ -261,7 +267,8 @@ class LdapGroup:
             host = self.server.server_host,
             port = self.server.server_port,
             use_ssl = self.server.start_tls,
-            get_info=ALL
+            get_info=ALL,
+            tls=Tls(validate=ssl.CERT_NONE)
         )
 
         connection = Connection(
@@ -316,7 +323,8 @@ class LdapGroup:
             host=self.server.server_host,
             port=self.server.server_port,
             use_ssl=self.server.start_tls,
-            get_info=ALL
+            get_info=ALL,
+            tls=Tls(validate=ssl.CERT_NONE)
         )
 
         connection = Connection(
