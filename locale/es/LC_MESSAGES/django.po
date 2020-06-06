@@ -1069,3 +1069,7 @@ msgstr "notificar al equipo de supervisores?"
 #: UserInterface/templates/UserInterface/supervision_services.html:40
 msgid "Enter a new password for the ldap server admin user: <strong>%(username)s</strong>"
 msgstr "Entre una nueva contraseña para el usuario administrador del servidor ldap: <strong>%(username)s</strong>"
+
+#: CustomUser/admin.py:158
+msgid "Password for user {} is: {}."
+msgstr "La contaseña del usuario {} es: {}."
