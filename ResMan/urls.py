@@ -19,8 +19,14 @@ from django.conf.urls.static import static
 from ResMan.admin import admin_site
 from django.urls import path
 from django.conf.urls import include, url
+from UserInterface.views import change_password
 
 urlpatterns = [
+    path(
+        'admin/password_change/',
+        change_password,
+        name='admin_password_change',
+    ),
     path('admin/', admin_site.urls),
     url(r'',include("UserInterface.urls"))
 ]
