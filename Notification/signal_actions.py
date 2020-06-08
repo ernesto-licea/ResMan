@@ -83,3 +83,60 @@ def notification_externaldb_check_user(sender,**kwargs):
             )
             msg.attach_alternative(html_content, "text/html")
             msg.send()
+
+
+def notification_password_changed_successfully(sender,**kwargs):
+    user = kwargs['obj']
+    if user.email:
+        html_content = get_template(
+            "Notification/password_changed_successfully.html").render(
+            {
+                "user": user,
+            })
+
+        # Crear correo text
+        text_content = get_template(
+            "Notification/password_changed_successfully.txt").render({
+            "user": user,
+        })
+
+
+        appconfig = apps.get_app_config('Notification')
+        EmailServer = appconfig.get_model('EmailServer', 'EmailServer')
+        email_server_list = EmailServer.objects.filter(is_active=True)
+
+        for server in email_server_list:
+
+            if server.auth_required:
+                backend = EmailBackend(
+                    host=server.email_server,
+                    port=server.email_port,
+                    username=server.email_username,
+                    password=base64.b64decode(server.email_password).decode('utf-8'),
+                    use_tls=server.use_tls,
+                    fail_silently=True,
+                    timeout=10
+                )
+                mail_from = server.email_username
+            else:
+                backend = EmailBackend(
+                    host=server.email_server,
+                    port=server.email_port,
+                    username="",
+                    password="",
+                    use_tls=False,
+                    fail_silently=True,
+                    timeout=10
+                )
+                mail_from = "ResMan"
+
+            # Enviar correo
+            msg = EmailMultiAlternatives(
+                subject=_("ResMan - Password successfully changed"),
+                body=text_content,
+                from_email=mail_from,
+                to=[user.email,],
+                connection=backend
+            )
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
