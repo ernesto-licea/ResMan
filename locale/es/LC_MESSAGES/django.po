@@ -1073,3 +1073,34 @@ msgstr "Entre una nueva contraseña para el usuario administrador del servidor l
 #: CustomUser/admin.py:158
 msgid "Password for user {} is: {}."
 msgstr "La contaseña del usuario {} es: {}."
+
+#: UserInterface/templates/UserInterface/dashboard.html:20
+#, python-format
+msgid ""
+"\n"
+"                                                        Your password will "
+"expire on %(expiration_date)s. You must change your password before the "
+"expiration date to prevent your user from being disabled.\n"
+"                                                        "
+msgstr ""
+"\n"
+"                                                        Su contraseña "
+"expirará el %(expiration_date)s. Usted debe cambiar su contraseña antes de "
+"la fecha de expiración para prevenir que su usuario sea deshabilitado.\n"
+"                                                        "
+#: CustomUser/admin.py:158
+msgid "ResMan - Password successfully changed"
+msgstr "ResMan - Contraseña cambiada correctamente"
+
+#: CustomUser/admin.py:158
+msgid "You had changed your password successfully."
+msgstr "Usted ha cambiado su contraseña correctamente"
+
+#: UserInterface/templates/UserInterface/dashboard.html:20
+#, python-format
+msgid "You must change your password before the expiration date to prevent your user from being disabled."
+msgstr "Usted debe cambiar su contraseña antes de la fecha de expiración para prevenir que su usuario sea deshabilitado."
+
+#: CustomUser/admin.py:158
+msgid "Expiration Date"
+msgstr "Fecha de Expiración"
