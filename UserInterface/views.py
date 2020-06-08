@@ -13,6 +13,7 @@ from CustomUser.models import User, PasswordHistory
 from LdapServer.models import LdapServer
 from Services.models import Service
 from UserInterface.forms import LoginForm, UserPasswordChangeForm
+from UserInterface.signals.signals import password_changed_successfully
 
 
 def get_default_data(request):
@@ -141,6 +142,10 @@ def change_password(request):
                     message_success = gettext('Password changed successfully.')
 
                     update_session_auth_hash(request, form.user)
+
+                    user.password_expiration_date = timezone.now()
+                    password_changed_successfully.send(sender=user.__class__, obj=user)
+
         else:
             form = UserPasswordChangeForm(request.user)
 
