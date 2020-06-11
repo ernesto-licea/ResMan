@@ -87,6 +87,7 @@ def notification_externaldb_check_user(sender,**kwargs):
 
 def notification_password_changed_successfully(sender,**kwargs):
     user = kwargs['obj']
+    language_code = kwargs['language_code']
     if user.email:
         html_content = get_template(
             "Notification/password_changed_successfully.html").render(
@@ -104,6 +105,11 @@ def notification_password_changed_successfully(sender,**kwargs):
         appconfig = apps.get_app_config('Notification')
         EmailServer = appconfig.get_model('EmailServer', 'EmailServer')
         email_server_list = EmailServer.objects.filter(is_active=True)
+
+
+        appconfig = apps.get_app_config('Help')
+        Help = appconfig.get_model('Help','Help')
+        help_text = Help.objects.get(id=4)
 
         for server in email_server_list:
 
@@ -139,4 +145,11 @@ def notification_password_changed_successfully(sender,**kwargs):
                 connection=backend
             )
             msg.attach_alternative(html_content, "text/html")
+
+            if language_code.find("es") != -1:
+                if help_text.attachment_es:
+                    msg.attach("%s.pdf" % help_text.name_es, help_text.attachment_es.read(), "application/pdf")
+            else:
+                if help_text.attachment_en:
+                    msg.attach("%s.pdf" %help_text.name_en,help_text.attachment_en.read(),"application/pdf")
             msg.send()
