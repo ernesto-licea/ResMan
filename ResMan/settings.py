@@ -159,6 +159,8 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend'
 ]
 
+EXPIRATION_PASSWORD_DAYS = 90
+
 LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale'),
 ]
