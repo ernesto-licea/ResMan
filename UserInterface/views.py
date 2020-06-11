@@ -2,6 +2,7 @@ import base64
 import hashlib
 from datetime import timedelta
 
+from django.conf import settings
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.hashers import make_password
 from django.core.paginator import Paginator
@@ -145,7 +146,7 @@ def change_password(request):
 
                     update_session_auth_hash(request, form.user)
 
-                    user.password_expiration_date = timezone.now() + timedelta(days=90)
+                    user.password_expiration_date = timezone.now() + timedelta(days=settings.EXPIRATION_PASSWORD_DAYS)
                     password_changed_successfully.send(sender=user.__class__, obj=user,language_code=request.LANGUAGE_CODE)
 
         else:
