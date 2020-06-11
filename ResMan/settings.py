@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'UserInterface',
     'CheckExternalDB',
     'Notification',
+    'Help',
 ]
 
 MIDDLEWARE = [
