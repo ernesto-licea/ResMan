@@ -1,5 +1,9 @@
+from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
+from Help.validators import FileMimeTypeValidator
+
 
 def help_en_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/help_<id>/<filename>
@@ -14,9 +18,24 @@ class Help(models.Model):
     name_en = models.CharField(_('name (en)'), max_length=50, default=True)
     description_es = models.TextField(_('description (es)'), default="")
     description_en = models.TextField(_('description (en)'), default="")
-    attachment_es = models.FileField(_('attachment (es)'),upload_to=help_es_directory_path, blank=True)
-    attachment_en = models.FileField(_('attachment (en)'),upload_to=help_en_directory_path, blank=True)
-
+    attachment_es = models.FileField(
+        _('attachment (es)'),
+        upload_to=help_es_directory_path,
+        blank=True,
+        validators=[
+            FileExtensionValidator(['pdf',]),
+            FileMimeTypeValidator(['application/pdf',])
+        ]
+    )
+    attachment_en = models.FileField(
+        _('attachment (es)'),
+        upload_to=help_en_directory_path,
+        blank=True,
+        validators=[
+            FileExtensionValidator(['pdf',]),
+            FileMimeTypeValidator(['application/pdf',])
+        ]
+    )
     def __str__(self):
         return self.name_en
 
