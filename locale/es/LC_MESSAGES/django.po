@@ -1151,3 +1151,11 @@ msgid ""
 "'%(allowed_mime_types)s'."
 msgstr "El tipo de archivo '%(mime_type)s' no está permitido. Los tipos de archivos permitidos son: "
 "'%(allowed_mime_types)s'."
+
+#: CustomUser/admin.py:158
+msgid "ResMan - Your password has been reset"
+msgstr "ResMan - Su contraseña ha sido restablecida"
+
+#: CustomUser/admin.py:158
+msgid "Your password has been reset by admin user"
+msgstr "Su contraseña ha sido restablecida por el usuario administrador"
