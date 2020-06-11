@@ -153,3 +153,75 @@ def notification_password_changed_successfully(sender,**kwargs):
                 if help_text.attachment_en:
                     msg.attach("%s.pdf" %help_text.name_en,help_text.attachment_en.read(),"application/pdf")
             msg.send()
+
+def notification_password_reset_successfully(sender,**kwargs):
+    user = kwargs['obj']
+    admin_user = kwargs['admin_user']
+    language_code = kwargs['language_code']
+    if user.email:
+        html_content = get_template(
+            "Notification/password_reset_successfully.html").render(
+            {
+                "user": user,
+                'admin_user': admin_user
+            })
+
+        # Crear correo text
+        text_content = get_template(
+            "Notification/password_reset_successfully.txt").render({
+            "user": user,
+            'admin_user': admin_user
+        })
+
+
+        appconfig = apps.get_app_config('Notification')
+        EmailServer = appconfig.get_model('EmailServer', 'EmailServer')
+        email_server_list = EmailServer.objects.filter(is_active=True)
+
+
+        appconfig = apps.get_app_config('Help')
+        Help = appconfig.get_model('Help','Help')
+        help_text = Help.objects.get(id=4)
+
+        for server in email_server_list:
+
+            if server.auth_required:
+                backend = EmailBackend(
+                    host=server.email_server,
+                    port=server.email_port,
+                    username=server.email_username,
+                    password=base64.b64decode(server.email_password).decode('utf-8'),
+                    use_tls=server.use_tls,
+                    fail_silently=True,
+                    timeout=10
+                )
+                mail_from = server.email_username
+            else:
+                backend = EmailBackend(
+                    host=server.email_server,
+                    port=server.email_port,
+                    username="",
+                    password="",
+                    use_tls=False,
+                    fail_silently=True,
+                    timeout=10
+                )
+                mail_from = "ResMan"
+
+            # Enviar correo
+            msg = EmailMultiAlternatives(
+                subject=_("ResMan - Your password has been reset"),
+                body=text_content,
+                from_email=mail_from,
+                to=[user.email,],
+                connection=backend
+            )
+            msg.attach_alternative(html_content, "text/html")
+
+            if language_code.find("es") != -1:
+                if help_text.attachment_es:
+                    msg.attach("%s.pdf" % help_text.name_es, help_text.attachment_es.read(), "application/pdf")
+            else:
+                if help_text.attachment_en:
+                    msg.attach("%s.pdf" %help_text.name_en,help_text.attachment_en.read(),"application/pdf")
+            msg.send()
