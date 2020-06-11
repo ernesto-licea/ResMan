@@ -1140,3 +1140,14 @@ msgstr "ayudas"
 #: CustomUser/admin.py:158
 msgid "Help"
 msgstr "Ayuda"
+
+#: CustomUser/admin.py:158
+msgid "Only pdf files are supported."
+msgstr "Solo se permiten archivos pdf."
+
+#, python-format
+msgid ""
+"File mime type '%(mime_type)s' is not allowed. Allowed mime types are: "
+"'%(allowed_mime_types)s'."
+msgstr "El tipo de archivo '%(mime_type)s' no está permitido. Los tipos de archivos permitidos son: "
+"'%(allowed_mime_types)s'."
