@@ -28,7 +28,7 @@ class Help(models.Model):
         ]
     )
     attachment_en = models.FileField(
-        _('attachment (es)'),
+        _('attachment (en)'),
         upload_to=help_en_directory_path,
         blank=True,
         validators=[
