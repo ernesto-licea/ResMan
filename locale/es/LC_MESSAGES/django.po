@@ -1104,3 +1104,39 @@ msgstr "Usted debe cambiar su contraseña antes de la fecha de expiración para 
 #: CustomUser/admin.py:158
 msgid "Expiration Date"
 msgstr "Fecha de Expiración"
+
+#: CustomUser/admin.py:158
+msgid "name (es)"
+msgstr "nombre (es)"
+
+#: CustomUser/admin.py:158
+msgid "name (en)"
+msgstr "nombre (en)"
+
+#: CustomUser/admin.py:158
+msgid "description (es)"
+msgstr "descripción (es)"
+
+#: CustomUser/admin.py:158
+msgid "description (en)"
+msgstr "descripción (en)"
+
+#: CustomUser/admin.py:158
+msgid "attachment (es)"
+msgstr "fichero adjunto (es)"
+
+#: CustomUser/admin.py:158
+msgid "attachment (en)"
+msgstr "fichero adjunto (en)"
+
+#: CustomUser/admin.py:158
+msgid "help"
+msgstr "ayuda"
+
+#: CustomUser/admin.py:158
+msgid "helps"
+msgstr "ayudas"
+
+#: CustomUser/admin.py:158
+msgid "Help"
+msgstr "Ayuda"
