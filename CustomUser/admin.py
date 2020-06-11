@@ -1,6 +1,8 @@
 import base64
 import hashlib
+from datetime import timedelta
 
+from django.conf import settings
 from django.conf.urls import url
 from django.contrib import admin, messages
 from ResMan.admin import admin_site
@@ -29,6 +31,8 @@ from LdapServer.models import LdapServer
 from Services.models import Service
 from .forms import UserFormEdit, UserFormAdd
 from .models import User, UserEnterprise, UserInstitutional, UserGuest, PasswordHistory
+from .signals.signals import password_reset_successfully
+
 
 def delete_queryset(modeladmin,request,queryset):
     for obj in queryset:
@@ -82,6 +86,9 @@ def change_password(modeladmin,request, id, form_url=''):
                 messages.success(request, msg)
 
                 update_session_auth_hash(request, form.user)
+
+                user.password_expiration_date = timezone.now() + timedelta(days=settings.EXPIRATION_PASSWORD_DAYS)
+                password_reset_successfully.send(sender=user.__class__, obj=user, admin_user=request.user, language_code=request.LANGUAGE_CODE)
 
             return HttpResponseRedirect(
                 reverse(
